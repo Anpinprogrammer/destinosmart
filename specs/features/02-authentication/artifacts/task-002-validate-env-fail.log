@@ -1,0 +1,5 @@
+
+> destinosmart-app@0.1.0 validate:env
+> node --experimental-strip-types scripts/validate-env.ts
+
+Configuración de entorno inválida: VITE_SUPABASE_ANON_KEY no puede ser una secret key (sb_secret_).

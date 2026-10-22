@@ -1,0 +1,10 @@
+
+> destinosmart-app@0.1.0 test:e2e
+> playwright test
+
+
+Running 1 test using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/smoke.spec.ts:3:1 › la home del scaffold responde y renderiza (817ms)
+
+  1 passed (4.2s)

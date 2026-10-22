@@ -1,0 +1,13 @@
+
+> destinosmart-app@0.1.0 test
+> vitest run
+
+
+ RUN  v5.0.5 <repo>
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  18:59:40
+   Duration  693ms (environment 71%, setup 14%, tests 10%, import 3%, transform 1%)
+

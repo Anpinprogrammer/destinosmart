@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://destinosmart.local/schemas/profile.schema.json",
+  "title": "Profile",
+  "description": "Contrato conceptual de public.profiles para la feature 02. No es una migración ni un esquema ejecutable en Supabase.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "email",
+    "email_verified",
+    "full_name",
+    "avatar_url",
+    "plan_id",
+    "role",
+    "free_trip_credits",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Debe coincidir con auth.users.id.",
+      "pattern": "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Copia controlada de auth.users.email; minúsculas y sin espacios.",
+      "pattern": "^[^\\s@\\p{Lu}]+@[^\\s@\\p{Lu}]+\\.[^\\s@\\p{Lu}]+$"
+    },
+    "email_verified": {
+      "type": "boolean",
+      "description": "true para OAuth; false para Email/Password hasta completar verificación."
+    },
+    "full_name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 120
+    },
+    "avatar_url": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "plan_id": {
+      "type": "string",
+      "enum": [
+        "free",
+        "occasional",
+        "frequent"
+      ],
+      "default": "free"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "user",
+        "admin"
+      ],
+      "default": "user"
+    },
+    "free_trip_credits": {
+      "type": "integer",
+      "minimum": 0,
+      "default": 1,
+      "description": "Crédito Free; 1 al crear el perfil, 0 tras consumirlo; no se reinicia."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+    }
+  }
+}

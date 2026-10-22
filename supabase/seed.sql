@@ -1,0 +1,2 @@
+-- Seed local de DestinoSmart.
+-- Intencionalmente vacío: no se insertan usuarios, perfiles ni datos personales.

@@ -1,0 +1,13 @@
+
+> destinosmart-app@0.1.0 build
+> tsc --noEmit && vite build
+
+vite v6.4.4 building for production...
+transforming...
+✓ 122 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.85 kB │ gzip:  0.46 kB
+dist/assets/index-BAZg6x2L.css    6.75 kB │ gzip:  2.01 kB
+dist/assets/index-Dx3LzRDn.js   225.33 kB │ gzip: 75.22 kB
+✓ built in 2.09s

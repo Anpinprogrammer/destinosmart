@@ -1,0 +1,5 @@
+
+> destinosmart-app@0.1.0 validate:env
+> node --experimental-strip-types scripts/validate-env.ts
+
+Entorno Supabase válido.

@@ -1,0 +1,8 @@
+Connecting to local database...
+psql:<repo>/supabase/tests/0002_profiles.test.sql:1: NOTICE:  extension "pgtap" already exists, skipping
+<repo>/supabase/tests/0002_profiles.test.sql ...... ok
+psql:<repo>/supabase/tests/0003_profiles_rls.test.sql:1: NOTICE:  extension "pgtap" already exists, skipping
+<repo>/supabase/tests/0003_profiles_rls.test.sql .. ok
+All tests successful.
+Files=2, Tests=51,  0 wallclock secs ( 0.02 usr  0.02 sys +  0.01 cusr  0.01 csys =  0.06 CPU)
+Result: PASS
