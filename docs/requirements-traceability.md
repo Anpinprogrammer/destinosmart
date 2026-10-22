@@ -86,6 +86,7 @@
 | **Feature 04 — Planes/cuotas** | Debe implementar USD 4.99/9.99, viajes ilimitados, crédito Free y cuotas IA pendientes. | Spec/plan propios; no inventar límites. |
 | **Feature 05 — Viajes/IA/PDF** | Debe crear viajes con `is_free_trial_trip`, `free_pro_expires_at`, consumo atómico y solo lectura. | Depende de CORE-04/05/07/08. |
 | **Feature 07 — Dashboard** | Debe mostrar paywall, badge, contador, vencimiento, solo lectura y PDFs/reservas existentes. | Depende de CORE-05/06/07. |
+| **Adopción prototipo → producción** | La Landing y el Dashboard visuales se adoptaron en la app raíz; no equivalen a la aprobación funcional de Features 01/07. | `ADR-007` y `CR-004`; baseline separado y verificado. |
 
 ## Historia y no reutilización de IDs
 

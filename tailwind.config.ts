@@ -6,11 +6,19 @@ export default {
     extend: {
       colors: {
         brand: {
+          primary: '#0E2C52',
+          accent: '#FF9A00',
+          secondary: '#00AEEF',
+          pastel: '#E0F7FC',
           ocean: '#087F8C',
           deep: '#073C51',
           sea: '#14B8A6',
           sun: '#F59E0B',
         },
+        ocean: '#087F8C',
+        deep: '#073C51',
+        sea: '#14B8A6',
+        sun: '#F59E0B',
         surface: {
           canvas: '#F8FAFC',
           base: '#FFFFFF',

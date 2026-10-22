@@ -1,5 +1,7 @@
 # CORE-02 — Arquitectura del sistema
 
+> **Actualización 2026-10-22:** la app de producción ya existe en la raíz (`src/`, React + Vite + TanStack Router + Supabase) y la adopción visual está documentada en `docs/decisions/ADR-007-prototype-to-production-adoption.md`. `prototipos/prototipo-gpt` es la única referencia visual; `prototipos/destinosmart-dashboard` fue eliminado intencionalmente. La sección 2 siguiente describe el estado histórico previo a la app raíz y no debe usarse para afirmar que el producto carece de aplicación, router, auth o CI.
+
 - **ID:** `CORE-02`
 - **Nombre:** Arquitectura actual y arquitectura objetivo
 - **Estado:** `APPROVED`

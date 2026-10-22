@@ -284,7 +284,7 @@ Detalle en `research.md`. Resumen:
 
 - Reutilizar `Hero`, `DesktopTripSearch`, `MobileTripChat`, `MobileTripAccordion`, `TravelForm`, `DesktopDatePicker`, `MobileDatePicker`, `Navbar` y tokens/capturas del prototipo.
 - `UserDashboard` y componentes de dashboard son referencia de **Feature 07**; no implementar dashboard en Feature 03.
-- `Pricing.tsx` contiene precios USD 2/5 y trial de 14 días obsoletos: **no reutilizar ese copy**; pertenece a Feature 01/04.
+- `Pricing.tsx` contenía precios USD 2/5 y trial de 14 días obsoletos. La copia de producción ya usa Free 1 viaje/Pro 30 días y USD 4.99/9.99, sin cambiar layout (CR-004).
 - El prototipo usa hash routing (`#/mis-viajes`) y la app raíz TanStack Router; la reutilización literal de routing no es posible. **G-13 (nueva):** decidir montaje/port de componentes sin cambiar routing ni prototipos; no implementar hasta aprobación.
 - IDs del prototipo (`stays`, `transport`, `food`, `travelerCounts` con infants/pets) difieren del contrato (`accommodation`, `local_transport`, `restaurants`, adults/minors): adaptador pendiente; no editar el prototipo.
 - Cualquier ajuste visual (modo flexible, composición del hero, campos) requiere documentación y aprobación.

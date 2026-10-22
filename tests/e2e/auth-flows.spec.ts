@@ -30,14 +30,16 @@ test.describe('flujos de autenticación con Supabase local', () => {
 
     await expect(page).toHaveURL(/\/dashboard$/);
     await expect(
-      page.getByRole('heading', { name: 'Hola, E2E User' }),
+      page.getByRole('heading', { name: /Hola, E2E User/ }),
     ).toBeVisible();
-    await expect(page.getByText('1 viaje', { exact: true })).toBeVisible();
-    await expect(page.getByText('1 crédito', { exact: true })).toBeVisible();
+    await expect(page.getByText(/Free · 1 crédito/)).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'Cerrar sesión' }),
+    ).toBeVisible();
 
     await page.reload();
     await expect(
-      page.getByRole('heading', { name: 'Hola, E2E User' }),
+      page.getByRole('heading', { name: /Hola, E2E User/ }),
     ).toBeVisible();
 
     await page.getByRole('button', { name: 'Cerrar sesión' }).click();
@@ -53,7 +55,7 @@ test.describe('flujos de autenticación con Supabase local', () => {
     await page.getByRole('button', { name: 'Entrar' }).click();
     await expect(page).toHaveURL(/\/dashboard$/);
     await expect(
-      page.getByRole('heading', { name: 'Hola, E2E User' }),
+      page.getByRole('heading', { name: /Hola, E2E User/ }),
     ).toBeVisible();
   });
 

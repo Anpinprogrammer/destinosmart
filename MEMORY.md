@@ -1,54 +1,65 @@
 # MEMORY.md — Estado operativo del harness
 
-> Estado de trabajo, no fuente de requisitos. No contiene secretos ni datos personales. Las fuentes de verdad siguen siendo `AGENTS.md`, `docs/constitution.md`, `specs/features/02-authentication/*` y `specs/features/03-travel-form/*`.
+> Estado de trabajo, no fuente de requisitos. No contiene secretos ni datos personales. Las fuentes de verdad siguen siendo `AGENTS.md`, `docs/constitution.md`, `specs/features/02-authentication/*`, `specs/features/03-travel-form/*` y `docs/decisions/ADR-007-prototype-to-production-adoption.md`.
 
 ## Proyecto
 - Nombre canónico: **DestinoSmart**.
 - Fuente de producto: Documento Maestro v4.0 y modelo Freemium aprobado (`BR-FREE-001..010`).
 - Stack de la app raíz: React + TypeScript estricto + Tailwind + Framer Motion + Vite + TanStack Router + Supabase (Auth/PostgreSQL/RLS/Storage/Realtime) + Supabase Edge Functions + OpenRouter.
-- No hay repositorio Git en este directorio; la evidencia se basa en archivos, hashes y mtimes.
-- Prototipos preservados; no modificar `prototipos/` sin autorización.
+- Git local: rama `main`, un commit inicial. No se modificó historial ni se hizo push.
+- Prototipo oficial: `prototipos/prototipo-gpt/`. `prototipos/destinosmart-dashboard/` fue eliminado intencionalmente por el propietario y **no debe restaurarse**.
 
-## Estado actual (2026-10-21)
+## Estado actual (2026-10-22)
 ### Feature 02 — Autenticación
 - **Aceptada por el propietario y `verified`**.
 - `spec.md` v0.2.0 aprobada; `plan.md` v0.3.0 aprobado; `tasks.md`/`verification.md` con aceptación registrada.
-- Evidencia final: 263 tests Vitest + 7 skipped; 6 integración + 1 Google skip; 177 pgTAP; 20/20 E2E; build 184 módulos; baseline operativo actual 85 archivos (MEMORY.md excluido por ser estado mutable; la aceptación se registró con 86).
-- Runbook: `docs/operations/runbook.md`; CI: `.github/workflows/ci.yml`; Vercel: `vercel.json`.
+- La app real conserva `src/features/auth`, `src/features/profile`, Supabase, guard y rutas.
+- Evidencia de adopción: `npm test` 263 passed + 7 skipped; `npm run typecheck` OK; build 2167 módulos; smoke E2E 7/7; `check:protected` OK.
 
 ### Feature 03 — Formulario Inteligente
-- **Implementación NO iniciada.** Spec/plan/tasks en **`draft` v0.3.0**; no hay `verification.md`.
-- `clarifications.md` v0.1.0 con decisiones CQ-01–CQ-05:
-  - contrato normalizado con ubicaciones `{id,label}`, fechas inicio/fin, adultos/menores, presupuesto ISO 4217, cinco servicios;
-  - visitante completa borrador; login al continuar; sin creación ni crédito;
-  - Feature 03 solo valida/normaliza/prepara payload; Feature 07 crea y consume;
-  - reutilizar `prototipos/prototipo-gpt` (landing/hero/formulario/componentes); dashboard como referencia de Feature 07;
-  - estados UI para errores Core 07; backend autoriza.
-- `spec.md` v0.3.0: AC-023 (sessionStorage TTL 30 min), AC-024 (contrato preparado sin endpoint), AC-025 (UI auditada).
-- `plan.md` v0.3.0: §14 contrato preliminar `CreateTripRequestV1`; §15 estrategia `sessionStorage`; §16 auditoría UI; §17 gates.
-- `research.md`: auditoría G-12/UI, 48 diferencias de prototipos.
+- **Spec/plan/tasks en `draft` v0.3.0**; no hay `verification.md` ni implementación backend.
+- `clarifications.md` v0.1.0 con CQ-01–CQ-05: contrato normalizado, borrador anónimo, validación/normalización en Feature 03, creación/crédito en Feature 07, reutilización del prototipo y estados UI Core 07.
+- La UI visual del formulario ya está copiada a `src/components/travel` como parte de la adopción; **la lógica de negocio de Feature 03 sigue pendiente de aprobación/implementación específica**.
+- Servicios canónicos en la copia: `flights`, `lodging`, `transport`, `sights`, `food`.
+- `plan.md` §14–§17; `research.md` con auditoría UI/contrato/draft.
 
-## Bloqueos activos
-1. **G-12 abierto:** `node scripts/check-protected-files.mjs` detecta 48 diferencias en `prototipos/` (11 eliminadas, 11 modificadas, 26 nuevas). No actualizar el baseline ni revertir prototipos hasta aprobación del propietario. `MEMORY.md` quedó excluido del manifiesto por ser estado operativo mutable.
-2. **G-13 abierto:** el prototipo usa hash routing (`#/mis-viajes`) y la app raíz TanStack Router. No importar el hash routing literalmente; definir montaje/port antes de G1/G2.
-3. **Contrato backend de creación** pendiente de Feature 07; no implementar endpoint, migración, SQL ni Edge Function en Feature 03.
-4. **Detalles non-blocking:** catálogo/fuente de ubicaciones, edades/límites de pasajeros, catálogo final de monedas/redondeo, timezone, UI de paywall, mecanismo exacto del borrador.
-5. **Decisiones de producto abiertas:** `Q-09` proveedor de correo, `Q-10` rate limits, `Q-17` retención/privacidad; `DQ-22` cuotas IA y `DQ-23` cancelación.
+### Adopción prototipo → producción
+- **G-12 resuelto:** baseline separado.
+  - Prototipo oficial: `tests/regression/prototype-reference.baseline.json` (53 archivos).
+  - Infraestructura/gobernanza: `tests/regression/protected-files.baseline.json` (40 archivos).
+- **G-13 resuelto:** TanStack Router es el único router; `/` landing y `/dashboard` dashboard; auth Feature 02 intacta.
+- Backup verificado: `backups/prototipo-gpt-2026-10-22.tar.gz` + `.sha256`.
+- Manifiesto: `specs/features/03-travel-form/artifacts/prototype-gpt-manifest-2026-10-22.json`.
+- ADR aprobado: `docs/decisions/ADR-007-prototype-to-production-adoption.md` (el ID `ADR-003` quedó reservado a la decisión previa).
+- Plan/resultado: `docs/changes/CR-004-prototype-to-production-adoption-plan.md`.
+- Dependencia añadida: `lucide-react@^0.468.0`.
+- Dashboard usa datos demo etiquetados; no hay persistencia real de viajes. Pricing actualizado a Free 1 viaje/30 días Pro, USD 4.99 y USD 9.99.
+
+## Bloqueos y pendientes
+1. **Contrato backend de creación** pendiente de Feature 07; no implementar endpoint, migración, SQL ni Edge Function en Feature 03.
+2. **Detalles non-blocking:** catálogo/fuente de ubicaciones, edades/límites de pasajeros, moneda final/redondeo, timezone, UI de paywall, mecanismo exacto del borrador.
+3. **Decisiones de producto abiertas:** `Q-09` proveedor de correo, `Q-10` rate limits, `Q-17` retención/privacidad; `DQ-22` cuotas IA, `DQ-23` cancelación.
+4. **CI remoto:** no hay ejecuciones de GitHub Actions verificadas en esta sesión; los jobs locales pasan.
+5. **Validación visual:** capturas locales desktop/mobile revisadas; no hay comparador automatizado pixel-perfect.
 
 ## Próximo paso
-1. Propietario aprueba/rechaza **G-12** (baseline de prototipos) y **G-13** (montaje UI/routing).
-2. Si se aprueban, ejecutar `/sdd-spec 03-travel-form` para G1; luego `/sdd-plan` y `/sdd-tasks`.
-3. **No ejecutar `/sdd-implement`** ni modificar código/infraestructura/prototipos sin spec y plan aprobados y tarea explícita.
+1. Revisar el reporte de adopción y las capturas.
+2. Si se autoriza, continuar Feature 03 desde su flujo SDD (`/sdd-spec` → `/sdd-plan` → `/sdd-tasks`); no asumir que la copia visual equivale a Feature 03 implementada.
+3. No implementar Features 04/05/06/07 ni pagos sin autorización.
 
-## Evidencia y comandos útiles
-- Feature 02: `npm test`, `npm run test:integration`, `npm run test:e2e`, `npx supabase test db --local`, `npm run check:protected`, `npm run build`.
-- Feature 03: solo documentación; no hay pruebas de código ejecutadas.
-- `check:protected` seguirá fallando hasta resolver G-12; no “arreglarlo” actualizando el baseline a ciegas.
-- `check:bundle` requiere build previo; `prebuild` valida `VITE_*` y `postbuild` ejecuta bundle check.
+## Evidencia y comandos
+- `npm run typecheck` → OK.
+- `npm test` → 263 passed, 7 skipped.
+- `VITE_SUPABASE_URL=https://example.supabase.co VITE_SUPABASE_ANON_KEY=sb_publishable_ci_placeholder npm run build` → OK (2167 módulos).
+- `npm run check:protected` → OK (40 + 53).
+- `npx playwright test tests/e2e/smoke.spec.ts` → 7 passed.
+- `npm run check:bundle` → OK, 10 assets sin secretos.
+- Backup: `shasum -a 256 -c backups/prototipo-gpt-2026-10-22.tar.gz.sha256`.
 
 ## Registro
 | Fecha | Hecho | Evidencia | Estado |
 |---|---|---|---|
 | 2026-10-20 | Preparación inicial del harness | `AGENTS.md`, `docs/`, `.agents/`, `.opencode/` | Histórico |
-| 2026-10-21 | Feature 02 aceptada por el propietario | `specs/features/02-authentication/tasks.md` (`status: verified`) | Aceptada |
-| 2026-10-21 | Decisiones CQ-01–CQ-05 y documentación Feature 03 en draft | `specs/features/03-travel-form/{clarifications,spec,plan,tasks,research}.md` | Draft; G-12/G-13 abiertos |
+| 2026-10-21 | Feature 02 aceptada por el propietario | `specs/features/02-authentication/tasks.md` | Aceptada |
+| 2026-10-21 | Decisiones CQ-01–CQ-05 y documentación Feature 03 | `specs/features/03-travel-form/*` | Draft |
+| 2026-10-22 | Adopción prototipo → producción y baseline separado | `ADR-007`, `CR-004`, baselines, capturas | Implementado/verificado localmente |

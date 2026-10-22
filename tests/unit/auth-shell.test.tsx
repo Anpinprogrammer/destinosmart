@@ -83,6 +83,14 @@ function renderLayout(
   );
 }
 
+function renderDashboard(service: AuthService = createFakeService(authenticatedState)) {
+  return render(
+    <AuthProvider service={service}>
+      <DashboardPage />
+    </AuthProvider>,
+  );
+}
+
 afterEach(() => {
   cleanup();
   navigateMock.mockClear();
@@ -90,51 +98,10 @@ afterEach(() => {
 });
 
 describe('AuthenticatedLayout', () => {
-  it('muestra el perfil propio y el shell privado', async () => {
+  it('muestra el contenido privado con sesión activa', async () => {
     renderLayout(authenticatedState);
 
-    expect(await screen.findByText('user@example.com')).toBeVisible();
-    expect(screen.getByText('Free')).toBeVisible();
-    expect(screen.getByText('1 crédito')).toBeVisible();
-    expect(screen.getByTestId('outlet')).toBeVisible();
-    expect(screen.getByRole('button', { name: 'Cerrar sesión' })).toBeVisible();
-  });
-
-  it('hace logout, llama al servicio y navega a login', async () => {
-    const service = createFakeService(authenticatedState);
-    renderLayout(authenticatedState, service);
-
-    fireEvent.click(await screen.findByRole('button', { name: 'Cerrar sesión' }));
-
-    await waitFor(() =>
-      expect(navigateMock).toHaveBeenCalledWith({
-        to: '/login',
-        search: { returnTo: '/dashboard' },
-        replace: true,
-      }),
-    );
-    expect(service.signOut).toHaveBeenCalledTimes(1);
-    expect(screen.queryByText('user@example.com')).not.toBeInTheDocument();
-  });
-
-  it('completa el logout local aunque el proveedor falle', async () => {
-    const service = {
-      ...createFakeService(authenticatedState),
-      signOut: vi.fn(async () => {
-        throw new Error('network');
-      }),
-    };
-    renderLayout(authenticatedState, service);
-
-    fireEvent.click(await screen.findByRole('button', { name: 'Cerrar sesión' }));
-
-    await waitFor(() =>
-      expect(navigateMock).toHaveBeenCalledWith({
-        to: '/login',
-        search: { returnTo: '/dashboard' },
-        replace: true,
-      }),
-    );
+    expect(await screen.findByTestId('outlet')).toBeVisible();
     expect(screen.queryByText('user@example.com')).not.toBeInTheDocument();
   });
 
@@ -148,21 +115,21 @@ describe('AuthenticatedLayout', () => {
         replace: true,
       }),
     );
-    expect(screen.queryByText('user@example.com')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('outlet')).not.toBeInTheDocument();
   });
 
-  it('restaura la sesión y actualiza al cambiar de cuenta', async () => {
+  it('restaura la sesión y reacciona al cambio de cuenta', async () => {
     let emit: ((next: AuthState) => void) | undefined;
     const service = createFakeService(authenticatedState, (callback) => {
       emit = callback;
     });
     renderLayout(authenticatedState, service);
 
-    expect(await screen.findByText('user@example.com')).toBeVisible();
+    expect(await screen.findByTestId('outlet')).toBeVisible();
     await act(async () => {
       emit?.({ status: 'initializing' });
     });
-    expect(screen.queryByText('user@example.com')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('outlet')).not.toBeInTheDocument();
 
     await act(async () => {
       emit?.({
@@ -176,19 +143,18 @@ describe('AuthenticatedLayout', () => {
       });
     });
 
-    expect(await screen.findByText('otra@example.com')).toBeVisible();
-    expect(screen.queryByText('user@example.com')).not.toBeInTheDocument();
+    expect(await screen.findByTestId('outlet')).toBeVisible();
     expect(navigateMock).not.toHaveBeenCalled();
   });
 
-  it('al expirar la sesión retira el shell y redirige', async () => {
+  it('al expirar la sesión retira el contenido y redirige', async () => {
     let emit: ((next: AuthState) => void) | undefined;
     const service = createFakeService(authenticatedState, (callback) => {
       emit = callback;
     });
     renderLayout(authenticatedState, service);
 
-    expect(await screen.findByText('user@example.com')).toBeVisible();
+    expect(await screen.findByTestId('outlet')).toBeVisible();
     await act(async () => {
       emit?.({ status: 'anonymous' });
     });
@@ -200,23 +166,58 @@ describe('AuthenticatedLayout', () => {
         replace: true,
       }),
     );
-    expect(screen.queryByText('user@example.com')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('outlet')).not.toBeInTheDocument();
   });
 });
 
 describe('DashboardPage', () => {
-  it('muestra nombre, plan, crédito y verificación', async () => {
-    render(
-      <AuthProvider service={createFakeService(authenticatedState)}>
-        <DashboardPage />
-      </AuthProvider>,
-    );
+  it('muestra el perfil real en el dashboard', async () => {
+    renderDashboard();
 
     expect(
-      await screen.findByRole('heading', { name: 'Hola, Ada Lovelace' }),
-    ).toBeVisible();
-    expect(screen.getByText('Free')).toBeVisible();
-    expect(screen.getByText('1 viaje')).toBeVisible();
-    expect(screen.getByText('Verificado')).toBeVisible();
+      await screen.findByRole('heading', { name: /Hola, Ada Lovelace/ }),
+    ).toHaveTextContent(/Hola, Ada Lovelace/);
+    expect(screen.getByText(/Free · 1 crédito/)).toBeVisible();
+    expect(screen.getByRole('button', { name: 'Cerrar sesión' })).toBeVisible();
+  });
+
+  it('hace logout, llama al servicio y navega a login', async () => {
+    const service = createFakeService(authenticatedState);
+    renderDashboard(service);
+
+    fireEvent.click(
+      await screen.findByRole('button', { name: 'Cerrar sesión' }),
+    );
+
+    await waitFor(() =>
+      expect(navigateMock).toHaveBeenCalledWith({
+        to: '/login',
+        search: { returnTo: '/dashboard' },
+        replace: true,
+      }),
+    );
+    expect(service.signOut).toHaveBeenCalledTimes(1);
+  });
+
+  it('completa el logout local aunque el proveedor falle', async () => {
+    const service = {
+      ...createFakeService(authenticatedState),
+      signOut: vi.fn(async () => {
+        throw new Error('network');
+      }),
+    };
+    renderDashboard(service);
+
+    fireEvent.click(
+      await screen.findByRole('button', { name: 'Cerrar sesión' }),
+    );
+
+    await waitFor(() =>
+      expect(navigateMock).toHaveBeenCalledWith({
+        to: '/login',
+        search: { returnTo: '/dashboard' },
+        replace: true,
+      }),
+    );
   });
 });

@@ -10,6 +10,8 @@
 
 > **Actualización 2026-10-20:** el propietario aprobó este informe y las decisiones recomendadas. La decisión `D-03` quedó resuelta mediante `docs/decisions/ADR-002-product-name.md`: el nombre canónico es **DestinoSmart** y “Travel Planner AI” queda deprecado. Las menciones al nombre legado en este informe se conservan como evidencia histórica del conflicto.
 
+> **Actualización 2026-10-22 — estado vigente:** la app real existe en la raíz (`src/`, TanStack Router, Supabase, Feature 02). El propietario aprobó `ADR-007` y adoptó `prototipos/prototipo-gpt` como referencia visual oficial. `prototipos/destinosmart-dashboard` fue eliminado intencionalmente y no se restaura. El repositorio local sí es Git (rama `main`). Los hallazgos H-01 y H-05 de este informe quedan **superados** por la app raíz y el nuevo baseline; el resto del documento se conserva como auditoría histórica.
+
 ## Leyenda de estado
 
 | Etiqueta | Significado |

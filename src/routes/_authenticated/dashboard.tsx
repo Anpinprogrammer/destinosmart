@@ -1,62 +1,51 @@
+import { useNavigate } from '@tanstack/react-router';
 import { useAuth } from '../../features/auth/auth-provider';
+import UserDashboard from '../../features/dashboard/components/UserDashboard';
+import type {
+  DashboardUser,
+  SubscriptionPlan,
+} from '../../features/dashboard/components/UserDashboard';
+
+function planForDashboard(plan: string | undefined): SubscriptionPlan {
+  if (plan === 'occasional' || plan === 'frequent') return plan;
+  return 'free';
+}
 
 export function DashboardPage() {
-  const { state } = useAuth();
+  const { state, signOut } = useAuth();
+  const navigate = useNavigate();
 
   if (state.status !== 'authenticated') {
     return null;
   }
 
   const profile = state.user.profile;
-  const name = profile?.full_name?.trim() || 'viajero';
-  const plan =
-    profile?.plan_id === 'occasional'
-      ? 'Viajero Ocasional'
-      : profile?.plan_id === 'frequent'
-        ? 'Viajero Frecuente'
-        : 'Free';
+  const email = profile?.email ?? state.user.email ?? '';
+  const user: DashboardUser = {
+    name: profile?.full_name?.trim() || email.split('@')[0] || 'Viajero',
+    email,
+    avatarUrl: profile?.avatar_url ?? undefined,
+    plan: planForDashboard(profile?.plan_id),
+    currency: 'USD',
+    locale: 'es-CO',
+    freeTripCredits: profile?.free_trip_credits,
+    emailVerified: profile?.email_verified,
+  };
 
-  return (
-    <section aria-labelledby="dashboard-title">
-      <p className="text-xs font-extrabold uppercase tracking-[0.18em] text-brand-ocean">
-        Área privada
-      </p>
-      <h1
-        id="dashboard-title"
-        className="mt-2 text-3xl font-extrabold tracking-tight text-brand-deep"
-      >
-        Hola, {name}
-      </h1>
-      <p className="mt-2 max-w-xl text-sm leading-6 text-text-secondary">
-        Tu sesión está activa. Desde aquí podrás gestionar tu cuenta y, en las
-        siguientes fases, tus viajes.
-      </p>
+  async function handleLogout() {
+    try {
+      await signOut();
+    } catch {
+      // El estado local ya quedó limpio; no se expone el detalle del proveedor.
+    }
+    void Promise.resolve(
+      navigate({
+        to: '/login',
+        search: { returnTo: '/dashboard' },
+        replace: true,
+      }),
+    ).catch(() => undefined);
+  }
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-3">
-        <article className="rounded-2xl border border-border-default bg-surface-base p-5">
-          <h2 className="text-xs font-bold uppercase tracking-wide text-text-secondary">
-            Plan
-          </h2>
-          <p className="mt-2 text-lg font-extrabold text-text-primary">{plan}</p>
-        </article>
-        <article className="rounded-2xl border border-border-default bg-surface-base p-5">
-          <h2 className="text-xs font-bold uppercase tracking-wide text-text-secondary">
-            Crédito Free
-          </h2>
-          <p className="mt-2 text-lg font-extrabold text-text-primary">
-            {profile?.free_trip_credits ?? 0} viaje
-            {profile?.free_trip_credits === 1 ? '' : 's'}
-          </p>
-        </article>
-        <article className="rounded-2xl border border-border-default bg-surface-base p-5">
-          <h2 className="text-xs font-bold uppercase tracking-wide text-text-secondary">
-            Email
-          </h2>
-          <p className="mt-2 text-sm font-semibold text-text-primary">
-            {profile?.email_verified ? 'Verificado' : 'Pendiente de verificar'}
-          </p>
-        </article>
-      </div>
-    </section>
-  );
+  return <UserDashboard user={user} actions={{ onLogout: handleLogout }} />;
 }

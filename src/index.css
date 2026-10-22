@@ -14,4 +14,80 @@
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-brand-ocean;
   }
+
+}
+
+.landing-scope button {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sea focus-visible:ring-offset-2;
+}
+
+.landing-scope input,
+.landing-scope select,
+.landing-scope textarea {
+  @apply focus:outline-none focus:ring-0 focus:ring-offset-0;
+}
+
+.landing-scope label:has(input:focus-visible),
+.landing-scope label:has(select:focus-visible),
+.landing-scope label:has(textarea:focus-visible) {
+  @apply border-brand-primary;
+}
+
+@layer utilities {
+  .glass {
+    @apply border border-white/70 bg-white/90 shadow-float backdrop-blur-xl;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@keyframes story-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.story-marquee {
+  animation: story-marquee 45s linear infinite;
+  will-change: transform;
+}
+
+.story-gallery:hover .story-marquee,
+.story-gallery:focus-within .story-marquee,
+.story-gallery[data-paused='true'] .story-marquee {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-marquee {
+    animation: none;
+    will-change: auto;
+  }
+
+  .story-copy {
+    display: none;
+  }
+
+  .story-window {
+    overflow-x: auto;
+  }
+}
+
+/* Concave cutout leaves the elevated create-trip button clear of the surface. */
+.dashboard-tab-surface {
+  -webkit-mask-image: radial-gradient(
+    circle 36px at 50% 0,
+    transparent 34px,
+    black 35px
+  );
+  mask-image: radial-gradient(
+    circle 36px at 50% 0,
+    transparent 34px,
+    black 35px
+  );
 }

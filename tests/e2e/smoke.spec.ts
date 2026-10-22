@@ -1,12 +1,12 @@
 import { expect, test } from '@playwright/test';
 
-test('la home del scaffold responde y renderiza', async ({ page }) => {
+test('la landing responde y renderiza', async ({ page }) => {
   await page.goto('/');
 
   await expect(
-    page.getByRole('heading', { name: /base de autenticación/i }),
+    page.getByRole('heading', { name: /el mundo es enorme/i }),
   ).toBeVisible();
-  await expect(page.getByText('DestinoSmart')).toBeVisible();
+  await expect(page.getByLabel('DestinoSmart').first()).toBeVisible();
 });
 
 test('login público renderiza el formulario', async ({ page }) => {

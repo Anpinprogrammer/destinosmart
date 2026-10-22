@@ -9,6 +9,11 @@ const BASELINE = path.join(
   ROOT,
   'tests/regression/protected-files.baseline.json',
 );
+const PROTOTYPE_REFERENCE = 'prototipos/prototipo-gpt';
+const PROTOTYPE_BASELINE = path.join(
+  ROOT,
+  'tests/regression/prototype-reference.baseline.json',
+);
 const PROTECTED = [
   'AGENTS.md',
   'README.md',
@@ -27,7 +32,6 @@ const PROTECTED = [
   'specs/features/02-authentication/contracts',
   'specs/README.md',
   'specs/_templates',
-  'prototipos',
 ];
 const IGNORED_DIRECTORIES = new Set(['node_modules', '.git', 'dist', '.vite']);
 const IGNORED_FILES = new Set(['.DS_Store']);
@@ -63,9 +67,9 @@ async function walk(absolutePath, relativePath, files) {
   files[relativePath] = hash;
 }
 
-export async function computeManifest() {
+export async function computeManifest(paths = PROTECTED) {
   const files = {};
-  for (const protectedPath of PROTECTED) {
+  for (const protectedPath of paths) {
     const absolute = path.join(ROOT, protectedPath);
     try {
       await walk(absolute, protectedPath, files);
@@ -79,8 +83,12 @@ export async function computeManifest() {
   return { algorithm: 'sha256', files };
 }
 
-async function readBaseline() {
-  return JSON.parse(await readFile(BASELINE, 'utf8'));
+export async function computePrototypeManifest() {
+  return computeManifest([PROTOTYPE_REFERENCE]);
+}
+
+async function readBaseline(file = BASELINE) {
+  return JSON.parse(await readFile(file, 'utf8'));
 }
 
 function diffManifests(expected, actual) {
@@ -102,16 +110,37 @@ function diffManifests(expected, actual) {
 }
 
 const write = process.argv.includes('--write');
+const writePrototype = process.argv.includes('--write-prototype');
 const manifest = await computeManifest();
+const prototypeManifest = await computePrototypeManifest();
 
-if (write) {
-  await writeFile(BASELINE, `${JSON.stringify(manifest, null, 2)}\n`);
-  console.log(`Baseline protegido escrito: ${path.relative(ROOT, BASELINE)}`);
+if (write || writePrototype) {
+  if (write) {
+    await writeFile(BASELINE, `${JSON.stringify(manifest, null, 2)}\n`);
+    console.log(`Baseline protegido escrito: ${path.relative(ROOT, BASELINE)}`);
+  }
+  if (writePrototype) {
+    await writeFile(
+      PROTOTYPE_BASELINE,
+      `${JSON.stringify(prototypeManifest, null, 2)}\n`,
+    );
+    console.log(
+      `Baseline de referencia del prototipo escrito: ${path.relative(ROOT, PROTOTYPE_BASELINE)}`,
+    );
+  }
   process.exit(0);
 }
 
 const baseline = await readBaseline();
-const changes = diffManifests(baseline, manifest);
+const prototypeBaseline = await readBaseline(PROTOTYPE_BASELINE);
+const changes = [
+  ...diffManifests(baseline, manifest).map(
+    (change) => `infraestructura/gobernanza — ${change}`,
+  ),
+  ...diffManifests(prototypeBaseline, prototypeManifest).map(
+    (change) => `prototipo de referencia — ${change}`,
+  ),
+];
 if (changes.length > 0) {
   console.error('Cambios en archivos protegidos:');
   for (const change of changes) {
@@ -120,4 +149,6 @@ if (changes.length > 0) {
   process.exit(1);
 }
 
-console.log(`OK — ${Object.keys(manifest.files).length} archivos protegidos sin cambios`);
+console.log(
+  `OK — ${Object.keys(manifest.files).length} archivos protegidos sin cambios y ${Object.keys(prototypeManifest.files).length} de referencia del prototipo sin cambios`,
+);

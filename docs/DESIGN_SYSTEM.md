@@ -106,7 +106,7 @@ Los cuatro primeros tienen implementación inicial en `src/components`. Los dem�
 
 **Destinos:** 6 cards, fotografía en relación 4:5 o 3:4, origen-destino visible, precio y descuento solo si provienen de oferta verificada; botón Actualizar Ofertas con loading y control 15 min por usuario, **no implementar el rate limit solo en frontend**. Cache backend 6 h según especificación del proyecto.
 
-**Pricing:** Free / Viajero Ocasional USD 2 mes / Viajero Frecuente USD 5 mes; frecuente destacado con gradiente Ocean → Deep y tag Más popular. Prueba de 14 días es una regla comercial a confirmar antes de activar cobros. No incluir botones de pago activos en prototipo.
+**Pricing:** Free (1 viaje completo con 30 días de Pro) / Viajero Ocasional USD 4.99 mes / Viajero Frecuente USD 9.99 mes; frecuente destacado con gradiente Ocean → Deep y tag Más popular. No hay trial de suscripción de 14 días. Al vencer el beneficio Pro, el viaje queda en modo lectura y los PDF generados siguen disponibles. No incluir botones de pago activos en el prototipo.
 
 **Dashboard:** barra lateral, encabezado, cards KPI, distribución de presupuesto, timeline por día y bloque (mañana/tarde/noche), exportación y chat contextual restringido por plan. Color de categoría de gráfico siempre acompañado de etiqueta, valor y/o patrón, nunca solo color.
 

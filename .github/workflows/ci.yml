@@ -34,7 +34,7 @@ jobs:
       - name: Unit and contract tests
         run: npm test
 
-      - name: Protected files regression
+      - name: Protected infrastructure and prototype reference regression
         run: npm run check:protected
 
       - name: Build
