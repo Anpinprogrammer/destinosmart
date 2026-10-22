@@ -6,7 +6,7 @@
 - Nombre canónico: **DestinoSmart**.
 - Fuente de producto: Documento Maestro v4.0 y modelo Freemium aprobado (`BR-FREE-001..010`).
 - Stack de la app raíz: React + TypeScript estricto + Tailwind + Framer Motion + Vite + TanStack Router + Supabase (Auth/PostgreSQL/RLS/Storage/Realtime) + Supabase Edge Functions + OpenRouter.
-- Git local: rama `main`, un commit inicial. No se modificó historial ni se hizo push.
+- Git local: rama `main`; commit de adopción `f03e442`. No se modificó historial ni se hizo push.
 - Prototipo oficial: `prototipos/prototipo-gpt/`. `prototipos/destinosmart-dashboard/` fue eliminado intencionalmente por el propietario y **no debe restaurarse**.
 
 ## Estado actual (2026-10-22)
@@ -35,6 +35,9 @@
 - Plan/resultado: `docs/changes/CR-004-prototype-to-production-adoption-plan.md`.
 - Dependencia añadida: `lucide-react@^0.468.0`.
 - Dashboard usa datos demo etiquetados; no hay persistencia real de viajes. Pricing actualizado a Free 1 viaje/30 días Pro, USD 4.99 y USD 9.99.
+- Revisión independiente: **APPROVED** tras corregir H-01–H-12 (demo etiquetado, prefill móvil, perfil, baseline de producción, cambio de cuenta, hash residual, vocabulario y copy).
+- Evidencia visual versionada: `docs/changes/evidence/2026-10-22/` (landing y dashboard, desktop/mobile).
+- App local: Vite disponible en `http://localhost:3000` (landing `/`, dashboard `/dashboard`).
 
 ## Bloqueos y pendientes
 1. **Contrato backend de creación** pendiente de Feature 07; no implementar endpoint, migración, SQL ni Edge Function en Feature 03.
@@ -44,9 +47,10 @@
 5. **Validación visual:** capturas locales desktop/mobile revisadas; no hay comparador automatizado pixel-perfect.
 
 ## Próximo paso
-1. Revisar el reporte de adopción y las capturas.
-2. Si se autoriza, continuar Feature 03 desde su flujo SDD (`/sdd-spec` → `/sdd-plan` → `/sdd-tasks`); no asumir que la copia visual equivale a Feature 03 implementada.
-3. No implementar Features 04/05/06/07 ni pagos sin autorización.
+1. Revisar la app local en `http://localhost:3000` y las capturas de `docs/changes/evidence/2026-10-22/`.
+2. Validar el commit `f03e442` en GitHub Actions; el CI remoto aún no se ejecutó desde esta sesión.
+3. Si se autoriza, continuar Feature 03 desde su flujo SDD (`/sdd-spec` → `/sdd-plan` → `/sdd-tasks`); no asumir que la copia visual equivale a Feature 03 implementada.
+4. No implementar Features 04/05/06/07 ni pagos sin autorización.
 
 ## Evidencia y comandos
 - `npm run typecheck` → OK.
@@ -54,6 +58,7 @@
 - `VITE_SUPABASE_URL=https://example.supabase.co VITE_SUPABASE_ANON_KEY=sb_publishable_ci_placeholder npm run build` → OK (2167 módulos).
 - `npm run check:protected` → OK (40 + 61 + 81).
 - `npx playwright test tests/e2e/smoke.spec.ts` → 7 passed.
+- `npx playwright test` → 13 passed, 7 skipped (auth local pendiente de entorno).
 - `npm run check:bundle` → OK, 10 assets sin secretos.
 - Backup: `shasum -a 256 -c backups/prototipo-gpt-2026-10-22.tar.gz.sha256`.
 
@@ -64,3 +69,5 @@
 | 2026-10-21 | Feature 02 aceptada por el propietario | `specs/features/02-authentication/tasks.md` | Aceptada |
 | 2026-10-21 | Decisiones CQ-01–CQ-05 y documentación Feature 03 | `specs/features/03-travel-form/*` | Draft |
 | 2026-10-22 | Adopción prototipo → producción y baseline separado | `ADR-007`, `CR-004`, baselines, capturas | Implementado/verificado localmente |
+| 2026-10-22 | Revisión independiente y cierre H-01–H-12 | `docs/changes/evidence/2026-10-22/`; tests 267/7 | APPROVED |
+| 2026-10-22 | Commit de adopción y actualización de memoria | `f03e442`; memoria operativa | Commiteado, sin push |
