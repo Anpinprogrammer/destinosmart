@@ -130,6 +130,9 @@ export function DesktopTripSearch({
   }, [datesOpen, travelersOpen])
   const [origin, setOrigin] = useState(initialOrigin)
   const [destination, setDestination] = useState(initialDestination)
+  useEffect(() => {
+    if (initialDestination) setDestination(initialDestination)
+  }, [initialDestination])
   const [departureDate, setDepartureDate] = useState('')
   const [returnDate, setReturnDate] = useState('')
   const [travelerCounts, setTravelerCounts] = useState<TravelerCounts>({
@@ -407,7 +410,7 @@ export function DesktopTripSearch({
               className="inline-flex min-h-12 items-center gap-2 rounded-full bg-[#FF9A00] px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-[#ed8e00]"
             >
               <Search size={19} aria-hidden="true" />
-              Crear mi viaje con IA
+              Revisar mi viaje
             </button>
           </div>
         </section>

@@ -28,7 +28,7 @@ Inventario íntegro:
 
 No se detectan archivos corruptos. Las modificaciones actuales son coherentes con el dashboard avanzado descrito por el propietario; el historial local solo tiene el commit inicial, por lo que no se atribuye autoría externa. `destinosmart-dashboard` no existe y no puede respaldarse; su eliminación es intencional.
 
-**Decisión aprobada y ejecutada:** el estado actual de `prototipo-gpt` es la referencia oficial. Se generaron `prototype-reference.baseline.json` (53 archivos) y el baseline de infraestructura/gobernanza (40 archivos), sin incluir el prototipo eliminado.
+**Decisión aprobada y ejecutada:** el estado actual de `prototipo-gpt` es la referencia oficial. Se generaron `prototype-reference.baseline.json` (61 archivos: 53 fuente + 8 assets raíz), `production-files.baseline.json` (81 archivos) y el baseline de infraestructura/gobernanza (40 archivos), sin incluir el prototipo eliminado.
 
 ## 3. Destino propuesto
 
@@ -161,13 +161,13 @@ Aprobado por el propietario en la instrucción del 2026-10-22:
 | Verificación | Resultado |
 |---|---|
 | `npm run typecheck` | OK |
-| `npm test` | 263 passed, 7 skipped |
+| `npm test` | 267 passed, 7 skipped |
 | `npm run build` (env de CI) | OK, 2167 módulos |
-| `npm run check:protected` | OK — 40 protegidos + 53 de referencia |
+| `npm run check:protected` | OK — 40 protegidos + 61 de referencia + 81 de producción |
 | `npm run check:bundle` | OK — 10 assets sin secretos |
 | Playwright smoke | 7 passed |
 | Backup/restauración | 53 archivos verificados por SHA-256 |
-| Capturas | Landing desktop/mobile y Dashboard desktop/mobile revisadas localmente |
+| Capturas | Landing desktop/mobile y Dashboard desktop/mobile revisadas manualmente; artefactos en `docs/changes/evidence/2026-10-22/` |
 
 **Límites:** no hay backend de viajes ni pagos en esta entrega; las acciones de creación de viaje del dashboard siguen siendo locales y etiquetadas como demostración. La validación remota de GitHub Actions queda pendiente de ejecutar en GitHub.
 

@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type FormEvent, type ReactNode } from 'react'
+import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import {
   ChevronDown,
@@ -78,6 +78,9 @@ export function MobileTripAccordion({
   const reducedMotion = useReducedMotion()
   const [open, setOpen] = useState<Section | null>('destination')
   const [destination, setDestination] = useState(initialDestination)
+  useEffect(() => {
+    if (initialDestination) setDestination(initialDestination)
+  }, [initialDestination])
   const [departureDate, setDepartureDate] = useState('')
   const [returnDate, setReturnDate] = useState('')
   const [travelerCounts, setTravelerCounts] =

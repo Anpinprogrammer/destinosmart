@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type FormEvent } from 'react'
+import { useEffect, useId, useRef, useState, type FormEvent } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import {
   Plane,
@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 import type { Currency, ServiceId, TravelSearch } from './types'
 interface TravelFormProps {
+  initialDestination?: string
   currency: Currency
   onSearch: (value: TravelSearch) => void
 }
@@ -30,11 +31,14 @@ const serviceOptions = [
 ] as const
 const inputClass =
   'min-w-0 w-full bg-transparent text-[12px] md:text-base font-bold leading-5 text-slate-800 sm:text-sm placeholder:text-slate-400 focus:outline-none'
-export function TravelForm({ currency, onSearch }: TravelFormProps) {
+export function TravelForm({ initialDestination = '', currency, onSearch }: TravelFormProps) {
   const formId = useId()
   const reducedMotion = useReducedMotion()
   const [origin, setOrigin] = useState('')
-  const [destination, setDestination] = useState('')
+  const [destination, setDestination] = useState(initialDestination)
+  useEffect(() => {
+    if (initialDestination) setDestination(initialDestination)
+  }, [initialDestination])
   const [departureDate, setDepartureDate] = useState('')
   const [returnDate, setReturnDate] = useState('')
   const [travelers, setTravelers] = useState(2)
@@ -435,7 +439,7 @@ export function TravelForm({ currency, onSearch }: TravelFormProps) {
               disabled={step === 2 && services.length === 0}
               className={`justify-self-end inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-brand-accent px-6 py-3 text-sm font-extrabold text-brand-primary shadow-lg shadow-brand-accent/20 hover:bg-brand-accent/90 disabled:cursor-not-allowed disabled:opacity-50 col-start-2 row-start-1 lg:col-start-3`}
             >
-              Crear mi viaje con IA <ArrowRight size={18} aria-hidden="true" />
+              Revisar mi viaje <ArrowRight size={18} aria-hidden="true" />
             </button>
           )}
         </div>

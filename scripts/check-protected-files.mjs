@@ -9,11 +9,44 @@ const BASELINE = path.join(
   ROOT,
   'tests/regression/protected-files.baseline.json',
 );
-const PROTOTYPE_REFERENCE = 'prototipos/prototipo-gpt';
+const PROTOTYPE_REFERENCE = 'prototipos';
 const PROTOTYPE_BASELINE = path.join(
   ROOT,
   'tests/regression/prototype-reference.baseline.json',
 );
+const PRODUCTION_BASELINE = path.join(
+  ROOT,
+  'tests/regression/production-files.baseline.json',
+);
+const PRODUCTION_PROTECTED = [
+  '.github/workflows',
+  '.gitignore',
+  'package.json',
+  'package-lock.json',
+  'index.html',
+  'vite.config.ts',
+  'vitest.config.ts',
+  'playwright.config.ts',
+  'tsconfig.json',
+  'tailwind.config.ts',
+  'postcss.config.js',
+  'vercel.json',
+  'scripts/check-protected-files.mjs',
+  'scripts/check-bundle-secrets.mjs',
+  'scripts/validate-env.ts',
+  'src/main.tsx',
+  'src/router.tsx',
+  'src/index.css',
+  'src/vite-env.d.ts',
+  'src/lib',
+  'src/routes',
+  'src/components',
+  'src/features/auth',
+  'src/features/profile',
+  'src/features/landing',
+  'src/features/dashboard',
+  'public/assets',
+];
 const PROTECTED = [
   'AGENTS.md',
   'README.md',
@@ -87,6 +120,10 @@ export async function computePrototypeManifest() {
   return computeManifest([PROTOTYPE_REFERENCE]);
 }
 
+export async function computeProductionManifest() {
+  return computeManifest(PRODUCTION_PROTECTED);
+}
+
 async function readBaseline(file = BASELINE) {
   return JSON.parse(await readFile(file, 'utf8'));
 }
@@ -111,10 +148,12 @@ function diffManifests(expected, actual) {
 
 const write = process.argv.includes('--write');
 const writePrototype = process.argv.includes('--write-prototype');
+const writeProduction = process.argv.includes('--write-production');
 const manifest = await computeManifest();
 const prototypeManifest = await computePrototypeManifest();
+const productionManifest = await computeProductionManifest();
 
-if (write || writePrototype) {
+if (write || writePrototype || writeProduction) {
   if (write) {
     await writeFile(BASELINE, `${JSON.stringify(manifest, null, 2)}\n`);
     console.log(`Baseline protegido escrito: ${path.relative(ROOT, BASELINE)}`);
@@ -128,17 +167,30 @@ if (write || writePrototype) {
       `Baseline de referencia del prototipo escrito: ${path.relative(ROOT, PROTOTYPE_BASELINE)}`,
     );
   }
+  if (writeProduction) {
+    await writeFile(
+      PRODUCTION_BASELINE,
+      `${JSON.stringify(productionManifest, null, 2)}\n`,
+    );
+    console.log(
+      `Baseline de producción escrito: ${path.relative(ROOT, PRODUCTION_BASELINE)}`,
+    );
+  }
   process.exit(0);
 }
 
 const baseline = await readBaseline();
 const prototypeBaseline = await readBaseline(PROTOTYPE_BASELINE);
+const productionBaseline = await readBaseline(PRODUCTION_BASELINE);
 const changes = [
   ...diffManifests(baseline, manifest).map(
     (change) => `infraestructura/gobernanza — ${change}`,
   ),
   ...diffManifests(prototypeBaseline, prototypeManifest).map(
     (change) => `prototipo de referencia — ${change}`,
+  ),
+  ...diffManifests(productionBaseline, productionManifest).map(
+    (change) => `producción — ${change}`,
   ),
 ];
 if (changes.length > 0) {
@@ -150,5 +202,5 @@ if (changes.length > 0) {
 }
 
 console.log(
-  `OK — ${Object.keys(manifest.files).length} archivos protegidos sin cambios y ${Object.keys(prototypeManifest.files).length} de referencia del prototipo sin cambios`,
+  `OK — ${Object.keys(manifest.files).length} archivos protegidos sin cambios, ${Object.keys(prototypeManifest.files).length} de referencia del prototipo sin cambios y ${Object.keys(productionManifest.files).length} de producción sin cambios`,
 );

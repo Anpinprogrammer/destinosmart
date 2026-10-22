@@ -1,4 +1,4 @@
-# Feature 03 — Investigación y auditoría de prototipo | G-12
+# Feature 03 — Investigación y auditoría de prototipo | G-12 resuelto 2026-10-22
 
 - **feature_id:** `03-travel-form`
 - **fecha:** 2026-10-21
@@ -22,7 +22,7 @@
 | `public/assets/images/dashboard/tokyo.webp`, `loader/{avion,orbita,pin}.webp` | 4 assets nuevos | Visual | Recursos del dashboard/loader; no afectan contrato | mtime 18:58:54 | Mantener como activos del prototipo; no copiar sin decisión de Feature 07. |
 | `src/utils/sectionScroll.ts` | Utilidad de navegación hash | Funcional / configuración | Acopla la landing a hash routing; no es directamente reutilizable con TanStack Router | mtime 18:58:54 | Adaptar/navegar con el router de la app; no importar el hash routing tal cual. |
 
-**Conclusión G-12:** las diferencias son compatibles con una actualización externa/owner del prototipo (incluye el dashboard avanzado que el propietario pidió reutilizar). No se pueden aprobar automáticamente. **G-12 permanece abierto** hasta que el propietario confirme la eliminación de `destinosmart-dashboard`, la autoría de la actualización de `prototipo-gpt` y autorice regenerar el baseline.
+**Conclusión G-12:** las diferencias fueron confirmadas por el propietario como actualización intencional. `prototipo-gpt` es la referencia oficial (53 archivos) y `destinosmart-dashboard` fue eliminado intencionalmente. **G-12 quedó resuelto el 2026-10-22** con baseline separado y backup verificado.
 
 ## 2. Inventario UI reutilizable
 
@@ -111,8 +111,8 @@ export type CreateTripErrorCode =
 
 ## 5. Decisiones pendientes y gates
 
-- **G-12 abierto:** baseline no aprobado; no actualizar.
-- **G-13 (nueva, no resuelta):** ruta de integración UI: el prototipo usa hash routing y la app raíz TanStack Router; no se puede “reutilizar routing” literalmente sin definir montaje/port. Requiere decisión del propietario.
+- **G-12 resuelto:** baseline de referencia, gobernanza y producción verificado.
+- **G-13 resuelto:** TanStack Router es el único router de producción; el prototipo conserva hash routing sin copiarse.
 - **Pendientes non-blocking:** catálogo de ubicaciones, edades/límites, moneda final/redondeo, timezone, UI flexible, PII/retención del borrador, contrato backend aprobado.
-- **Mapeo canónico:** prototipo `stays`→draft `accommodation`→contrato `lodging`; `transport`→`local_transport`→`transport`; `attractions`→`attractions`→`sights`; `food`→`restaurants`→`food`. El prototipo permite presupuesto `0`; el contrato exige `> 0`, por lo que el adaptador debe omitir/rechazar cero.
+- **Mapeo canónico:** prototipo `stays`→`lodging`; `transport`→`transport`; `attractions`→`sights`; `food`→`food`. El prototipo permite presupuesto `0`; el contrato exige `> 0`, por lo que el adaptador debe omitir/rechazar cero.
 - **G1/G2/G3:** no aprobados. Feature 03 permanece `draft`; no `/sdd-implement`.

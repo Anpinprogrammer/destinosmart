@@ -166,7 +166,7 @@ export function Footer({ onPlan }: { onPlan: () => void }) {
           </button>
         </div>
         <p className="mt-4 text-sm leading-7 text-slate-600">
-          Este documento aún no está publicado en el prototipo. Para solicitar
+          Este documento aún no está publicado en el sitio. Para solicitar
           información, contacta con nuestro equipo.
         </p>
         <a

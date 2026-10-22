@@ -298,7 +298,7 @@ export function DashboardTripForm({
               type="submit"
               className="inline-flex min-h-12 items-center gap-2 rounded-full bg-brand-accent px-6 py-3 text-sm font-bold text-white shadow-lg shadow-orange-500/20 hover:bg-[#ed8e00]"
             >
-              {step === 1 ? 'Siguiente paso' : 'Crear mi viaje con IA'}
+              {step === 1 ? 'Siguiente paso' : 'Guardar preferencias'}
               <ArrowRight size={18} />
             </button>
           </div>

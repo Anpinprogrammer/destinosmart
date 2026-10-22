@@ -1,12 +1,12 @@
 # Regresión de archivos protegidos
 
-La verificación está separada en dos ámbitos:
+La verificación está separada en tres ámbitos:
 
 ## 1. Prototipo visual de referencia
 
 `prototype-reference.baseline.json` es un manifiesto SHA-256 exclusivo de
-`prototipos/prototipo-gpt/`. Protege los 53 archivos fuente, configuración y
-assets aprobados.
+`prototipos/prototipo-gpt/`. Protege los 61 archivos de referencia: 53 fuente/config/assets de `prototipo-gpt` y 8
+assets raíz de `prototipos/`.
 
 - Verificar: incluido en `npm run check:protected`.
 - Regenerar solo con autorización explícita:
@@ -22,6 +22,19 @@ contratos de Feature 02.
 - Verificar: incluido en `npm run check:protected`.
 - Regenerar solo con autorización explícita:
   `node scripts/check-protected-files.mjs --write`.
+
+## 3. Producción adoptada
+
+`production-files.baseline.json` protege la copia de producción crítica:
+router, rutas, Feature 02 auth/profile, Landing/Dashboard/travel, assets,
+configuración Vite/TS/Tailwind/PostCSS, CI, scripts críticos, `package.json`,
+`package-lock.json`, `vercel.json` e `index.html`.
+
+- Verificar: incluido en `npm run check:protected`.
+- Regenerar solo con autorización explícita:
+  `node scripts/check-protected-files.mjs --write-production`.
+- Los cambios legítimos de features deben actualizar este baseline con revisión
+  de diff; no se regenera para “hacer pasar” CI.
 
 ## Reglas
 

@@ -14,7 +14,7 @@
 - **Aceptada por el propietario y `verified`**.
 - `spec.md` v0.2.0 aprobada; `plan.md` v0.3.0 aprobado; `tasks.md`/`verification.md` con aceptación registrada.
 - La app real conserva `src/features/auth`, `src/features/profile`, Supabase, guard y rutas.
-- Evidencia de adopción: `npm test` 263 passed + 7 skipped; `npm run typecheck` OK; build 2167 módulos; smoke E2E 7/7; `check:protected` OK.
+- Evidencia de adopción: `npm test` 267 passed + 7 skipped; `npm run typecheck` OK; build 2167 módulos; smoke E2E 7/7; `check:protected` OK.
 
 ### Feature 03 — Formulario Inteligente
 - **Spec/plan/tasks en `draft` v0.3.0**; no hay `verification.md` ni implementación backend.
@@ -24,9 +24,10 @@
 - `plan.md` §14–§17; `research.md` con auditoría UI/contrato/draft.
 
 ### Adopción prototipo → producción
-- **G-12 resuelto:** baseline separado.
-  - Prototipo oficial: `tests/regression/prototype-reference.baseline.json` (53 archivos).
+- **G-12 resuelto:** baseline separado en tres ámbitos.
+  - Prototipo oficial: `tests/regression/prototype-reference.baseline.json` (61 archivos).
   - Infraestructura/gobernanza: `tests/regression/protected-files.baseline.json` (40 archivos).
+  - Producción adoptada: `tests/regression/production-files.baseline.json` (81 archivos).
 - **G-13 resuelto:** TanStack Router es el único router; `/` landing y `/dashboard` dashboard; auth Feature 02 intacta.
 - Backup verificado: `backups/prototipo-gpt-2026-10-22.tar.gz` + `.sha256`.
 - Manifiesto: `specs/features/03-travel-form/artifacts/prototype-gpt-manifest-2026-10-22.json`.
@@ -49,9 +50,9 @@
 
 ## Evidencia y comandos
 - `npm run typecheck` → OK.
-- `npm test` → 263 passed, 7 skipped.
+- `npm test` → 267 passed, 7 skipped.
 - `VITE_SUPABASE_URL=https://example.supabase.co VITE_SUPABASE_ANON_KEY=sb_publishable_ci_placeholder npm run build` → OK (2167 módulos).
-- `npm run check:protected` → OK (40 + 53).
+- `npm run check:protected` → OK (40 + 61 + 81).
 - `npx playwright test tests/e2e/smoke.spec.ts` → 7 passed.
 - `npm run check:bundle` → OK, 10 assets sin secretos.
 - Backup: `shasum -a 256 -c backups/prototipo-gpt-2026-10-22.tar.gz.sha256`.

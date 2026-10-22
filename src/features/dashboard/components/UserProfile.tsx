@@ -22,7 +22,7 @@ const titles = {
   personal: 'Información personal',
   security: 'Seguridad',
   language: 'Idiomas',
-  delete: 'Eliminar cuenta',
+  delete: 'Descartar viajes y cerrar sesión',
 }
 const field =
   'mt-2 min-h-12 w-full rounded-xl border border-slate-300 bg-white px-3 text-base text-brand-primary focus:border-brand-secondary'
@@ -32,7 +32,7 @@ export function UserProfile({ user, onUpdate, onLogout, onDelete }: Props) {
   const dialog = useRef<HTMLDialogElement>(null)
   const [panel, setPanel] = useState<Panel>('personal')
   const [name, setName] = useState(user.name)
-  const [email, setEmail] = useState(user.email ?? '')
+  const email = user.email ?? ''
   const [phone, setPhone] = useState(user.phone ?? '')
   const [language, setLanguage] = useState(user.preferredLanguage ?? 'es')
   const [confirmation, setConfirmation] = useState('')
@@ -45,9 +45,11 @@ export function UserProfile({ user, onUpdate, onLogout, onDelete }: Props) {
   function save(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!name.trim()) return
-    onUpdate({ ...user, name: name.trim(), email: email.trim(), phone: phone.trim() })
+    onUpdate({ ...user, name: name.trim(), phone: phone.trim() })
     dialog.current?.close()
-    setNotice('Información actualizada en esta sesión de prueba.')
+    setNotice(
+      'Información actualizada en esta sesión. La persistencia del perfil se habilitará al conectar el servicio correspondiente.',
+    )
   }
   return (
     <section
@@ -78,13 +80,15 @@ export function UserProfile({ user, onUpdate, onLogout, onDelete }: Props) {
                   .join('')
               )}
             </div>
-            <span
-              title="Verificación de ejemplo"
-              className="absolute -bottom-1 -right-1 flex size-8 items-center justify-center rounded-full border-4 border-white bg-brand-secondary text-white"
-            >
-              <Check size={17} strokeWidth={3} aria-hidden="true" />
-              <span className="sr-only">Verificación de ejemplo</span>
-            </span>
+            {user.emailVerified && (
+              <span
+                title="Correo verificado"
+                className="absolute -bottom-1 -right-1 flex size-8 items-center justify-center rounded-full border-4 border-white bg-brand-secondary text-white"
+              >
+                <Check size={17} strokeWidth={3} aria-hidden="true" />
+                <span className="sr-only">Correo verificado</span>
+              </span>
+            )}
           </div>
           <div>
             <h2 className="text-2xl font-bold text-brand-primary">
@@ -195,10 +199,10 @@ export function UserProfile({ user, onUpdate, onLogout, onDelete }: Props) {
             <Trash2 size={22} className="ml-3 shrink-0 text-red-500" />
             <span>
               <span className="block font-semibold text-red-600">
-                Eliminar cuenta
+                Descartar viajes de esta sesión
               </span>
               <span className="mt-1 block text-xs leading-relaxed text-slate-500">
-                Elimina permanentemente tu cuenta y tus viajes guardados
+                Cierra la sesión y descarta los viajes creados localmente
               </span>
             </span>
           </button>
@@ -250,11 +254,15 @@ export function UserProfile({ user, onUpdate, onLogout, onDelete }: Props) {
               <input
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                readOnly
+                aria-readonly="true"
                 autoComplete="email"
                 placeholder="tu@email.com"
-                className={field}
+                className={`${field} cursor-not-allowed bg-slate-50 text-slate-500`}
               />
+              <span className="mt-1 block text-xs font-normal text-slate-500">
+                El correo se gestiona desde tu cuenta y no es editable aquí.
+              </span>
             </label>
             <label className="block text-sm font-semibold">
               Teléfono
@@ -279,9 +287,9 @@ export function UserProfile({ user, onUpdate, onLogout, onDelete }: Props) {
           <div>
             <ShieldCheck size={32} className="mb-4 text-brand-secondary" />
             <p className="text-sm leading-7 text-slate-600">
-              Estás usando el acceso de prueba, sin credenciales. El cambio de
-              contraseña y la protección de la cuenta estarán disponibles al
-              conectar el servicio de autenticación.
+              Tu sesión está gestionada por Supabase Auth. Para cambiar la
+              contraseña usa el flujo de recuperación; la edición desde este
+              panel se habilitará cuando se conecte el servicio de perfil.
             </p>
           </div>
         )}
@@ -307,7 +315,7 @@ export function UserProfile({ user, onUpdate, onLogout, onDelete }: Props) {
                 onUpdate({ ...user, preferredLanguage: language })
                 dialog.current?.close()
                 setNotice(
-                  `Preferencia guardada: ${language === 'es' ? 'Español' : 'English'}. La interfaz del prototipo continúa en español.`,
+                  `Preferencia guardada: ${language === 'es' ? 'Español' : 'English'}. La interfaz de esta versión continúa en español.`,
                 )
               }}
               className="mt-5 min-h-12 w-full rounded-full bg-brand-primary px-5 py-3 font-semibold text-white"
@@ -319,12 +327,12 @@ export function UserProfile({ user, onUpdate, onLogout, onDelete }: Props) {
         {panel === 'delete' && (
           <div>
             <p className="text-sm leading-7 text-slate-600">
-              En esta demostración se borrarán únicamente los viajes creados en
-              la sesión y regresarás al inicio. No existe una cuenta real que
-              eliminar.
+              Se descartarán únicamente los viajes creados en esta sesión y se
+              cerrará tu sesión. No se elimina tu cuenta ni tus datos de
+              Supabase.
             </p>
             <label className="mt-4 block text-sm font-semibold">
-              Escribe ELIMINAR para confirmar
+              Escribe CERRAR para confirmar
               <input
                 value={confirmation}
                 onChange={(e) => setConfirmation(e.target.value)}
@@ -342,14 +350,14 @@ export function UserProfile({ user, onUpdate, onLogout, onDelete }: Props) {
               </button>
               <button
                 type="button"
-                disabled={confirmation !== 'ELIMINAR'}
+                disabled={confirmation !== 'CERRAR'}
                 onClick={() => {
                   dialog.current?.close()
                   onDelete()
                 }}
                 className="min-h-12 flex-1 rounded-full bg-red-600 px-4 text-sm font-semibold text-white disabled:opacity-40"
               >
-                Eliminar datos
+                Cerrar sesión y descartar
               </button>
             </div>
           </div>

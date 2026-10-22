@@ -4,7 +4,7 @@
 - **version:** `0.3.0`
 - **status:** `draft`
 - **clarifications_version:** `0.1.0`
-- **gate_g0:** `satisfied` para clarificación; G-12/G-13 abiertos (2026-10-21)
+- **gate_g0:** `satisfied`; G-12/G-13 resueltos (2026-10-22); G1 pendiente
 - **approved_by / approved_at / approved_version:** `— / — / —`
 - **source:** Documento Maestro DestinoSmart v4.0 + decisiones Freemium (CR-003/ADR-002, 2026-10-21) + `clarifications.md` v0.1.0 (decisiones CQ-01–CQ-05, 2026-10-21); principalmente **RF-01**, con dependencias RF-02/RF-03; **RNF-01**, RNF-02, RNF-03.
 - **nature:** especificación propuesta; no acredita funcionalidades actualmente implementadas.
@@ -28,7 +28,7 @@ El visitante o usuario necesita expresar los parámetros iniciales de su viaje *
 - **Servicios:** cinco categorías; «Servicios completos» selecciona todas las categorías disponibles.
 - **Anónimo:** puede completar el formulario, pero no crear un viaje persistente ni consumir crédito; al continuar se solicita login preservando los datos. El mecanismo exacto del borrador temporal se revisará antes de implementar.
 - **Submit:** Feature 03 valida, normaliza, genera payload tipado, prepara la interfaz de integración y gestiona loading/errores. No crea viajes reales ni descuenta créditos ni simula éxito.
-- **UI:** auditar y reutilizar `prototipos/prototipo-gpt`: Landing Page, hero, formulario, Design System, estructura de navegación y componentes; dashboard avanzado como referencia de Feature 07. No se crea una landing nueva ni se reemplazan componentes. El prototipo usa hash routing y la app raíz TanStack Router; el montaje/adaptación es G-13 y requiere aprobación.
+- **UI:** auditar y reutilizar `prototipos/prototipo-gpt`: Landing Page, hero, formulario, Design System, estructura de navegación y componentes; dashboard avanzado como referencia de Feature 07. No se crea una landing nueva ni se reemplazan componentes. El prototipo usa hash routing y la app raíz TanStack Router; G-13 quedó resuelto con TanStack como único router y `/dashboard` como destino.
 - **Errores:** estados UI preparados para `UNAUTHENTICATED`, `FREE_TRIP_LIMIT_REACHED`, `SUBSCRIPTION_REQUIRED`, `FREE_PRO_EXPIRED`, `TRIP_READ_ONLY`, `FORBIDDEN` y `VALIDATION_ERROR`, conciliados con Core 07; el backend autoriza y React refleja.
 
 **Pendiente non-blocking para plan/implementación:** catálogo/fuente de ubicaciones, edades y límites de proveedor, catálogo final de monedas/redondeo, semántica exacta de zona horaria, mecanismo y TTL del borrador, contrato backend y UI concreta de paywall. No se inventan valores.
@@ -138,7 +138,7 @@ El formulario debe usar el **Design System, landing, layouts, routing, component
 ## 10. Contrato conceptual de datos (NO contrato API aprobado)
 ```ts
 type TravelService =
-  | 'flights' | 'accommodation' | 'local_transport' | 'attractions' | 'restaurants';
+  | 'flights' | 'lodging' | 'transport' | 'sights' | 'food';
 
 interface TravelLocationRef {
   id: string;       // identificador normalizado; catálogo/proveedor pendiente
@@ -157,7 +157,7 @@ interface TravelFormDraft {
   currency: string;  // USD por defecto según prototipo; catálogo final pendiente
 }
 ```
-No se envía `all` como sexto servicio: «Servicios completos» es un **control de interfaz** que representa las cinco categorías. No se fijan aquí catálogo de ubicaciones, edades/límites de pasajeros, períodos máximos ni moneda final; son pendientes non-blocking de plan/implementación. El adaptador entre `TravelSearch` del prototipo (`stays`, `transport`, `attractions`, `food`, conteos de viajeros) y este contrato normalizado debe definirse en el plan sin alterar el prototipo: `stays`→`accommodation`→`lodging`; `transport`→`local_transport`→`transport`; `attractions`→`attractions`→`sights`; `food`→`restaurants`→`food`. El prototipo admite presupuesto 0; el contrato exige >0 y el adaptador debe omitirlo/rechazarlo.
+No se envía `all` como sexto servicio: «Servicios completos» es un **control de interfaz** que representa las cinco categorías. No se fijan aquí catálogo de ubicaciones, edades/límites de pasajeros, períodos máximos ni moneda final; son pendientes non-blocking de plan/implementación. El adaptador entre `TravelSearch` del prototipo (`stays`, `transport`, `attractions`, `food`, conteos de viajeros) y este contrato normalizado debe definirse en el plan sin alterar el prototipo: `stays`→`lodging`; `transport`→`transport`; `attractions`→`sights`; `food`→`food`. La copia de producción ya usa el vocabulario canónico. El prototipo admite presupuesto 0; el contrato exige >0 y el adaptador debe omitirlo/rechazarlo.
 
 ## 11. Estado de clarificaciones (2026-10-21)
 | ID | Decisión / estado | Efecto |
@@ -178,7 +178,7 @@ No se envía `all` como sexto servicio: «Servicios completos» es un **control 
 | Q-14 | Pendiente non-blocking: suscripción cancelada | Feature 04/07 |
 | Q-15 | Parcial: códigos UI preparados; UI final de paywall pendiente | Feature 04/07 |
 
-**G0:** decisiones CQ-01–CQ-05 registradas; pendientes no-blocking. **G-12/G-13** siguen bloqueando la preparación de G1/G2. No se marca `approved`.
+**G0:** decisiones CQ-01–CQ-05 registradas; pendientes no-blocking. **G-12/G-13 resueltos**; G1 (aprobación funcional) sigue pendiente. No se marca `approved`.
 
 ## 12. Trazabilidad
 | Requisito maestro | Cobertura | Criterios |
@@ -197,7 +197,7 @@ No se envía `all` como sexto servicio: «Servicios completos» es un **control 
 - [ ] Confirmar auditoría de `prototipos/prototipo-gpt` y reutilización de componentes.
 - [ ] Validar detalles non-blocking (catálogo, edades/límites, moneda, timezone, borrador).
 - [ ] Aprobar explícitamente `spec.md` con versión y fecha.
-**Estado:** `draft`; G0 de clarificación satisfecho, G-12/G-13 y G1 pendientes. No habilita implementación.
+**Estado:** `draft`; G0 satisfecho, G-12/G-13 resueltos y G1 pendiente. No habilita implementación.
 
 
 ## 13. Adenda DestinoSmart — Integración del formulario con Freemium (decisiones aprobadas)
@@ -260,4 +260,4 @@ Los códigos se preparan para conciliarse con `specs/core/07-api-contracts.md`; 
 
 React solo refleja permisos concedidos; no decide autorización. Si el contrato no está aprobado, estos códigos quedan como propuesta.
 
-**Gate adicional:** no integrar creación ni paywall sin resolver los detalles de Q-13/Q-15, aprobar contratos y revisar el código real; la compatibilidad de `sessionStorage`/routing es G-13. Ningún documento de este paquete autoriza ejecutar migraciones, implementar hooks, modificar React ni ejecutar `/sdd-implement`.
+**Gate adicional:** no integrar creación ni paywall sin resolver los detalles de Q-13/Q-15, aprobar contratos y revisar el código real; la compatibilidad de `sessionStorage`/routing quedó resuelta en G-13. Ningún documento de este paquete autoriza ejecutar migraciones, implementar hooks, modificar React ni ejecutar `/sdd-implement`.

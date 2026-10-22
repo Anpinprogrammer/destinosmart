@@ -50,8 +50,8 @@
 | G-09 | Contrato mínimo definido; quedan detalles non-blocking de catálogo, edades/límites, moneda final y timezone. | CQ-01; `spec.md` §10. | Payload base determinado; detalles a auditoría/plan. |
 | G-10 | La matriz global ya incluye la fila de Feature 03 y su estado draft. | `docs/requirements-traceability.md`. | Trazabilidad formal añadida. |
 | G-11 | `spec.md` v0.3.0 y plan/tasks v0.3.0 están en `draft`; G0 satisfecho, G1/G2/G3 pendientes. | Cabeceras de los tres artefactos. | No se implementa hasta aprobaciones. |
-| G-12 | `npm run check:protected` no coincide con el estado actual de `prototipos/`: falta `destinosmart-dashboard` y `prototipo-gpt` tiene dashboard/componentes nuevos. | `research.md` §1; `npm run check:protected`, 2026-10-21. | No actualizar el baseline ni implementar hasta que el propietario confirme que esos cambios de prototipos son autorizados. |
-| G-13 | El prototipo usa hash routing (`#/mis-viajes`) y la app raíz TanStack Router; la reutilización literal de routing no es posible. | `research.md` §2; `prototipo-gpt/src/App.tsx`. | Bloquea G1/G2 hasta decidir montaje/port sin cambiar routing ni prototipo. |
+| G-12 | **RESUELTO 2026-10-22.** El propietario aprobó el estado actual de `prototipo-gpt` y la eliminación intencional de `destinosmart-dashboard`. Baseline separado en referencia (53), infraestructura (40) y producción (81). | `ADR-007`; `CR-004`; `npm run check:protected`. | Cerrado; no restaurar el dashboard eliminado. |
+| G-13 | **RESUELTO 2026-10-22.** TanStack Router es el único router de producción; `#/mis-viajes` se mapea a `/dashboard`; el prototipo conserva su hash routing. | `ADR-007` §6; `src/router.tsx`; `src/routes/index.tsx`. | Cerrado; no importar el hash routing a producción. |
 
 ### Dependencias
 
@@ -167,7 +167,7 @@ Subdecisiones que deben quedar explícitas si se elige A o B: formato de ubicaci
 | Q-04 detalle | Catálogo final de monedas y redondeo | non-blocking para G0; USD observado en prototipo | auditoría/Feature 04 |
 | Q-02 detalle | Zona horaria y semántica exacta de fechas tentativas | non-blocking para G0 | plan/auditoría |
 | Q-13/Q-15 | Contrato backend y UI de paywall | non-blocking para G0; bloquea integración real | Features 04/07 |
-| Mapeo prototipo | `ServiceId` usa `stays`/`transport`/`food`; el contrato propone `accommodation`/`local_transport`/`restaurants`, y `TravelSearch` usa conteos distintos. Decidir adaptador o conservar IDs. | non-blocking | auditoría/plan |
+| Mapeo prototipo | `ServiceId` usa `stays`/`transport`/`attractions`/`food`; el contrato canónico usa `lodging`/`transport`/`sights`/`food`, y `TravelSearch` usa conteos distintos. Adaptador definido en plan; la copia de producción usa IDs canónicos. | non-blocking | auditoría/plan |
 | UI flexible | El prototipo incluye modo de fechas flexible; la decisión pide no implementar flexibilidad avanzada. Decidir si se oculta o se deja fuera hasta otra fase. | non-blocking | plan/auditoría |
 
 No se inventan valores para estas preguntas.
@@ -184,13 +184,13 @@ Las decisiones del propietario sobre CQ-01 a CQ-05 están registradas arriba; lo
 
 ## 7. Gate G0
 
-- **Resultado:** CQ-01 a CQ-05 resueltas; **G0 de clarificación satisfecho**, pero G-12 (baseline) y G-13 (integración UI/routing) siguen bloqueando G1/G2.
+- **Resultado:** CQ-01 a CQ-05 resueltas; **G0 satisfecho**; **G-12 y G-13 resueltos el 2026-10-22** por aprobación del propietario y `ADR-007`. La adopción visual ya se ejecutó; Feature 03 funcional sigue en `draft` hasta G1.
 - **Decisiones:** registradas el 2026-10-21 por el propietario del proyecto.
 - **No bloqueantes:** catálogo exacto de ubicaciones, edades/límites de proveedor, catálogo final de monedas, timezone y mecanismo exacto de borrador. No se inventan.
 - **Spec:** se actualiza solo con las decisiones confirmadas; sigue en `draft` hasta aprobación G1.
 - **Plan/tasks:** se actualizan como DRAFT; G1/G2/G3 no están aprobados.
-- **No se autoriza** `/sdd-implement` ni cambios de código; G-12/G-13 requieren aprobación del propietario.
+- La adopción visual fue autorizada y ejecutada; **no se autoriza** implementar la lógica funcional de Feature 03 ni `/sdd-implement` sin completar G1/G2/G3.
 
 ## 8. Próximo paso
 
-G0 de clarificación está satisfecho, pero G-12 y G-13 no. La spec y el plan quedan en `draft`; el siguiente paso es que el propietario apruebe el baseline de prototipos y la estrategia de montaje UI. Solo entonces se podrá preparar/aprobar `/sdd-spec`. No aprobar ni implementar `/sdd-plan`, `/sdd-tasks` ni `/sdd-implement` sin aprobación explícita; los artefactos draft ya existen.
+G0 está satisfecho y G-12/G-13 quedaron resueltos. La spec/plan/tasks de Feature 03 siguen en `draft`; el siguiente paso es la aprobación funcional G1 y, después, plan/tasks. La adopción visual no equivale a la implementación funcional de Feature 03.

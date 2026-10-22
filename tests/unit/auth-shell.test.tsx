@@ -181,6 +181,41 @@ describe('DashboardPage', () => {
     expect(screen.getByRole('button', { name: 'Cerrar sesión' })).toBeVisible();
   });
 
+
+  it('actualiza la identidad del dashboard al cambiar de cuenta', async () => {
+    let emit: ((next: AuthState) => void) | undefined;
+    const service = createFakeService(authenticatedState, (callback) => {
+      emit = callback;
+    });
+    renderDashboard(service);
+
+    expect(
+      await screen.findByRole('heading', { name: /Hola, Ada Lovelace/ }),
+    ).toHaveTextContent(/Hola, Ada Lovelace/);
+
+    await act(async () => {
+      emit?.({
+        status: 'authenticated',
+        user: {
+          id: '00000000-0000-4000-8000-000000000002',
+          email: 'grace@example.com',
+          email_verified: true,
+          profile: {
+            ...profileFixture,
+            id: '00000000-0000-4000-8000-000000000002',
+            email: 'grace@example.com',
+            full_name: 'Grace Hopper',
+          },
+        },
+      });
+    });
+
+    expect(
+      await screen.findByRole('heading', { name: /Hola, Grace Hopper/ }),
+    ).toHaveTextContent(/Hola, Grace Hopper/);
+    expect(screen.queryByText(/Ada Lovelace/)).not.toBeInTheDocument();
+  });
+
   it('hace logout, llama al servicio y navega a login', async () => {
     const service = createFakeService(authenticatedState);
     renderDashboard(service);

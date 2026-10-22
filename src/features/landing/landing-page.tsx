@@ -63,6 +63,7 @@ function LandingContent() {
   const { state } = useAuth();
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [planningRequest, setPlanningRequest] = useState(0);
+  const [destinationDraft, setDestinationDraft] = useState('');
   const [currency, setCurrency] = useState<Currency>('USD');
   const [submitted, setSubmitted] = useState<
     TravelSearch | { description: string } | null
@@ -128,21 +129,9 @@ function LandingContent() {
   }, []);
 
   function chooseDestination(name: string) {
+    setDestinationDraft(name);
+    setPlanningRequest((value) => value + 1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    window.setTimeout(() => {
-      const destination = document.querySelector<HTMLInputElement>(
-        'input[placeholder="¿A dónde quieres ir?"]',
-      );
-      if (destination) {
-        const setter = Object.getOwnPropertyDescriptor(
-          window.HTMLInputElement.prototype,
-          'value',
-        )?.set;
-        setter?.call(destination, name);
-        destination.dispatchEvent(new Event('input', { bubbles: true }));
-        destination.focus();
-      }
-    }, 450);
   }
 
   return (
@@ -158,6 +147,7 @@ function LandingContent() {
       <main>
         <Hero
           planningRequest={planningRequest}
+          destination={destinationDraft}
           currency={currency}
           onSearch={setSubmitted}
           onDescribe={(description) => setSubmitted({ description })}

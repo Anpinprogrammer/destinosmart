@@ -105,7 +105,7 @@ No regenerar el baseline completo mientras G-12 no esté aprobado. La adaptació
 |---|---|---|
 | Feature 01 Landing | No existe spec aprobada; la Landing visual se adopta como referencia. Requiere propuesta/spec propia. | Pendiente de aprobación. |
 | Feature 02 Auth | Se conserva `src/features/auth`, `src/lib/supabase.ts`, guard y rutas. No se reemplaza por mocks del prototipo. | Aceptada/verified; no modificar sin nueva autorización. |
-| Feature 03 Formulario | Reutiliza formularios visuales; adapta contratos y deja creación/consumo a Feature 07. | Draft; G-12/G-13 abiertos. |
+| Feature 03 Formulario | Reutiliza formularios visuales; adapta contratos y deja creación/consumo a Feature 07. | Draft funcional; G-12/G-13 resueltos. |
 | Feature 04/07 | Dashboard y paywall visuales se copian como UI, pero permisos, viajes y persistencia no se implementan. | Fuera de alcance. |
 
 ## 8. Dependencias y conflictos detectados
@@ -161,7 +161,7 @@ No regenerar el baseline completo mientras G-12 no esté aprobado. La adaptació
 
 ## 13. Resultado de implementación (2026-10-22)
 
-- **G-12 resuelto:** `tests/regression/prototype-reference.baseline.json` protege el prototipo oficial (53 archivos) y `tests/regression/protected-files.baseline.json` protege infraestructura/gobernanza (40 archivos).
+- **G-12 resuelto:** tres ámbitos: `prototype-reference.baseline.json` (61 archivos: 53 fuente de `prototipo-gpt` + 8 assets raíz), `protected-files.baseline.json` (40 de infraestructura/gobernanza) y `production-files.baseline.json` (81 de la copia de producción).
 - **Prototipo eliminado:** `prototipos/destinosmart-dashboard/` fue eliminado intencionalmente por el propietario; no se restauró, no se usa como fuente y no tiene referencias operativas.
 - **G-13 resuelto:** TanStack Router es el único router de producción; la landing y el dashboard usan las rutas existentes.
 - **Adopción:** componentes copiados a `src/components/travel`, `src/features/landing`, `src/features/dashboard`; assets en `public/assets/images`.

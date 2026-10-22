@@ -12,7 +12,7 @@
 
 ## 1. Contexto y restricciones
 
-La feature 02 implementa identidad, sesión y autorización para una **app nueva** en la raíz del repositorio, con Supabase Auth/PostgreSQL/RLS. Los prototipos existentes (`prototipo-claude`, `prototipo-gpt`, `destinosmart-dashboard`) permanecen intactos.
+La feature 02 implementa identidad, sesión y autorización para una **app nueva** en la raíz del repositorio, con Supabase Auth/PostgreSQL/RLS. El prototipo oficial es `prototipos/prototipo-gpt`; `destinosmart-dashboard` fue eliminado intencionalmente y no se restaura.
 
 **Restricciones vinculantes:**
 

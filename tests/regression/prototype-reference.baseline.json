@@ -1,6 +1,14 @@
 {
   "algorithm": "sha256",
   "files": {
+    "prototipos/logo1_sin_fondo.png": "6072a9fd1d30ac5666c08462e83abae0afe98988974277d038e46bf8c6999156",
+    "prototipos/logo2_sin_fondo.png": "e161e522c354acf9f4bbaa6995ddacf5905fd1b224448fdffd9a3937763bd27f",
+    "prototipos/logo3.png": "c692f459aa168fcd023148b476cad7cf3dd86d514d4f89ffe2d7ebbed8246b72",
+    "prototipos/logo3_sin_fondo.png": "7115da5ac087682392bb3b9fa2c3f8045d4155ff34137c53a010f0a8460fcda8",
+    "prototipos/logo_1.png": "a94e8cbf76fdf576b7edb5877e7edb322efd6fe8051e83f804759d6faabd9137",
+    "prototipos/logo_2.jpeg": "13a7f76ccfedca81e1bd525d657a1b49b04107b0022ca5cdce386b4c459cb7c1",
+    "prototipos/logo_nombre.png": "ea6d068c4e48b29bf945e49a8c32c2c38d8d8f432a08b8de964932463edd92f3",
+    "prototipos/logo_solo.png": "a3578dd2641d7b1ef6ca920b5bbcf86d43d6ba8def55d81dce8a70a9b718ab26",
     "prototipos/prototipo-gpt/.prettierignore": "85a8d79a31ea2fcde34c32e2c6f3159d9eee540c4632f4d841bf6eb497ecef1c",
     "prototipos/prototipo-gpt/.prettierrc.json": "504e326627c2c9417582f1c1de4d4c53ae50e6e78a8d1f88eb3fb9824621a73b",
     "prototipos/prototipo-gpt/README.md": "fd72356d379af0571466e1b66645d7dba09a542e2cf1dc121789f86999e02958",

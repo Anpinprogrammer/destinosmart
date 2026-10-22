@@ -314,7 +314,7 @@ export function MyTrips({
               />
               <span className="absolute inset-0 bg-gradient-to-t from-brand-primary/95 via-brand-primary/20 to-transparent" />
               <span className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-brand-primary">
-                {value.demo ? 'Próximo destino' : 'Viaje organizado'}
+                {value.demo ? 'Viaje de ejemplo' : 'Borrador local'}
               </span>
               {value.start && (
                 <span className="absolute right-4 top-14 rounded-xl bg-black/40 px-3 py-2 text-center text-xs backdrop-blur-md">

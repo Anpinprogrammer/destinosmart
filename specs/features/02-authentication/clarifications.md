@@ -1,3 +1,5 @@
+> **Actualización 2026-10-22:** las referencias a `prototipos/destinosmart-dashboard` son históricas. Ese prototipo fue eliminado intencionalmente; el oficial es `prototipos/prototipo-gpt`. La app raíz ya existe con TanStack Router y Feature 02 verificada. Ver `ADR-007`.
+
 # Aclaraciones — Feature 02 Autenticación y usuarios
 
 - **feature_id:** `02-authentication`

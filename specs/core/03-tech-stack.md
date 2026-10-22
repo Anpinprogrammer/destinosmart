@@ -1,5 +1,7 @@
 # CORE-03 — Stack tecnológico
 
+> **Actualización 2026-10-22:** `prototipos/destinosmart-dashboard` fue eliminado intencionalmente. La app de producción en la raíz usa React + Vite + TypeScript estricto + Tailwind + Framer Motion + TanStack Router + Supabase; `prototipos/prototipo-gpt` es la única referencia visual. Las filas históricas del dashboard eliminado no son estado operativo.
+
 - **ID:** `CORE-03`
 - **Nombre:** Stack actual, dependencias y tecnologías objetivo
 - **Estado:** `APPROVED`

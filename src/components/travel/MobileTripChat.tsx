@@ -7,6 +7,7 @@ import type { Currency, TravelSearch } from './types'
 
 interface MobileTripChatProps {
   planningRequest: number
+  initialDestination?: string
   currency: Currency
   onSearch: (value: TravelSearch) => void
   onDescribe: (description: string) => void
@@ -14,6 +15,7 @@ interface MobileTripChatProps {
 
 export function MobileTripChat({
   planningRequest,
+  initialDestination = '',
   currency,
   onSearch,
   onDescribe,
@@ -183,7 +185,7 @@ export function MobileTripChat({
           <button
             type="submit"
             disabled={!description.trim()}
-            aria-label="Crear mi viaje con IA"
+            aria-label="Revisar mi viaje"
             className="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-brand-accent text-brand-primary transition-colors hover:bg-brand-accent/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <ArrowRight size={20} aria-hidden="true" />
@@ -240,6 +242,7 @@ export function MobileTripChat({
         <MobileTripAccordion
           origin={origin}
           onOriginChange={setOrigin}
+          initialDestination={initialDestination}
           currency={currency}
           onSearch={(value) => {
             void closeDialog(() => onSearch(value))
@@ -247,6 +250,7 @@ export function MobileTripChat({
         />
         <div className="hidden md:block">
           <TravelForm
+            initialDestination={initialDestination}
             currency={currency}
             onSearch={(value) => {
               void closeDialog(() => onSearch(value))

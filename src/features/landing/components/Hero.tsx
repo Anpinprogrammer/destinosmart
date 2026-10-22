@@ -14,12 +14,14 @@ import { DesktopTripSearch } from '../../../components/travel/DesktopTripSearch'
 import { MobileTripChat } from '../../../components/travel/MobileTripChat'
 interface HeroProps {
   planningRequest: number
+  destination: string
   currency: Currency
   onSearch: (value: TravelSearch) => void
   onDescribe: (description: string) => void
 }
 export function Hero({
   currency,
+  destination,
   onSearch,
   onDescribe,
   planningRequest,
@@ -84,6 +86,7 @@ export function Hero({
   return (
     <section
       id="inicio"
+      data-landing-section="inicio"
       className="relative h-auto overflow-hidden lg:overflow-visible lg:z-10 bg-brand-primary pb-8 pt-20 md:pt-32 md:h-dvh md:pb-6 lg:pb-8 lg:pt-44"
     >
       <div className="pointer-events-none absolute inset-0 z-0 isolate overflow-hidden">
@@ -140,10 +143,15 @@ export function Hero({
           </motion.p>
         </div>
         <div ref={desktopForm} className="hidden lg:block">
-          <DesktopTripSearch currency={currency} onSearch={onSearch} />
+          <DesktopTripSearch
+            currency={currency}
+            initialDestination={destination}
+            onSearch={onSearch}
+          />
         </div>
         <MobileTripChat
           planningRequest={planningRequest}
+          initialDestination={destination}
           currency={currency}
           onSearch={onSearch}
           onDescribe={onDescribe}

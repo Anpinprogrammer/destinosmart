@@ -46,7 +46,7 @@ Especificación del borrador en `spec.md`, §10. **Decisión:** origen/destino c
 Interfaz tentativa **solo para análisis**:
 ```ts
 type TravelService =
-  | 'flights' | 'accommodation' | 'local_transport' | 'attractions' | 'restaurants';
+  | 'flights' | 'lodging' | 'transport' | 'sights' | 'food';
 
 type TravelSearchRequest = {
   origin: { id: string; label: string; kind?: 'city' | 'airport' };
@@ -58,7 +58,7 @@ type TravelSearchRequest = {
   currency: string;
 };
 ```
-Este contrato NO define endpoint, catálogo de ubicaciones ni límites definitivos. Cualquier contrato implementado debe ser aprobado, validado en frontera y versionado si ya hay consumidores. La auditoría debe mapear `TravelSearch`/`ServiceId` del prototipo (`stays`, `transport`, `food`) al contrato normalizado y decidir si se conserva un adaptador; no modificar el prototipo.
+Este contrato NO define endpoint, catálogo de ubicaciones ni límites definitivos. Cualquier contrato implementado debe ser aprobado, validado en frontera y versionado si ya hay consumidores. La auditoría debe mapear `TravelSearch`/`ServiceId` del prototipo (`stays`, `transport`, `attractions`, `food`) al contrato normalizado (`lodging`, `transport`, `sights`, `food`) y decidir si se conserva un adaptador; no modificar el prototipo.
 
 ## 5. Secuencia conceptual
 1. El usuario edita controles reutilizados.
@@ -121,13 +121,13 @@ La meta v4.0 de **6 segundos** corresponde a la **generación** de presupuesto/i
 | Formulario expuesto a abuso | Costos API/cuotas | Servidor y feature 04; no client-only |
 
 ## 12. Gates de aprobación
-- **G0 Clarify:** CQ-01–CQ-05 registradas; G0 satisfecho, pero G-12/G-13 bloquean G1/G2.
+- **G0 Clarify:** CQ-01–CQ-05 registradas; G0 satisfecho; G-12/G-13 resueltos; G1/G2 pendientes.
 - **G1 Spec:** comportamiento/AC aprobados por propietario.
 - **G2 Plan:** arquitectura observada, contrato y tabla de impacto aprobados; sin modificaciones de infraestructura.
 - **G3 Tasks:** backlog aprobado, con pruebas y archivos previstos.
 - **G4 Implementation:** solo con autorización explícita y tras pasar G0–G3; la existencia de este documento **no habilita cambios**.
 
-**Estado de este plan:** `draft`; G0 satisfecho; G-12/G-13 y G1/G2 pendientes. No autoriza ejecución.
+**Estado de este plan:** `draft`; G0 satisfecho; G-12/G-13 resueltos; G1/G2 pendientes. La adopción visual no autoriza la lógica funcional de Feature 03.
 
 ## 13. Adenda técnica DestinoSmart Freemium (draft; pendiente G1/G2)
 
@@ -238,7 +238,7 @@ export type CreateTripErrorCode =
 - `origin` y `destination`: IDs no vacíos, normalizados; no confiar en etiquetas.
 - `start_date`/`end_date`: ISO `YYYY-MM-DD`, inicio ≤ fin; semántica de zona pendiente.
 - `travelers`: entero ≥ 1; el adaptador agrega adultos + menores porque Core 07 usa un número. El desglose por edad requiere evolución de contrato aprobada.
-- `services`: enum contractual, sin duplicados y al menos uno. El adaptador mapea prototipo → draft → contrato: `stays`→`accommodation`→`lodging`; `transport`→`local_transport`→`transport`; `attractions`→`attractions`→`sights`; `food`→`restaurants`→`food`. No editar `types/travel.ts`.
+- `services`: enum contractual, sin duplicados y al menos uno. El adaptador mapea prototipo → draft → contrato: `stays`→`lodging`; `transport`→`transport`; `attractions`→`sights`; `food`→`food`. No editar `types/travel.ts`.
 - `budget_target`: si existe, número finito > 0; el prototipo permite `0` y el adaptador debe omitirlo o rechazarlo explícitamente; `currency` ISO 4217.
 - Rechazar campos desconocidos y cualquier campo privilegiado (`user_id`, `plan_id`, `free_trip_credits`, `is_free_trial_trip`, `free_pro_expires_at`).
 
@@ -285,12 +285,12 @@ Detalle en `research.md`. Resumen:
 - Reutilizar `Hero`, `DesktopTripSearch`, `MobileTripChat`, `MobileTripAccordion`, `TravelForm`, `DesktopDatePicker`, `MobileDatePicker`, `Navbar` y tokens/capturas del prototipo.
 - `UserDashboard` y componentes de dashboard son referencia de **Feature 07**; no implementar dashboard en Feature 03.
 - `Pricing.tsx` contenía precios USD 2/5 y trial de 14 días obsoletos. La copia de producción ya usa Free 1 viaje/Pro 30 días y USD 4.99/9.99, sin cambiar layout (CR-004).
-- El prototipo usa hash routing (`#/mis-viajes`) y la app raíz TanStack Router; la reutilización literal de routing no es posible. **G-13 (nueva):** decidir montaje/port de componentes sin cambiar routing ni prototipos; no implementar hasta aprobación.
-- IDs del prototipo (`stays`, `transport`, `food`, `travelerCounts` con infants/pets) difieren del contrato (`accommodation`, `local_transport`, `restaurants`, adults/minors): adaptador pendiente; no editar el prototipo.
+- El prototipo usa hash routing (`#/mis-viajes`) y la app raíz TanStack Router. **G-13 resuelto:** TanStack es el único router; `/dashboard` es el destino; el prototipo no se modifica.
+- IDs del prototipo (`stays`, `sights` equivalentes, `travelerCounts` con infants/pets) difieren del contrato (`lodging`, `sights`, adults/minors): adaptador pendiente; no editar el prototipo.
 - Cualquier ajuste visual (modo flexible, composición del hero, campos) requiere documentación y aprobación.
 
 ## 17. Gates adicionales
 
-- **G-12:** baseline de prototipos no aprobado; no actualizar ni implementar.
-- **G-13:** ruta de integración UI/routing pendiente; no implementar.
+- **G-12:** resuelto con baseline de referencia/gobernanza/producción.
+- **G-13:** resuelto; no importar hash routing.
 - **G1/G2/G3:** no aprobados; Feature 03 sigue `draft`.

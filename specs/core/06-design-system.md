@@ -11,6 +11,8 @@
 
 > **Regla:** este documento **no crea** una identidad nueva, no propone un rediseño y no autoriza modificar componentes, colores, tipografías, animaciones ni prototipos.
 
+> **Actualización 2026-10-22:** `prototipos/destinosmart-dashboard` fue eliminado intencionalmente y `prototipos/prototipo-gpt` es la referencia visual oficial. La app real ya usa los componentes adoptados en `src/`; las menciones al dashboard eliminado en este documento se conservan como historia. El pricing vigente es Free 1 viaje/30 días Pro, USD 4.99/9.99, sin trial de 14 días.
+
 ## 1. Fuentes y estado
 
 | Fuente | Rol | Estado |

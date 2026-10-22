@@ -537,6 +537,9 @@ export default function UserDashboard({
   actions = {},
 }: UserDashboardProps) {
   const [user, setUser] = useState(initialUser)
+  useEffect(() => {
+    setUser(initialUser)
+  }, [initialUser])
   const transition = usePageTransition()
   const [origin, setOrigin] = useState('')
   const [destinationDraft, setDestinationDraft] = useState('')
@@ -565,6 +568,7 @@ export default function UserDashboard({
     },
   ])
   const [notice, setNotice] = useState<string | null>(null)
+  const demo = trip.id.startsWith('demo-')
   const format = (value: number) => currency(value, user)
   const budgetSpent = trip.budget.reduce((sum, item) => sum + item.amount, 0)
   const remaining = trip.budgetTotal - budgetSpent
@@ -744,6 +748,15 @@ export default function UserDashboard({
         onProfile={() => navigate('profile')}
         onLogout={actions.onLogout}
       />
+      {demo && (
+        <div
+          role="note"
+          className="mx-auto mt-2 w-[calc(100%-2rem)] max-w-[1440px] rounded-2xl border border-amber-200 bg-amber-50 px-4 py-2.5 text-center text-xs font-semibold text-amber-900"
+        >
+          Vista demostrativa: el viaje, las reservas, los precios y las alertas
+          son ejemplos. No representan datos reales de tu cuenta.
+        </div>
+      )}
       <main className="mx-auto w-full px-4 pb-32 pt-7 sm:px-6 md:pb-16 md:pt-7 lg:px-8">
         {tab === 'alerts' ? (
           <Notifications
@@ -891,7 +904,7 @@ export default function UserDashboard({
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <Pill variant="teal">
                       <span className="size-1.5 rounded-full bg-[#00AEEF]" />{' '}
-                      Próximo destino
+                      {demo ? 'Viaje de ejemplo' : 'Próximo destino'}
                     </Pill>
                     <div className="rounded-2xl border border-white/25 bg-white/15 px-4 py-3 text-center backdrop-blur-xl">
                       <p className="text-2xl font-extrabold">
@@ -1013,6 +1026,11 @@ export default function UserDashboard({
                       </p>
                       <h2 className="mt-1 text-xl font-bold text-[#0E2C52]">
                         Estado de reservas
+                        {demo && (
+                          <span className="ml-2 align-middle text-[10px] font-bold uppercase tracking-[.12em] text-amber-700">
+                            demo
+                          </span>
+                        )}
                       </h2>
                     </div>
                     <Pill variant="teal">
@@ -1079,6 +1097,11 @@ export default function UserDashboard({
                       </p>
                       <h2 className="mt-1 text-xl font-bold text-[#0E2C52]">
                         Alertas de precio
+                        {demo && (
+                          <span className="ml-2 align-middle text-[10px] font-bold uppercase tracking-[.12em] text-amber-700">
+                            demo
+                          </span>
+                        )}
                       </h2>
                     </div>
                     <span className="grid size-10 place-items-center rounded-2xl bg-brand-accent/10 text-brand-accent">
