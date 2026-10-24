@@ -496,3 +496,85 @@ La aprobación no cierra `Q-09`, `Q-10`, `Q-17`, `DQ-10`, `DQ-22` ni `DQ-23`; es
 - `docs/tech-stack.md`.
 - `docs/current-architecture-audit.md`.
 - `specs/core/01-product-overview.md` a `specs/core/10-observability-performance.md` (aprobados v0.2.0).
+
+
+## Adenda propuesta — LOGIN-UI-001: alineación visual con prototipo
+
+- **version:** LOGIN-UI-001 v0.1.0
+- **status:** `approved`
+- **approved_by / approved_at / approved_version:** `propietario del proyecto / 2026-10-24 / LOGIN-UI-001 v0.1.0`
+- **date:** 2026-10-24 (America/Bogota)
+- **request_source:** «corrige el formulario actual de login de la aplicacion, no concuerda con el de los prototipos».
+
+La aceptación histórica de Feature02 y plan0.3.0 permanece intacta; no aprueba esta nueva adenda. Alcance visual derivado de spec0.2.0 FR-001/003/009/010 y NFR-001, DS1.1.0 §3.3, ADR-007: conectar UI del prototipo a Auth existente sin sustituir servicios reales. Los límites documentales antiguos «no modificar specs» describen ejecución histórica; esta propuesta SDD responde a nueva solicitud del propietario y no cambia código.
+
+### Comportamiento propuesto
+
+1. Reutilizar estructura/clases de TripsLogin del prototipo: encabezado «Inicia sesión», apoyo, Google primero, separador correo, campos blancos min-h12/rounded-xl, contraseña con mostrar/ocultar, CTA naranja con icono. Conservar tokens, proporciones y tipografía del prototipo; no reutilizar mensajes demo/callbacks sin autenticación.
+2. Formulario real compartido entre /login y acceso desde Landing. En /login conservar ruta y retorno saneado, presentar el mismo panel dentro del contenedor de página existente, sin introducir modal artificial al cargar URL. Su cierre/volver al inicio navega a / de manera explícita, sin history.back dependiente de origen externo. Panel standalone es adaptación necesaria de página, documentada y aprobada aquí; no se presenta como pantalla ya existente del prototipo.
+3. «Mis viajes» anónimo abre panel anclado desktop/tablet desde768 y diálogo nativo móvil bajo768 según prototipo. Sesión autenticada conserva navegación directa a dashboard. Cerrar por botón/Escape y exterior según variante; gestionar foco inicial, restauración y cleanup sin listeners permanentes. Mantener coordinación con menú no modal y no cerrar otros diálogos accidentalmente.
+4. Reutilizar useAuth/service.signInWithPassword, signInWithGoogle, applyAuthState, callbacks y toReturnToNavigation/sanitizeReturnTo existentes. No duplicar sesión, cliente Supabase, validación o contratos. Bloquear envíos mientras loading; errores del catálogo existente, accesibles. Mantener enlaces de registro/recuperación con destinos internos existentes, sin rediseñar sus formularios.
+5. Google mantiene integración y errores reales, sin copy «no conectado» del prototipo. Su nuevo estilo se aplica solo a variante login para no alterar registro. AuthCard/FormField compartidos con otros flujos no cambian globalmente; separar presentación login cuando corresponda. No tocar perfil, guards, callbacks OAuth, tablas, RLS o políticas.
+
+### Archivos y límites
+
+Runtime permitido: auth-forms.tsx (LoginForm y presentación relacionada), GoogleButton.tsx (variante visual opcional preservando default), nuevo componente de presentación login si necesario, routes/login.tsx, features/landing/components/TripsLogin.tsx y landing-page.tsx (conexión mínima de login anónimo). Reusar APIs existentes, no nueva dependencia o router. No editar prototipo/DS, registro/reset/verificación ni dashboard por inferencia. Es adaptación transversal de acceso Landing a Feature02, no funcionalidades de Feature03/09.
+
+Si la implementación necesita ampliar estos archivos/contratos o cambiar composición más allá del panel descrito, registrar impacto y pedir aprobación antes. No instalar librerías ni persistir credenciales/borradores.
+
+### Verificación y aceptación propuesta
+
+TASK-026 implementa y verifica: comparación de estructura/clases y capturas con referencia a390/768/1440 (también320 para overflow), estados contraseña oculta/visible, teclado y cierre/restauración, diferencias standalone explícitas; autenticación mocks deterministas de éxito/error/loading/Google y retorno interno seguro. Regresión registro/reset/guards y navegación Landing; no llamadas reales/PII. Typecheck/suite/build aislado/check protegido, documentar comandos/entorno y review independiente solo lectura. No atribuir autenticación real por solo aspecto visual.
+
+Preparar delta específico por archivo protegido realmente cambiado después de review; obtener aprobación explícita antes de aplicarlo, sin regenerar manifiestos. Documentar evidencia y cierre; sin autoaceptación G5 o publicación. Tarea en espera de aprobación del plan concreto y TASK-026, con spec actual sin cambio de requisitos de negocio.
+
+**Aprobación y ejecución:** propietario «apruebo la adenda y procede con la implementacion de TASK-026», 2026-10-24. G2/G3 de LOGIN-UI-001 v0.1.0 aprobados; TASK-026 en ejecución. Los textos previos que indican pendiente corresponden a preparación histórica.
+
+
+## Adenda aprobada — AUTH-ROUTE-001: destino tras autenticación y logout
+
+- **version:** AUTH-ROUTE-001 v0.1.0
+- **status:** `approved`
+- **approved_by / approved_at / approved_version:** `propietario del proyecto / 2026-10-24 / AUTH-ROUTE-001 v0.1.0`
+- **approval_source:** «apruebo AUTH-ROUTE-001 y TASK-027»
+- **date:** 2026-10-24 (America/Bogota)
+
+No cambia requisitos de negocio de `spec.md` 0.2.0: precisa el destino de navegación posterior a autenticación y a cierre de sesión bajo FR-001/FR-003.
+
+**Defecto reproducido** (2026-10-24, 390×844 y 1440×900, usuario sintético): tras el login la URL final era `/login?returnTo=%2Fdashboard` con la sesión ya creada, y el logout llevaba a `/login?returnTo=%2Fdashboard`. Causa: el guard de `/dashboard` leía el estado antes de confirmarse, `/login` y `/register` no contemplaban «ya autenticado», y el logout apuntaba al login.
+
+**Comportamiento aprobado:**
+
+1. `/login` y `/register` redirigen con `replace` al `returnTo` saneado (por defecto `/dashboard`) cuando `status === 'authenticated'`; un `returnTo` hacia `/login` o `/register` cae en `/dashboard` para evitar bucles.
+2. Los tres puntos de éxito (`TripsLogin`, `LoginPage`, `RegisterPage`) aplican el estado con `flushSync` antes de navegar, para que el guard lea el estado confirmado.
+3. Logout del dashboard navega a `/` con `replace`, sin `returnTo`.
+4. En viewport móvil (<768 px) el destino `/dashboard` resuelve su pestaña inicial a `trips` («Mis viajes»); no se añaden rutas ni parámetros de búsqueda.
+
+**Archivos runtime:** `src/routes/login.tsx`, `src/routes/register.tsx`, `src/features/landing/components/TripsLogin.tsx`, `src/routes/_authenticated/dashboard.tsx`. Sin cambios en guards, RLS, Auth, OAuth, Design System o prototipo.
+
+**Verificación:** unit `auth-route-destination`/`auth-shell`/`trips-login`, suite completa, navegador 390/1440 y deltas específicos por archivo protegido. Detalle en `artifacts/task-027/adenda-AUTH-ROUTE-001.md`.
+
+## Adenda aprobada — UI-LOADER-001: feedback de carga y transición sin destello de login
+
+- **version:** UI-LOADER-001 v0.1.0
+- **status:** `approved`
+- **approved_by / approved_at / approved_version:** `propietario del proyecto / 2026-10-24 / UI-LOADER-001 v0.1.0`
+- **approval_source:** «apruebo UI-LOADER-001 y TASK-028»
+- **date:** 2026-10-24 (America/Bogota)
+
+No cambia requisitos de negocio de `spec.md` 0.2.0: precisa el feedback visible en restauración de sesión, entrada autenticada, salida y cambio de vista del dashboard.
+
+**Defecto remediado dentro de TASK-027:** el logout cerraba la sesión antes de navegar, el `AuthenticatedGuard` veía el estado anónimo con la ruta todavía en `/dashboard` y redirigía a `/login?returnTo=%2Fdashboard`; la navegación a `/` llegaba después. Se espera la navegación a `/` y después se cierra la sesión.
+
+**Comportamiento aprobado:**
+
+1. `Loader` (`src/components/Loader.tsx`) acepta `label` visible y accesible; la landing conserva su etiqueta «Cargando...».
+2. `LoaderProvider` acepta `preload`, `minimumDuration` y `transitionDuration`, con los valores actuales de la landing por defecto (1500 ms de splash, 1200 ms de transición, 150/100 ms con movimiento reducido).
+3. `AuthenticatedGuard` en estado `loading` renderiza el `Loader` con «Cargando tu sesión…».
+4. `/login` y `/register` con sesión activa renderizan el `Loader` con «Entrando…» en lugar del formulario mientras se resuelve la redirección.
+5. El logout del dashboard muestra el `Loader` con «Cerrando sesión…» mientras se resuelve la navegación a `/`.
+6. El dashboard se envuelve en `LoaderProvider` con `preload={false}`, `minimumDuration={0}` y `transitionDuration={350}` (100 ms con movimiento reducido), de modo que `usePageTransition` —ya invocado por `UserDashboard`— muestra el loader entre pestañas sin splash ni precarga de portada.
+
+**Archivos runtime:** `src/components/Loader.tsx`, `src/routes/_authenticated.tsx`, `src/routes/login.tsx`, `src/routes/register.tsx`, `src/routes/_authenticated/dashboard.tsx`. Sin cambios en RLS, Auth, OAuth, guards de autorización, Design System, copy del producto ni prototipo; la landing no cambia tiempos ni splash.
+
+**Verificación:** unit `loader`/`auth-guard`/`auth-shell`/`auth-route-destination`, suite completa, navegador 390×844 y 1440×900. Detalle en `artifacts/task-028/adenda-UI-LOADER-001.md` y `verification.md`.

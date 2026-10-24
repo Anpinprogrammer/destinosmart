@@ -4,17 +4,18 @@
 
 ## Punto exacto de continuidad
 
-- Trabajo activo: **Feature 01 — Landing Page**. Último trabajo completado: **TASK-025**, corrección de H018-001 y aplicación de su única huella expresamente autorizada; protección/typecheck/suite pasaron. Cierre registrado en tasks.md y verification.md, con fecha 2026-10-23.
-- Solicitud actual del propietario: actualizar esta memoria para otro agente. **No hay una nueva tarea de implementación seleccionada tras TASK-025.** No ejecutar tareas abiertas o propuestas por inferencia.
-- Feature 01 sigue `in-progress`, no está aceptada globalmente ni autorizada para publicación. G5 humano aprobado únicamente para P16-001/002 y TASK-022/023/024. No extenderlo automáticamente a TASK-020/025 o al lanzamiento.
-- Antes de continuar leer `specs/features/01-landing-page/tasks.md`, los cierres finales de `verification.md`, `plan.md` §9/§10 y `research-task-016.md`. Para el próximo trabajo pedir selección concreta si no está indicada; preparar/reaprobar el alcance técnico que no tenga plan/tareas aprobados.
+- Últimos incrementos ejecutados en Feature 02: **TASK-026 / LOGIN-UI-001** (login alineado al prototipo, huellas aplicadas), **TASK-027 / AUTH-ROUTE-001** (destino tras login y logout, AC-1…AC-6 verificados, huellas aplicadas) y **TASK-028 / UI-LOADER-001** (loader de carga y transición, completada el 2026-10-24 con sus 6 huellas autorizadas/aplicadas y validación posterior exitosa).
+- **Próximo gate pendiente: revisión independiente de TASK-027/TASK-028 y commit de los tres incrementos** (36 archivos sin commit ni push). **G5 de TASK-026, TASK-027 y TASK-028 aceptado por el propietario el 2026-10-24**. No hay huellas pendientes: las 6 de TASK-028 se aplicaron con autorización específica y `check:protected` está en verde. No actualizar manifiestos sin permiso nuevo.
+- Solicitud actual: actualizar memoria. No hay otra tarea de implementación seleccionada después de TASK-026. Esperar selección concreta; no empezar P16-003–007, Feature03, rediseños o despliegue por inferencia.
+- Feature01 sigue `in-progress`, no aceptada globalmente ni autorizada para publicar. G5 humano previo limitado a P16-001/002 y TASK-022/023/024. TASK-018/020/025 completadas; H018-001 resuelto. Las tareas abiertas se detallan abajo.
+- Leer primero esta memoria, `docs/DESIGN_SYSTEM.md` 1.1.0 y cierres recientes de Feature02. Para volver a Landing, leer tareas/cierres Feature01 y plan§9/§10/research-task-016. Las frases antiguas «login divergente», «huellas pendientes» o «ejecución pendiente» son historia cuando existe cierre posterior.
 
 ## Proyecto y estado Git observado
 
 - DestinoSmart; Documento Maestro v4.0 y Freemium `BR-FREE-001..010`. React + TypeScript estricto, Tailwind, Framer Motion, Vite, TanStack Router, Supabase; Edge Functions/OpenRouter son stack objetivo, no prueba de integración ya realizada.
-- Rama observada: `main`. HEAD al actualizar memoria: `c34eab2` (Update operational memory with adoption status). Commit histórico de adopción: `f03e442`.
-- **Hay cambios locales sin commit y archivos untracked** de Feature 01. No descartarlos, resetearlos, sobrescribirlos o asumir que ya están en GitHub. No se hizo commit/push en esta actualización.
-- Runtime modificado durante Feature 01: `src/features/landing/components/{Pricing,Navbar,Destinations}.tsx` y `src/features/landing/landing-page.tsx`. También manifiesto de producción, tests y documentación/evidencias. Inventario exacto con `git status --short` antes de actuar.
+- Rama observada: `main`. HEAD al actualizar memoria: `5b2bb67` (Feature 1 de la landing page implementada). Commit histórico de adopción: `f03e442`.
+- **Hay cambios locales sin commit y archivos untracked** de alineación del DS y TASK-026, además de capturas de regresión Feature01. El trabajo anterior de Feature01 está reflejado en el HEAD observado, pero eso no acredita aceptación global ni push remoto. No descartarlos, resetearlos, sobrescribirlos o asumir que ya están en GitHub. No se hizo commit/push en esta actualización.
+- Inventario histórico de cambios de Feature01: `src/features/landing/components/{Pricing,Navbar,Destinations}.tsx` y `src/features/landing/landing-page.tsx`. También manifiesto de producción, tests y documentación/evidencias. Inventario exacto con `git status --short` antes de actuar. No descartar los cambios actuales de TASK-026 o del DS.
 - Prototipo oficial inmutable: `prototipos/prototipo-gpt/`. `prototipos/destinosmart-dashboard/` fue eliminado intencionalmente: **no restaurarlo**. App real en raíz; no crear segunda landing ni cambiar DS, fuentes, breakpoints, animaciones/layout, router, dependencias o infraestructura por iniciativa propia.
 
 ## Specs disponibles y aprobaciones
@@ -22,10 +23,30 @@
 | Feature | Artefactos y estado real | Límites |
 |---|---|---|
 | 01 — Landing | `spec.md` 0.2.0 approved; `plan.md` y `tasks.md` 0.3.0 con aprobaciones G2/G3. Adenda plan §10/TASK-025 aprobada explícitamente por «apruebo plan 10 y task-025». `verification.md` 0.1.0 acumula evidencia; `clarifications.md` registra CQ-001–005 y fronteras | Estado de tareas in-progress; G5 parcial TASK-022–024; no cierre global |
-| 02 — Authentication | `spec.md` 0.2.0 approved, `plan.md` 0.3.0 approved, `tasks.md` 0.3.0 verified y aceptación humana registrada | Preservar Auth, perfiles, sesión, guards y rutas; la aceptación no prueba integraciones de viajes |
+| 02 — Authentication | spec0.2.0 y plan0.3.0 aprobados; TASK-001–025 históricas aceptadas/verified. Adendas LOGIN-UI-001 (TASK-026), AUTH-ROUTE-001 (TASK-027) y UI-LOADER-001 (TASK-028) aprobadas, implementadas, validadas y con G5 aceptado el 2026-10-24 | No confundir con cierre global de Auth; falta revisión independiente de TASK-027/028, commit y push. Preservar servicios/guards/perfiles |
 | 03 — Travel form | `spec.md`, `plan.md`, `tasks.md` 0.3.0 draft; clarifications 0.1.0 con G0 resuelto y detalles no bloqueantes; research y manifiesto de adopción | Sin verification.md ni implementación backend de esta feature. No programar negocio sin aprobaciones específicas |
 
 Las únicas carpetas de features con spec/plan/tasks encontradas son 01, 02 y 03. Referencias a Features 04/05/07/09 son dependencias futuras, no specs aprobadas existentes ni permiso para implementarlas.
+
+## Design System alineado — regla para todo trabajo visual
+
+- `docs/DESIGN_SYSTEM.md` **1.1.0**, actualizado por solicitud del propietario el 2026-10-24. Paleta real primary/accent/secondary/pastel, tokens heredados distinguidos, tipografías/radios/responsive/motion del prototipo, catálogo real y patrón de login documentados. Documento anterior 1.0.0 tenía divergencias; no usar sus escalas/primitivas ficticias como referencia actual.
+- Política explícita del propietario: componentes existentes deben reutilizar el diseño/patrón de `prototipos/prototipo-gpt/`; los nuevos extienden ese lenguaje y el DS, sin estética paralela. Conectar backend no justifica reemplazar una UI aprobada por tarjeta genérica.
+- Las correcciones autorizadas de la app real prevalecen sobre copiar defectos/demo del prototipo: teclado, honestidad de ofertas, testimonios por entorno y Pricing vigente. Cambios visuales adicionales requieren plan/aprobación.
+- Única huella documental del DS aprobada/aplicada. Registro: `docs/changes/design-system-prototype-alignment-baseline.proposed.json` con status approved-and-applied. No volver a pedir permiso de ese delta existente ni modificar DS incidentalmente.
+
+## Feature 02 — TASK-026, login real con patrón del prototipo
+
+- Autorización: «apruebo la adenda y procede con la implementacion de TASK-026». Adenda al final de plan.md y tareas02, LOGIN-UI-001 v0.1.0; no reemplaza ni invalida aceptación histórica de TASK-001–025.
+- Completado: Google primero con icono del prototipo, separador correo, campos blancos/labels, mostrar/ocultar contraseña, CTA naranja, errores/loading y enlaces reales. Se eliminaron mensajes/callbacks de autenticación simulada del patrón de referencia.
+- Anónimo desde «Mis viajes»: panel anclado en desktop/tablet desde 768; diálogo nativo bajo 768, foco email, Escape/botón/exterior y restauración/cleanup. Autenticado conserva navegación a dashboard, sin anunciar diálogo.
+- `/login` conserva URL y retorno saneado; utiliza el mismo formulario en panel standalone con cierre explícito al inicio. Es adaptación de página aprobada, no modal artificial al entrar por URL.
+- AuthService, Supabase, validación, AuthProvider, guards, callback OAuth, RLS y contratos conservados. Login password aplica estado autenticado y navega por helper existente. Google usa servicio real; contraseña/Google se bloquean mutuamente mientras hay petición pendiente. No pruebas contra cuentas reales.
+- Cuatro archivos runtime modificados: `src/features/auth/components/auth-forms.tsx`, `GoogleButton.tsx`, `src/features/landing/components/TripsLogin.tsx`, `src/routes/login.tsx`. Registro/reset mantienen componentes y estilo previos; variante Google predeterminada preservada. Landing-page no necesitó cambios para TASK-026.
+- Cinco huellas autorizadas explícitamente por «aplicalas y repite la validacion»: plan 02 en gobernanza y los cuatro runtime en producción. Todas aplicadas y comprobadas. Propuesta: `specs/features/02-authentication/artifacts/task-026/baseline-change.proposed.json` status approved-and-applied.
+- Review independiente `review_task026`: PASS_WITH_NOTES; clases del toggle y aria del usuario autenticado corregidas. Notas LOW restantes: cruce de breakpoint cierra sin restauración explícita de foco; primeras regresiones regeneraron cuatro PNG de TASK-024 (menu1024 y summary768/844/1440). No restaurarlos ciegamente si existen cambios del usuario. Corridas finales usan `KEYBOARD_AUDIT_ARTIFACTS` en carpeta TASK-026.
+- Tests nuevos: `tests/e2e/login-prototype.spec.ts`, `tests/unit/trips-login.test.tsx`; ampliados auth-forms y regresiones auth/landing. Fixtures sintéticas, recursos simulados, sin credenciales reales. Se adaptaron selectores al nuevo copy/orden; el acceso anónimo ya no debe esperarse como redirección inmediata a /login.
+- Cierre técnico completo y **G5 visual aceptado el 2026-10-24**. La aceptación no equivale a WCAG completa, autenticación real con proveedores ni autorización de despliegue.
 
 ## Feature 01 — Lo completado
 
@@ -78,12 +99,14 @@ H018-001 **ya no es pendiente**: consultar cierre TASK-025. Referencias antiguas
 
 - Baselines separados conforme ADR-007: 40 gobernanza (`protected-files.baseline.json`),61 prototipo (`prototype-reference.baseline.json`),81 producción (`production-files.baseline.json`). No mezclar, regenerar indiscriminadamente ni modificar prototipo.
 - Deltas expresamente autorizados durante Feature01: Pricing (TASK-015), landing-page (TASK-022 y luego TASK-020), Navbar (TASK-023), Destinations (TASK-025). Propuestas JSON con before/after/approval_source/applied bajo artifacts/task-XXX.
-- No queda delta de huella pendiente de esas tareas. Una autorización anterior de hash no cubre cambios futuros, ni siquiera en el mismo archivo. Tras implementación/review preparar delta concreto y obtener permiso específico según plan/README de regresión; nunca actualizar para ocultar cambios.
-- Última validación de aplicación registrada, **2026-10-23, cierre TASK-025**: `npm run check:protected` exit0(40+61+81), `npm run typecheck` exit0, `npm test` exit0 **270 passed /7 skipped(277)**,30archivos passed/1skipped,6.88s. Las omitidas no son éxito.
+- Añadidos deltas autorizados DS 1.1.0, TASK-026 (plan 02 + 4 runtime), TASK-027 (plan 02 + 4 runtime + remediación del destello de logout) y TASK-028 (5 runtime + plan 02). **No queda delta pendiente** de estos incrementos. Una autorización anterior de hash no cubre cambios futuros, ni siquiera en el mismo archivo. Tras implementación/review preparar delta concreto y obtener permiso específico según plan/README de regresión; nunca actualizar para ocultar cambios.
+- Última validación de aplicación registrada, **2026-10-24, cierre TASK-028**: `npm run check:protected` exit0 (40+61+81), `npm run typecheck` exit0, `npm test` exit0 **283 passed / 7 skipped (290)**, 33 archivos passed/1 skipped, `git diff --check` sin errores. Navegador 390×844 y 1440×900: restauración de sesión con loader ≈531 ms, transición de pestañas ≈531 ms, logout solo a `/` sin formulario de login. Las omitidas dependen de Supabase local real y no son éxito. Cifras anteriores de TASK-026 (273/280) siguen siendo históricas de su cierre.
+- Navegador TASK-026 final: producción-preview **32 passed / 1 skipped (25.1s)**; desarrollo **9 passed / 1 skipped (15.2s)** después de copiar clases exactas del toggle. Los omitidos dependen de Supabase local real; suite auth-flows real no ejecutada. Unit valida éxito/error/loading/Google/returnTo con mocks y éxito del panel. No una ejecución e2e contra Google o Supabase real.
+- Build final TASK-026: Vite directo,2167módulos,3.15s, warningchunk>500kB; envDir vacío y placeholders públicos. No npm lifecycle/hooks ni check:bundle nuevo.
 - Navegador TASK-025: desarrollo13/13(12.7s:5anchos+8interacciones), producción-preview12/12(9.2s:5anchos+7smoke). Prellenado se prueba390/1440;768 usa variante hero de descripción, no asumir formulario desktop.
 - Navegador TASK-020: desarrollo10/10,preview9/9. TASK-024 conjunto teclado/interacciones/smoke23/23. No confundir estas ejecuciones con una suite e2e global única ni una auditoría WCAG completa.
 - Builds TASK-018/020/025: Vite directo en /tmp con envDir vacío y placeholders públicos,2167módulos; warning existente chunk>500kB. No ejecutar ni atribuir hooks de npm run build si se usó Vite directo. Sin nuevo check:bundle global verificado en estos trabajos.
-- Evidencias: `specs/features/01-landing-page/verification.md` y `artifacts/task-{012,013,014,015,022,023,024,018,020,025}/README.md` donde exista; source/test y JSON/capturas por tarea. No comparar porcentajes históricos del backfill como cobertura actual recalculada.
+- Evidencia más reciente: `specs/features/02-authentication/verification.md`, `artifacts/task-026/README.md`, JSON/capturas development/production-preview y propuesta aprobada. Evidencias anteriores: `specs/features/01-landing-page/verification.md` y `artifacts/task-{012,013,014,015,022,023,024,018,020,025}/README.md` donde exista; source/test y JSON/capturas por tarea. No comparar porcentajes históricos del backfill como cobertura actual recalculada.
 - No CI remoto/staging/despliegue/dispositivos reales/pixel-perfect verificados en esta sesión. No afirmar SLA,60fps o conformidad WCAG global.
 - El usuario puede tener Vite en3000: no detenerlo ni reutilizarlo inadvertidamente. Pruebas usaron servidores aislados3100/3101, sin reuseExistingServer, recursos externos simulados y datos sintéticos. Configs/builds en /tmp son temporales: pueden faltar en otra sesión; reconstruir desde README, no tratarlos como artefactos versionados.
 - `.env` puede estar abierto en IDE: **no leerlo ni copiar secretos**. Usar placeholders públicos, envDir vacío para build aislado, sin cuentas reales/mensajes/compras. Autorizaciones de pruebas no son permisos de publicación.
@@ -98,10 +121,31 @@ H018-001 **ya no es pendiente**: consultar cierre TASK-025. Referencias antiguas
 ## Reanudación segura
 
 1. Revisar Git y cierres más recientes de Feature01, no solo encabezados o frases históricas como «ejecución pendiente». Preservar todos los cambios locales/untracked.
-2. Explicar al propietario que TASK-025 está terminada; pedir selección del siguiente alcance si no la proporciona. Posibles caminos: preparar selección/aprobación P16-003–007, revisión integral TASK-019 o contenidos/checklist de lanzamiento cuando existan insumos. Ninguno se inicia por esta memoria.
+2. TASK-026/027/028 están terminadas y con G5 aceptado; no repetir implementación ni permisos de hash resueltos. Pendiente: revisión independiente de TASK-027/028 y commit de los tres incrementos (sin push hasta autorización). Después pedir selección del siguiente alcance si no la proporciona. Posibles caminos: preparar selección/aprobación P16-003–007, revisión integral TASK-019 o contenidos/checklist de lanzamiento cuando existan insumos. Ninguno se inicia por esta memoria.
 3. Para Feature03, continuar SDD desde sus drafts y aprobaciones humanas, no implementar por el hecho de existir UI.
-4. Actualizar spec→plan→tasks y pedir reaprobación cuando cambie alcance; no ejecutar otras features, refactors o publicación sin autorización. Review independiente de solo lectura conforme comando SDD cuando corresponda.
+4. Mantener esta memoria al cerrar tareas, registrar aprobaciones/rechazos o cambiar prioridades: fecha, feature/ID, alcance, evidencia, pendientes y próximo gate. Es una instrucción operativa para el agente, no sincronización automática; siempre contrastar con specs y Git.
+5. Actualizar spec→plan→tasks y pedir reaprobación cuando cambie alcance; no ejecutar otras features, refactors o publicación sin autorización. Review independiente de solo lectura conforme comando SDD cuando corresponda.
 
 ## Registro de esta actualización
 
 2026-10-24: propietario pidió «actualiza la memoria para que otro agente de IA sepa en que paso vas del proyecto y que esta pendiente con las specs que tienes hasta ahora». Se contrastaron estados/specs/tareas/cierres y Git; se actualizó únicamente MEMORY.md. Sin nuevas pruebas de aplicación ni aprobaciones de producto; resultados anteriores citados con fecha. Validación documental: `git diff --check`.
+
+### Segunda actualización del 2026-10-24
+
+Propietario: «actualiza memoria para que otro agente de IA sepa siempre en que va el proyecto y pueda seguir con las tareas». Contrastados estado Git HEAD 5b2bb67, cierres TASK-026 y proposals aprobadas/aplicadas DS/TASK-026. Se actualiza solo MEMORY.md: último incremento, pendientes G5/Feature01/Feature03, política visual y protocolo de continuidad. No nueva aprobación de producto, implementación o pruebas de aplicación; validación documental git diff --check. Próxima acción del agente: revisar aceptación visual TASK-026 con el propietario o seguir su nueva selección explícita.
+
+### Tercera actualización del 2026-10-24
+
+Propietario reportó que al cerrar sesión se veía un instante el formulario de login y pidió un loader durante la carga de pantallas y las redirecciones. Se diagnosticó la carrera guard/estado en el logout y se corrigió dentro de TASK-027 (navegar a `/` antes de invalidar la sesión). Para el loader se preparó y aprobó `UI-LOADER-001 v0.1.0` / TASK-028 («apruebo UI-LOADER-001 y TASK-028») y se implementó en 5 archivos runtime. Validado con typecheck, unitarias nuevas y navegador real en 390×844 y 1440×900. No hay commit, push, G5 ni revisión independiente. Queda pendiente autorizar las 6 huellas de TASK-028.
+
+### Cierre de TASK-028 del 2026-10-24
+
+El propietario autorizó «autorizo aplicar las 6 huellas de TASK-028». Se verificaron los before/after antes de escribir y se aplicaron solo esas seis entradas. `check:protected` exit 0 (40+61+81), `typecheck` exit 0, `npm test` exit 0 con **283 passed / 7 skipped (290)** y `git diff --check` limpio. No hay cambios de runtime posteriores. Próximo paso: aceptación G5 de TASK-026/027/028, revisión independiente y commit (sin push) de los tres incrementos.
+
+### Aceptación G5 del 2026-10-24
+
+El propietario declaró «acepto G5 de TASK-027 y TASK-028». Se registró en `tasks.md` y `verification.md` de Feature 02, sin cambios de código ni nuevas huellas: TASK-027 (destino tras login/logout y remediación del destello) y TASK-028 (loader de carga y transición) quedan aceptados humanamente. Sigue pendiente el G5 de TASK-026, la revisión independiente y el commit (sin push) de los tres incrementos. Validación documental: `git diff --check` y `npm run check:protected` sin cambios en manifiestos.
+
+### G5 de TASK-026 del 2026-10-24
+
+El propietario declaró «acepto G5 de TASK-026». Se registró en `tasks.md` y `verification.md` de Feature 02, sin cambios de código ni huellas nuevas. Con ello TASK-026, TASK-027 y TASK-028 quedan con aceptación humana; siguen pendientes la revisión independiente de TASK-027/028 y el commit (36 archivos, sin push). Validación documental: `npm run check:protected` y `git diff --check`.

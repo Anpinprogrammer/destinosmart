@@ -216,7 +216,7 @@ describe('DashboardPage', () => {
     expect(screen.queryByText(/Ada Lovelace/)).not.toBeInTheDocument();
   });
 
-  it('hace logout, llama al servicio y navega a login', async () => {
+  it('hace logout, llama al servicio y navega a la landing', async () => {
     const service = createFakeService(authenticatedState);
     renderDashboard(service);
 
@@ -226,12 +226,46 @@ describe('DashboardPage', () => {
 
     await waitFor(() =>
       expect(navigateMock).toHaveBeenCalledWith({
-        to: '/login',
-        search: { returnTo: '/dashboard' },
+        to: '/',
         replace: true,
       }),
     );
     expect(service.signOut).toHaveBeenCalledTimes(1);
+  });
+
+  it('muestra el loader de salida y navega antes de cerrar la sesión', async () => {
+    const order: string[] = [];
+    navigateMock.mockImplementationOnce(async () => {
+      order.push('navigate');
+    });
+    let releaseSignOut: (() => void) | undefined;
+    const service = {
+      ...createFakeService(authenticatedState),
+      signOut: vi.fn(
+        () =>
+          new Promise<void>((resolve) => {
+            order.push('signOut');
+            releaseSignOut = resolve;
+          }),
+      ),
+    };
+    renderDashboard(service);
+
+    fireEvent.click(
+      await screen.findByRole('button', { name: 'Cerrar sesión' }),
+    );
+
+    expect(await screen.findByRole('status')).toHaveTextContent(
+      'Cerrando sesión',
+    );
+    expect(order).toEqual(['navigate', 'signOut']);
+
+    await act(async () => {
+      releaseSignOut?.();
+    });
+    await waitFor(() =>
+      expect(screen.queryByText('Cerrando sesión…')).not.toBeInTheDocument(),
+    );
   });
 
   it('completa el logout local aunque el proveedor falle', async () => {
@@ -249,8 +283,7 @@ describe('DashboardPage', () => {
 
     await waitFor(() =>
       expect(navigateMock).toHaveBeenCalledWith({
-        to: '/login',
-        search: { returnTo: '/dashboard' },
+        to: '/',
         replace: true,
       }),
     );

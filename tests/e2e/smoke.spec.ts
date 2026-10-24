@@ -12,9 +12,9 @@ test('la landing responde y renderiza', async ({ page }) => {
 test('login público renderiza el formulario', async ({ page }) => {
   await page.goto('/login');
 
-  await expect(page.getByRole('heading', { name: 'Entrar' })).toBeVisible();
-  await expect(page.getByLabel('Email')).toBeVisible();
-  await expect(page.getByLabel('Contraseña')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Inicia sesión' })).toBeVisible();
+  await expect(page.getByLabel('Correo electrónico')).toBeVisible();
+  await expect(page.getByLabel('Contraseña', { exact: true })).toBeVisible();
   await expect(
     page.getByRole('button', { name: 'Continuar con Google' }),
   ).toBeVisible();
@@ -63,5 +63,5 @@ test('dashboard privado redirige a login sin sesión', async ({ page }) => {
   await page.goto('/dashboard');
 
   await expect(page).toHaveURL(/\/login/);
-  await expect(page.getByRole('heading', { name: 'Entrar' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Inicia sesión' })).toBeVisible();
 });

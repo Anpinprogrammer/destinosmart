@@ -2395,3 +2395,132 @@ futuras.
 - **B-03/B-04:** TASK-025 marcada como revisada `PASS_WITH_NOTES`; incidentes, escalado, backup/restore y allowlist exacta añadidos.
 - **Revisión previa/final:** `PASS_WITH_NOTES`; aceptación reservada al propietario.
 - **N-01..N-08:** acciones de cierre corregidas en runbook/§36; integración/E2E documentados como secuenciales.
+
+## Preparación LOGIN-UI-001 — 2026-10-24
+
+Solicitud del propietario de corregir login divergente. Inspeccionados TripsLogin del prototipo, LoginForm/AuthCard/GoogleButton y routes/login reales, DS1.1.0, spec/plan/tasks Feature02. Preparadas adenda técnica LOGIN-UI-001 v0.1.0 y TASK-026 ready-for-approval; sin nuevos requisitos de negocio, sin cambios de React/routing/backend o prototipo. Aprobación histórica de Feature02 no se extiende a esta propuesta. No nuevas pruebas de aplicación; comprobación documental git diff --check. Implementación requiere aprobación específica del plan/tarea conforme AGENTS.
+
+
+## TASK-026 — Implementación LOGIN-UI-001 (2026-10-24)
+
+Aprobación/ejecución explícitas del propietario: «apruebo la adenda y procede con la implementacion de TASK-026». FR-001/003/009/010, NFR-001 → plan LOGIN-UI-001 v0.1.0 → TASK-026. Entradas: spec/plan/tasks, DS 1.1.0, ADR-007 y componentes reales/prototipo. La aceptación histórica de Feature 02 no se amplía automáticamente.
+
+Se implementa formulario compartido con estilo del prototipo, Google primero/contraseña visible/CTA naranja, manteniendo Auth real; anónimo abre panel anclado o modal móvil y autenticado va a dashboard. /login conserva ruta/returnTo con contenedor standalone aprobado. Runtime solo auth-forms.tsx, GoogleButton.tsx, TripsLogin.tsx y routes/login.tsx; no servicios, guards, RLS, prototipo, DS o backend. Registro/reset mantienen sus componentes y estilo previo. Tests de regresión actualizados para labels/nueva navegación aprobada; evidencia de cada cambio/historial en [artifacts/task-026/README.md](artifacts/task-026/README.md).
+
+Validación local final: typecheck exit 0; build Vite 2167 módulos3.15 s exit 0 con warning de chunk 500kB(no hooks npm); desarrollo 9 pass/1skip15.2 s y producción 32 pass/1skip25.1 s; unit suite 272 pass/7 skip/1 fail(280),7.00 s únicamente protección de4 runtime y plan 02. No reportar suite general como aprobada. Proveedores externos/recursos simulados, datos sintéticos; no login Supabase/Google real, CI remoto o conformidad WCAG global. Cierre específico de hashes pendiente, sin nuevo G5 o publicación.
+
+Las primeras regresiones regeneraron4 PNG históricos task-024 en Feature 01; efecto documentado, no restauración arbitraria sin snapshot previo. Test ahora permite ruta de capturas específica para esta tarea. Clases toggle exactas y ariaauthenticated corregidas según review; nota LOW de foco tras resize permanece documentada. TASK-026 implementada, abierta hasta aplicar propuesta de 5 huellas autorizada y repetir protección/suite.
+
+
+### Revisión independiente final TASK-026
+
+Agente `review_task026`: **PASS_WITH_NOTES**. Primera revisión incluyó ejecución independiente `npx vitest run tests/unit/auth-forms.test.tsx`:10/10 PASS (959ms). Revisión final solo lectura sin repetir pruebas; comprobó las cinco huellas before=baseline/after=archivo actual y no aplicadas. Notas de toggle/aria autenticado corregidas. Notas LOW restantes: foco al cruzar breakpoint y regeneración inicial de cuatro capturas históricas, ambas documentadas. No bloqueantes de código; cierre sujeto a permiso específico de hashes y validación posterior. No autoaceptación G5.
+
+
+## Cierre de validación TASK-026 — 2026-10-24
+
+El propietario autorizó «aplicalas y repite la validacion» respecto a la propuesta concreta de cinco huellas. Se verificaron todos los before contra los manifiestos vigentes y todos los after contra SHA-256 de archivos reales antes de escribir. Aplicadas exclusivamente: plan.md de Feature02 en manifiesto de gobernanza, y GoogleButton.tsx/auth-forms.tsx/TripsLogin.tsx/routes/login.tsx en manifiesto de producción. Resto de contenido conservado, sin regeneración general. Propuesta marcada approved-and-applied con responsable, fecha y fuente. Sin cambios runtime nuevos.
+
+Validación posterior realmente ejecutada en macOS local:
+
+- `npm run check:protected`: exit 0; 40 archivos protegidos + 61 del prototipo + 81 de producción correctos.
+- `npm run typecheck`: exit 0.
+- `npm test`: exit 0; **273 passed / 7 skipped (280)**, 31 archivos passed / 1 skipped, 6.27 s.
+- `git diff --check`: sin errores.
+
+**TASK-026 completada** con implementación LOGIN-UI-001, pruebas, review PASS_WITH_NOTES y deltas autorizados/verificados. Fallo anterior de protección resuelto, conservado como historial. No se repite navegador tras cambiar solo manifiestos/documentación; resultados anteriores de producción32/1omitida y desarrollo9/1omitida mantienen su fecha/alcance, no se presentan como nuevas ejecuciones. Notas LOW previas y límites de pruebas con mocks permanecen documentados. No nuevo G5 automático, publicación, autenticación real con proveedores o cierre global de Feature01 por inferencia.
+
+
+## TASK-027 — Implementación AUTH-ROUTE-001 (2026-10-24)
+
+Aprobación: «apruebo AUTH-ROUTE-001 y TASK-027». Alcance: destino posterior a autenticación y a logout; sin nuevos requisitos de negocio ni cambios en guards, RLS, Auth, OAuth, DS o prototipo.
+
+Diagnóstico reproducido antes del cambio: login a 390×844 terminaba en `/login?returnTo=%2Fdashboard` con `auth-token` ya en `localStorage`; el logout iba a `/login?returnTo=%2Fdashboard`. Causa: guard evaluado antes del commit del estado + `/login`/`/register` sin redirección de sesión activa + destino de logout incorrecto.
+
+Cambios: redirección con `replace` al `returnTo` saneado en `/login` y `/register` cuando hay sesión (con caída a `/dashboard` si el retorno apunta a una pantalla de acceso), `flushSync` del estado antes de navegar en los tres puntos de éxito y logout hacia `/`. Cuatro archivos runtime: `routes/login.tsx`, `routes/register.tsx`, `features/landing/components/TripsLogin.tsx`, `routes/_authenticated/dashboard.tsx`.
+
+Validación local ejecutada (macOS, 2026-10-24):
+
+- `npm run typecheck`: exit 0.
+- `npx vitest run tests/unit/auth-route-destination.test.tsx tests/unit/auth-shell.test.tsx tests/unit/trips-login.test.tsx`: 14/14 pass.
+- `npm test`: 277 passed / 7 skipped / **1 failed (285)**, único fallo de protección de los cuatro runtime (esperado antes del delta).
+- `npm run check:protected`: reporta los cuatro archivos de producción modificados; sin otros cambios.
+- Navegador con usuario sintético: móvil 390×844 login `/login` → `/dashboard` con «Mis viajes»; login desde el diálogo de la landing → `/dashboard`, sin diálogo abierto ni `body` bloqueado; visita autenticada a `/login` → `/dashboard`; logout → `/`; desktop 1440×900 → `/dashboard`. Capturas en `/tmp/ds-mobile/05-fix-login-390.png` y `06-fix-dialogo-390.png` (temporales, no versionadas).
+
+Pendiente: propuesta de delta para cuatro archivos de producción y el plan de Feature 02, autorización explícita y repetición de `check:protected`/suite. Sin G5 automático ni publicación.
+
+
+### Cierre de validación TASK-027 — 2026-10-24
+
+El propietario autorizó «autorizo aplicar las 5 huellas de TASK-027». Antes de escribir se verificó cada `before` contra el manifiesto vigente y cada `after` contra SHA-256 del archivo real. Se aplicaron exclusivamente las cinco entradas: cuatro runtime en `production-files.baseline.json` y `plan.md` en `protected-files.baseline.json`. Propuesta marcada `approved-and-applied`. Sin regeneración general ni cambios de código adicionales.
+
+Validación posterior realmente ejecutada en macOS local:
+
+- `npm run check:protected`: exit 0; 40 protegidos + 61 del prototipo + 81 de producción correctos.
+- `npm run typecheck`: exit 0.
+- `npm test`: exit 0; **278 passed / 7 skipped (285)**, 32 archivos passed / 1 skipped.
+- `git diff --check`: sin errores.
+
+**TASK-027 completada.** AC-1 a AC-6 verificados con navegador real en 390×844 y 1440×900 antes del cierre de huellas (ningún cambio runtime posterior). Persisten como pendientes el G5 de TASK-026 y el de TASK-027, la revisión independiente de solo lectura y la publicación; no se autoaceptan. Las 7 pruebas omitidas dependen de Supabase local real y no cuentan como éxito.
+
+
+### Remediación de AC-5 — destello de login al cerrar sesión (2026-10-24)
+
+Reportado por el propietario: al hacer logout se veía por un instante la pantalla de login antes de la landing. Causa: `handleLogout` cerraba la sesión primero, el estado pasaba a anónimo con la ruta todavía en `/dashboard` y el `AuthenticatedGuard` navegaba a `/login?returnTo=%2Fdashboard` antes de que llegara la navegación a `/`.
+
+Corrección en `src/routes/_authenticated/dashboard.tsx`: se espera la navegación a `/` y después se cierra la sesión, de modo que el guard ya está desmontado. Sin cambios de comportamiento adicionales.
+
+Evidencia de navegador (390×844, usuario sintético, rutas capturadas parcheando `history.pushState/replaceState`): rutas registradas durante el logout `["/"]`, sin `/login`; `auth-token` ausente al final. `npx vitest run tests/unit/auth-shell.test.tsx tests/unit/auth-route-destination.test.tsx`: 13/13 pass; `npm test`: 277 passed / 7 skipped / 1 failed (285), el fallo es únicamente la huella de `dashboard.tsx` pendiente de autorización; `npm run check:protected` reporta solo ese archivo.
+
+Pendiente: delta de hash de `dashboard.tsx` y decisión sobre `UI-LOADER-001` (adenda en `artifacts/task-028/`). Sin G5 automático.
+
+### UI-LOADER-001 / TASK-028 — feedback de carga (2026-10-24)
+
+Implementado tras la aprobación «apruebo UI-LOADER-001 y TASK-028». La medición se hizo en Chromium real contra el servidor de desarrollo en `http://127.0.0.1:3000`, con usuario sintético y un muestreo cada 20 ms de los elementos `[role="status"]`.
+
+**Remediación del destello de login (AC-1 de TASK-027).** Durante el logout en 390×844 y 1440×900 las únicas rutas registradas fueron `["/"]`; no hubo navegación a `/login` y `auth-token` desapareció del `localStorage`. `handleLogout` espera la navegación a `/` antes de cerrar la sesión, de modo que el `AuthenticatedGuard` ya está desmontado.
+
+| AC | Escenario | Medición real |
+|---|---|---|
+| AC-1 | Logout en móvil y escritorio | única ruta `/`; sin formulario de login |
+| AC-2 | Recarga de `/dashboard` con sesión | «Cargando tu sesión…» visible ≈531 ms (91→622 ms) |
+| AC-3 | `/login` y `/register` con sesión | formulario ausente (`input[name=email]` = 0) y redirección a `/dashboard`; el loader «Entrando…» se monta de forma síncrona, pero la navegación resuelve en el mismo frame, por lo que no llega a pintarse |
+| AC-4 | Accesibilidad | `role="status"`, `aria-live="polite"`, `aria-label` = etiqueta; `prefers-reduced-motion` reduce transiciones a 100 ms |
+| AC-5 | Cambio de pestaña en el dashboard | «Cargando...» visible ≈531 ms (350 ms de temporizador + ~200 ms de desvanecido) en 390×844 y ≈531 ms en 1440×900 |
+| AC-6 | Landing | conserva splash de 1500 ms y transición de 1200 ms; pruebas e2e de landing sin cambios |
+
+El loader «Cerrando sesión…» se monta al iniciar el logout, pero la navegación a `/` se resuelve antes del siguiente fotograma, así que en la práctica lo que se ve es el splash de la landing. Se mantiene como salvaguarda si la navegación tarda.
+
+Unitarias ejecutadas: `loader` (2), `auth-guard` (actualizada a «Cargando tu sesión»), `auth-shell` (nuevo caso de orden navegar→cerrar sesión y loader de salida), `auth-route-destination` (nuevo caso de loader en login y registro). `npm run typecheck` exit 0. Suite completa: **282 passed / 7 skipped / 1 failed (290)**; el único fallo es la verificación de huellas porque los archivos protegidos cambiaron y sus deltas aún no están autorizados.
+
+No se declara G5 ni revisión independiente; quedan pendientes.
+
+### Cierre de validación TASK-028 — 2026-10-24
+
+El propietario autorizó «autorizo aplicar las 6 huellas de TASK-028». Antes de escribir se verificó cada `before` contra el manifiesto vigente y cada `after` contra SHA-256 del archivo real. Se aplicaron exclusivamente las seis entradas: cinco runtime en `production-files.baseline.json` (`Loader.tsx`, `_authenticated.tsx`, `login.tsx`, `register.tsx`, `_authenticated/dashboard.tsx`) y `plan.md` en `protected-files.baseline.json`. Propuesta marcada `approved-and-applied`. Sin regeneración general ni cambios de código posteriores.
+
+Validación posterior realmente ejecutada en macOS local:
+
+- `npm run check:protected`: exit 0; 40 protegidos + 61 del prototipo + 81 de producción correctos.
+- `npm run typecheck`: exit 0.
+- `npm test`: exit 0; **283 passed / 7 skipped (290)**, 33 archivos passed / 1 skipped.
+- `git diff --check`: sin errores.
+
+**TASK-028 completada.** Quedan pendientes el G5 humano de TASK-026, TASK-027 y TASK-028, la revisión independiente de solo lectura y el commit/publicación; no se autoaceptan. Las 7 pruebas omitidas dependen de Supabase local real y no cuentan como éxito. Se mantiene la observación de AC-3: el loader «Entrando…» se monta pero no llega a pintarse porque la navegación resuelve en el mismo fotograma; el formulario nunca aparece.
+
+### Aceptación G5 de TASK-027 y TASK-028 — 2026-10-24
+
+El propietario declaró: «acepto G5 de TASK-027 y TASK-028». Se registra la aceptación humana de la verificación visual y funcional de ambos incrementos sobre la evidencia ya documentada en este archivo (navegador real 390×844 y 1440×900, usuario sintético, sin cambios de runtime posteriores al cierre de huellas).
+
+- **TASK-027 (AUTH-ROUTE-001):** aceptado. Incluye el destino tras login (`/dashboard`, pestaña «Mis viajes» en móvil), el logout a `/` y la remediación del destello de login.
+- **TASK-028 (UI-LOADER-001):** aceptado. Incluye el loader de sesión, la transición entre pestañas y la ausencia del formulario durante redirecciones.
+- **No cubierto por esta aceptación:** G5 de TASK-026 (sigue pendiente), revisión independiente de solo lectura, commit, push, despliegue y cierre global de Feature 02. La observación de AC-3 (el loader «Entrando…» se monta pero no se pinta por resolución en el mismo fotograma) se mantiene documentada y no se interpreta como defecto aceptado en silencio.
+
+### Aceptación G5 de TASK-026 — 2026-10-24
+
+El propietario declaró: «acepto G5 de TASK-026». Se registra la aceptación humana de la verificación visual del login alineado al prototipo (LOGIN-UI-001), sobre la evidencia ya documentada en este archivo y en `artifacts/task-026/README.md` (navegador real 390×844 y 1440×900, usuario sintético, sin cambios de runtime posteriores).
+
+- **TASK-026 (LOGIN-UI-001):** aceptado. Quedan documentadas, sin bloquear la aceptación, las notas LOW de foco al cruzar breakpoint y la regeneración inicial de cuatro capturas históricas de TASK-024.
+- **No cubierto:** publicación, autenticación real con Google/Supabase, CI remoto, conformidad WCAG global, cierre global de Feature 02 ni cierre de Feature 01.
+
+Con esta aceptación, los tres incrementos de Feature 02 del 2026-10-24 (TASK-026, TASK-027 y TASK-028) cuentan con G5 humano. Siguen pendientes la revisión independiente de TASK-027/TASK-028 y el commit.

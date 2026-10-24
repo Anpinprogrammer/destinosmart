@@ -1,10 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { authE2E, signUpViaApi, uniqueEmail } from '../e2e/auth-helpers';
 
-async function activeElementId(page: Page): Promise<string> {
-  return page.evaluate(() => document.activeElement?.id ?? '');
-}
-
 async function expectNoBasicA11yViolations(page: Page) {
   await expect(page.locator('html')).toHaveAttribute('lang', 'es');
 
@@ -72,33 +68,23 @@ async function expectNoBasicA11yViolations(page: Page) {
 test.describe('accesibilidad básica de autenticación', () => {
   test('login: labels, foco visible y flujo por teclado', async ({ page }) => {
     await page.goto('/login');
-    await expect(page.getByRole('heading', { name: 'Entrar' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Inicia sesión' })).toBeVisible();
     await expectNoBasicA11yViolations(page);
 
+    await page.getByRole('button', { name: 'Continuar con Google' }).focus();
     await page.keyboard.press('Tab');
-    expect(await activeElementId(page)).toBe('login-email');
-    const focusStyle = await page.evaluate(() => {
-      const element = document.activeElement as HTMLElement;
-      const style = getComputedStyle(element);
-      return {
-        outlineStyle: style.outlineStyle,
-        outlineWidth: style.outlineWidth,
-        outlineColor: style.outlineColor,
-      };
-    });
-    expect(focusStyle.outlineStyle).not.toBe('none');
-    expect(Number.parseFloat(focusStyle.outlineWidth)).toBeGreaterThan(0);
-    expect(focusStyle.outlineColor).not.toBe('rgba(0, 0, 0, 0)');
-    expect(focusStyle.outlineColor).not.toBe('transparent');
-
+    await expect(page.getByLabel('Correo electrónico')).toBeFocused();
     await page.keyboard.press('Tab');
-    expect(await activeElementId(page)).toBe('login-password');
+    await expect(page.getByLabel('Contraseña', { exact: true })).toBeFocused();
     await page.keyboard.press('Tab');
-    await expect(page.getByRole('button', { name: 'Entrar' })).toBeFocused();
-
-    await page.locator('#login-email').fill('not-an-email');
-    await page.locator('#login-password').fill('synthetic');
-    await page.keyboard.press('Enter');
+    await expect(page.getByRole('button', { name: 'Mostrar contraseña' })).toBeFocused();
+    const focusStyle = await page.getByRole('button', { name: 'Mostrar contraseña' }).evaluate(element => { const style = getComputedStyle(element); return { shadow: style.boxShadow, outline: style.outlineStyle, width: style.outlineWidth }; });
+    expect(focusStyle.shadow !== 'none' || (focusStyle.outline !== 'none' && parseFloat(focusStyle.width) > 0)).toBe(true);
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('button', { name: 'Iniciar sesión', exact: true })).toBeFocused();
+    await page.getByLabel('Correo electrónico').fill('not-an-email');
+    await page.getByLabel('Contraseña', { exact: true }).fill('synthetic');
+    await page.getByRole('button', { name: 'Iniciar sesión', exact: true }).click();
     await expect(page.getByRole('alert')).toBeVisible();
   });
 
@@ -145,7 +131,7 @@ test.describe('accesibilidad básica de autenticación', () => {
   test('ruta privada no muestra datos sin sesión', async ({ page }) => {
     await page.goto('/dashboard');
     await expect(page).toHaveURL(/\/login/);
-    await expect(page.getByRole('heading', { name: 'Entrar' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Inicia sesión' })).toBeVisible();
     await expectNoBasicA11yViolations(page);
   });
 
@@ -161,9 +147,9 @@ test.describe('accesibilidad básica de autenticación', () => {
     const email = uniqueEmail('a11y');
     await signUpViaApi(request, email, 'SyntheticPass123!');
     await page.goto('/login');
-    await page.getByLabel('Email').fill(email);
-    await page.getByLabel('Contraseña').fill('SyntheticPass123!');
-    await page.getByRole('button', { name: 'Entrar' }).click();
+    await page.getByLabel('Correo electrónico').fill(email);
+    await page.getByLabel('Contraseña', { exact: true }).fill('SyntheticPass123!');
+    await page.getByRole('button', { name: 'Iniciar sesión' }).click();
     await expect(page.getByRole('heading', { name: /Hola,/ })).toBeVisible();
     await expectNoBasicA11yViolations(page);
 

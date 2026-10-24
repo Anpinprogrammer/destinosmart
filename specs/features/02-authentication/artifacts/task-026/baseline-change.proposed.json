@@ -1,0 +1,42 @@
+{
+  "status": "approved-and-applied",
+  "task": "Feature 02 TASK-026 / LOGIN-UI-001 v0.1.0",
+  "date": "2026-10-24",
+  "changes": [
+    {
+      "baseline": "tests/regression/protected-files.baseline.json",
+      "path": "specs/features/02-authentication/plan.md",
+      "before": "4225c0a38ae17fa5c60f11a36263a06271937ca2515d000dd3aade3817a08e6e",
+      "after": "00265ec0b27d34daf69bdd92391833109ba6d0a5731eabdfbbf5f0c8a722308a"
+    },
+    {
+      "baseline": "tests/regression/production-files.baseline.json",
+      "path": "src/features/auth/components/GoogleButton.tsx",
+      "before": "a9b8a4f1499835d2edb8b2bc7d9ca119c94805f34bb4da531c41f1a1d5915f5e",
+      "after": "5bd41874856ffcd8731c97fcfb631d1ee658996cfe499ceb17a903851d5a6cbf"
+    },
+    {
+      "baseline": "tests/regression/production-files.baseline.json",
+      "path": "src/features/auth/components/auth-forms.tsx",
+      "before": "797b8d16686064f00c04f355d34860b2349b2fc624db54b3ed8b3d2e04884d5a",
+      "after": "2fe53af0ad15ca858bfd95b66a6dcd5c676688d329a91dbcca669ff49f34925d"
+    },
+    {
+      "baseline": "tests/regression/production-files.baseline.json",
+      "path": "src/features/landing/components/TripsLogin.tsx",
+      "before": "e23b2c964bb0a2b4a9e7cee3e257785e5e12c4f247014b2396c580dfc306e81f",
+      "after": "1e6f1071dde6f352f84b30b8bec6f9c6c52c447826f0128ec14db2f24de9aa75"
+    },
+    {
+      "baseline": "tests/regression/production-files.baseline.json",
+      "path": "src/routes/login.tsx",
+      "before": "67e2031dc3666783f42877d0cd9ee034684ec28b2671b2b5a61e20e587b8e6eb",
+      "after": "9d237a9506ceab5b55b10975c191b1a38ac7f7ddcaae268bffc33b3c37b1d5a6"
+    }
+  ],
+  "applied": true,
+  "scope": "Solo plan aprobado y cuatro archivos runtime listados; sin regeneración general.",
+  "approved_by": "propietario del proyecto",
+  "approved_at": "2026-10-24",
+  "approval_source": "aplicalas y repite la validacion"
+}

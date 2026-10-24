@@ -52,13 +52,13 @@ describe('LoginForm', () => {
     const onSuccess = vi.fn();
     render(<LoginForm service={service} returnTo="/dashboard" onSuccess={onSuccess} />);
 
-    fireEvent.change(screen.getByLabelText('Email'), {
+    fireEvent.change(screen.getByLabelText('Correo electrónico'), {
       target: { value: 'not-an-email' },
     });
     fireEvent.change(screen.getByLabelText('Contraseña'), {
       target: { value: '' },
     });
-    fireEvent.click(screen.getByRole('button', { name: 'Entrar' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'Revisa los datos ingresados',
@@ -72,13 +72,13 @@ describe('LoginForm', () => {
     const onSuccess = vi.fn();
     render(<LoginForm service={service} returnTo="/dashboard" onSuccess={onSuccess} />);
 
-    fireEvent.change(screen.getByLabelText('Email'), {
+    fireEvent.change(screen.getByLabelText('Correo electrónico'), {
       target: { value: 'USER@example.com' },
     });
     fireEvent.change(screen.getByLabelText('Contraseña'), {
       target: { value: 'secret-password' },
     });
-    fireEvent.click(screen.getByRole('button', { name: 'Entrar' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
 
     await waitFor(() =>
       expect(onSuccess).toHaveBeenCalledWith(
@@ -98,13 +98,13 @@ describe('LoginForm', () => {
     });
     render(<LoginForm service={service} returnTo="/dashboard" onSuccess={vi.fn()} />);
 
-    fireEvent.change(screen.getByLabelText('Email'), {
+    fireEvent.change(screen.getByLabelText('Correo electrónico'), {
       target: { value: 'user@example.com' },
     });
     fireEvent.change(screen.getByLabelText('Contraseña'), {
       target: { value: 'wrong-password' },
     });
-    fireEvent.click(screen.getByRole('button', { name: 'Entrar' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'No pudimos iniciar sesión',
@@ -119,18 +119,56 @@ describe('LoginForm', () => {
     });
     render(<LoginForm service={service} returnTo="/dashboard" onSuccess={vi.fn()} />);
 
-    fireEvent.change(screen.getByLabelText('Email'), {
+    fireEvent.change(screen.getByLabelText('Correo electrónico'), {
       target: { value: 'user@example.com' },
     });
     fireEvent.change(screen.getByLabelText('Contraseña'), {
       target: { value: 'secret-password' },
     });
-    fireEvent.click(screen.getByRole('button', { name: 'Entrar' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
 
     expect(await screen.findByRole('alert')).toHaveTextContent(
       'Ocurrió un error',
     );
-    expect(screen.getByRole('button', { name: 'Entrar' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: 'Iniciar sesión' })).toBeEnabled();
+  });
+});
+
+describe('TASK-026 prototype login states', () => {
+  it('shows Google before email, toggles password and locks both actions while password login is pending', async () => {
+    let complete!: (state: AuthState) => void;
+    const service = createFakeService({ signInWithPassword: vi.fn(() => new Promise<AuthState>(resolve => { complete = resolve; })) });
+    const success = vi.fn();
+    render(<LoginForm service={service} returnTo="/dashboard" onSuccess={success} />);
+    const email = screen.getByLabelText('Correo electrónico');
+    const google = screen.getByRole('button', { name: 'Continuar con Google' });
+    expect(google.compareDocumentPosition(email) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    const password = screen.getByLabelText('Contraseña');
+    fireEvent.click(screen.getByRole('button', { name: 'Mostrar contraseña' }));
+    expect(password).toHaveAttribute('type', 'text');
+    expect(screen.getByRole('button', { name: 'Ocultar contraseña' })).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.change(email, { target: { value: 'login.audit@example.com' } });
+    fireEvent.change(password, { target: { value: 'synthetic-password' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Iniciar sesión' }));
+    expect(google).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Entrando…' })).toBeDisabled();
+    fireEvent.submit(email.closest('form')!);
+    expect(service.signInWithPassword).toHaveBeenCalledTimes(1);
+    complete(authenticatedState);
+    await waitFor(() => expect(success).toHaveBeenCalledWith('/dashboard', authenticatedState));
+  });
+
+  it('locks password submit while Google is pending and displays catalog errors on failure', async () => {
+    let reject!: (error: unknown) => void;
+    const service = createFakeService({ signInWithGoogle: vi.fn(() => new Promise<void>((_, fail) => { reject = fail; })) });
+    render(<LoginForm service={service} returnTo="/dashboard" onSuccess={vi.fn()} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Continuar con Google' }));
+    expect(screen.getByRole('button', { name: 'Iniciar sesión' })).toBeDisabled();
+    expect(screen.getByLabelText('Correo electrónico')).toBeDisabled();
+    expect(service.signInWithGoogle).toHaveBeenCalledWith({ redirectTo: expect.stringContaining('/auth/callback?returnTo=%2Fdashboard') });
+    reject(new AuthServiceError('UNKNOWN'));
+    await waitFor(() => expect(screen.getByRole('alert')).toBeVisible());
+    expect(screen.getByRole('button', { name: 'Iniciar sesión' })).toBeEnabled();
   });
 });
 

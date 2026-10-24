@@ -89,7 +89,7 @@ test('TASK-012 AC-002: header and footer navigate lazy sections and back home', 
   await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
 });
 
-test('TASK-012 AC-002/004: mobile menu closes on navigation; anonymous trips goes to login', async ({ page }) => {
+test('TASK-012 AC-002/004: mobile menu closes on navigation; anonymous trips opens prototype login', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await home(page);
   const toggle = page.getByRole('button', { name: 'Abrir menú' });
@@ -100,8 +100,8 @@ test('TASK-012 AC-002/004: mobile menu closes on navigation; anonymous trips goe
   await expect(page.locator('#planes')).toBeInViewport();
   await toggle.click();
   await page.getByRole('button', { name: 'Mis viajes' }).click();
-  await expect(page).toHaveURL(/\/login\?returnTo=%2Fdashboard/);
-  await expect(page.getByRole('heading', { name: 'Entrar' })).toBeVisible();
+  await expect(page.getByRole('dialog', { name: 'Inicia sesión', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Inicia sesión' })).toBeVisible();
 });
 
 test('TASK-012 AC-004: authenticated trips uses existing dashboard (mock session)', async ({ page }) => {

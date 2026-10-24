@@ -1,0 +1,15 @@
+{
+  "status": "approved-and-applied",
+  "change": "Design System 1.1.0: alineación documental con prototipo oficial",
+  "requested_at": "2026-10-24",
+  "baseline": "tests/regression/protected-files.baseline.json",
+  "only_change": {
+    "path": "docs/DESIGN_SYSTEM.md",
+    "before": "a56ea9f41eb70955c619b772e6863ca4657e32be32e82689cbd4da045ce442b2",
+    "after": "eefaede5671d85eeb02d67994efcec83ac69ce116c386c4871a4d4855128c0a4"
+  },
+  "applied": true,
+  "approved_by": "propietario del proyecto",
+  "approved_at": "2026-10-24",
+  "approval_source": "autorizo aplicar la unica huella"
+}

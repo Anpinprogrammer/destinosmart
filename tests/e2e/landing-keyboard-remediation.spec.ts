@@ -55,7 +55,7 @@ for (const width of [768, 844, 1440]) {
         await page.keyboard.press('Tab');
         await expect(summary).toBeFocused();
         await summary.locator('button').evaluateAll(els => els.forEach(el => { (el as HTMLButtonElement).disabled = false; }));
-        const folder = resolve('specs/features/01-landing-page/artifacts/task-024');
+        const folder = resolve(process.env.KEYBOARD_AUDIT_ARTIFACTS ?? 'specs/features/01-landing-page/artifacts/task-024');
         await mkdir(folder, { recursive: true });
         await page.screenshot({ path: resolve(folder, `summary-${width}.png`) });
       }
@@ -76,7 +76,7 @@ for (const width of [768, 844, 1440]) {
     await page.setViewportSize({ width: Math.min(width, 844), height });
     await page.getByRole('button', { name: 'Abrir menú' }).click();
     await page.getByRole('button', { name: 'Mis viajes' }).last().click();
-    await expect(page).toHaveURL(/\/login/);
+    await expect(page.getByRole('dialog', { name: 'Inicia sesión', exact: true })).toBeVisible();
     await page.goto('/');
     await expect(description).toBeVisible();
     await expect(page.locator('.landing-scope [inert]')).toHaveCount(0);
@@ -118,7 +118,7 @@ for (const width of [320, 390, 768, 1024, 1440]) {
       }
       await toggle.click();
       if (width === 390 || width === 1024) {
-        const folder = resolve('specs/features/01-landing-page/artifacts/task-024');
+        const folder = resolve(process.env.KEYBOARD_AUDIT_ARTIFACTS ?? 'specs/features/01-landing-page/artifacts/task-024');
         await mkdir(folder, { recursive: true });
         await page.locator('.landing-scope > header').screenshot({ path: resolve(folder, `menu-${width}.png`) });
       }
@@ -142,7 +142,7 @@ for (const width of [320, 390, 768, 1024, 1440]) {
       expect(new URL(page.url()).hash).toBe('');
       await toggle.click();
       await page.getByRole('button', { name: 'Mis viajes' }).last().click();
-      await expect(page).toHaveURL(/\/login/);
+      await expect(page.getByRole('dialog', { name: 'Inicia sesión', exact: true })).toBeVisible();
       await page.goto('/');
       await expect(toggle).toHaveAttribute('aria-expanded', 'false');
     }

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Outlet, useLocation, useNavigate } from '@tanstack/react-router';
 import type { ReactNode } from 'react';
+import { Loader } from '../components/Loader';
 import { useAuth } from '../features/auth/auth-provider';
 import { sanitizeReturnTo } from '../features/auth/auth-service';
 import type { AuthState } from '../features/auth/auth-types';
@@ -34,13 +35,7 @@ export function AuthenticatedGuard({
   const decision = getAuthGuardDecision(state);
 
   if (decision === 'loading') {
-    return (
-      <main className="mx-auto flex min-h-screen max-w-3xl items-center justify-center px-6">
-        <p role="status" className="text-sm font-semibold text-text-secondary">
-          Cargando sesión…
-        </p>
-      </main>
-    );
+    return <Loader label="Cargando tu sesión…" />;
   }
 
   if (decision === 'allow') {

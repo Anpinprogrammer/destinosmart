@@ -1,0 +1,50 @@
+{
+  "feature_id": "02-authentication",
+  "increment": "UI-LOADER-001 / TASK-028",
+  "status": "approved-and-applied",
+  "applied": true,
+  "created_at": "2026-10-24",
+  "requested_by": "propietario del proyecto",
+  "approval_source": "propietario del proyecto: «autorizo aplicar las 6 huellas de TASK-028»",
+  "notes": "Cinco archivos runtime por UI-LOADER-001 y plan.md por la adenda aprobada. No se regeneran manifiestos completos ni se toca el prototipo.",
+  "changes": [
+    {
+      "path": "src/components/Loader.tsx",
+      "baseline": "tests/regression/production-files.baseline.json",
+      "before": "c304349ba052241ab90adc6c2a88f5709c69deb45d28d5e67182fe612db2cc35",
+      "after": "47b841e431669683f663ef2cf81f59042ccde1d8beeed733354e81fbfa7558f8"
+    },
+    {
+      "path": "src/routes/_authenticated.tsx",
+      "baseline": "tests/regression/production-files.baseline.json",
+      "before": "7cee572504efaed0cdaf2c2fcb01db3a3d7ae0f19e6b6cf237f55b5ed6db191b",
+      "after": "16076ab15f9c9c89c34ef4d45b0d0f9ed06387044a6454d66207d12578a62b41"
+    },
+    {
+      "path": "src/routes/login.tsx",
+      "baseline": "tests/regression/production-files.baseline.json",
+      "before": "15cef7b158dc9738030738fa25e193b642296ff7045c53387dc62b9b06224a42",
+      "after": "8804ab7d720e045a9bcd3b2634c947652135eae8f1b6b66e200fa0fb212859db"
+    },
+    {
+      "path": "src/routes/register.tsx",
+      "baseline": "tests/regression/production-files.baseline.json",
+      "before": "62354c59618070cd396dbff2b9b8aec27d5db90d4e6d05eb6450baf3fe0b06f9",
+      "after": "47062d875e5f4f7263bade34bf1b7e8b9b87a1861f9a7976ddfc0b7712617ced"
+    },
+    {
+      "path": "src/routes/_authenticated/dashboard.tsx",
+      "baseline": "tests/regression/production-files.baseline.json",
+      "before": "d923012a7a2b8e2027d875893948d65b2cadebfcafa6c5cd623fa9b487ac0f95",
+      "after": "e6494788dd4d0a5aab327e10efba10927962f27ca778aee4d2e654a5cf614364"
+    },
+    {
+      "path": "specs/features/02-authentication/plan.md",
+      "baseline": "tests/regression/protected-files.baseline.json",
+      "before": "63ee6ddcbe2adf99ef83f80cfcd02d0520b810f513fe8f75aae61e2d3659e682",
+      "after": "a9c61fbfbd7b49aeda5e5a033111bb25a14da46ff0975a75f99b2d7a03a13c61"
+    }
+  ],
+  "applied_at": "2026-10-24",
+  "applied_by": "agente implementador"
+}

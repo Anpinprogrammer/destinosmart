@@ -3,6 +3,9 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, expect, it, vi } from 'vitest';
 import { Navbar } from '../../src/features/landing/components/Navbar';
 
+vi.mock('../../src/features/auth/auth-provider', () => ({ useAuth: () => ({ state: { status: 'anonymous' } }) }));
+vi.mock('@tanstack/react-router', () => ({ useNavigate: () => vi.fn() }));
+
 afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 
 it('TASK-023 Escape listener respects consumed events and inert background, and cleans up on close/unmount', () => {

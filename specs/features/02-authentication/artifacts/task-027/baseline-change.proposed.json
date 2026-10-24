@@ -1,0 +1,45 @@
+{
+  "status": "approved-and-applied",
+  "task": "Feature 02 TASK-027 / AUTH-ROUTE-001 v0.1.0",
+  "date": "2026-10-24",
+  "changes": [
+    {
+      "baseline": "tests/regression/production-files.baseline.json",
+      "path": "src/routes/login.tsx",
+      "before": "9d237a9506ceab5b55b10975c191b1a38ac7f7ddcaae268bffc33b3c37b1d5a6",
+      "after": "15cef7b158dc9738030738fa25e193b642296ff7045c53387dc62b9b06224a42"
+    },
+    {
+      "baseline": "tests/regression/production-files.baseline.json",
+      "path": "src/routes/register.tsx",
+      "before": "30ac6abf7f4d91f2d2e1de388df14aeddb4f9cb3e27366a8313650b340370b80",
+      "after": "62354c59618070cd396dbff2b9b8aec27d5db90d4e6d05eb6450baf3fe0b06f9"
+    },
+    {
+      "baseline": "tests/regression/production-files.baseline.json",
+      "path": "src/features/landing/components/TripsLogin.tsx",
+      "before": "1e6f1071dde6f352f84b30b8bec6f9c6c52c447826f0128ec14db2f24de9aa75",
+      "after": "16c869d26b26e0a669f307ace6799aee9acc51676fb603724956be0f62fbec88"
+    },
+    {
+      "baseline": "tests/regression/production-files.baseline.json",
+      "path": "src/routes/_authenticated/dashboard.tsx",
+      "before": "94cf79a7495ab464ff20697467dd84f86c250455e16fbdd80b363fc55da65cad",
+      "after": "d923012a7a2b8e2027d875893948d65b2cadebfcafa6c5cd623fa9b487ac0f95"
+    },
+    {
+      "baseline": "tests/regression/protected-files.baseline.json",
+      "path": "specs/features/02-authentication/plan.md",
+      "before": "00265ec0b27d34daf69bdd92391833109ba6d0a5731eabdfbbf5f0c8a722308a",
+      "after": "63ee6ddcbe2adf99ef83f80cfcd02d0520b810f513fe8f75aae61e2d3659e682"
+    }
+  ],
+  "applied": true,
+  "scope": "Solo plan aprobado y cuatro archivos runtime listados; sin regeneración general.",
+  "approved_by": "propietario del proyecto",
+  "approved_at": "2026-10-24",
+  "approval_source": "apruebo AUTH-ROUTE-001 y TASK-027",
+  "note": "Los hashes after corresponden al estado implementado. Ninguna entrada de baseline fue modificada.",
+  "applied_at": "2026-10-24",
+  "applied_by": "agente implementador"
+}

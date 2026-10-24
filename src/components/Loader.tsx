@@ -18,13 +18,18 @@ const LoadingContext = createContext<(navigate: () => void) => void>(
 )
 export const usePageTransition = () => useContext(LoadingContext)
 
-export function Loader() {
+export interface LoaderProps {
+  /** Etiqueta visible y accesible del estado de carga. */
+  label?: string
+}
+
+export function Loader({ label = 'Cargando...' }: LoaderProps = {}) {
   const reduced = useReducedMotion()
   return (
     <motion.div
       role="status"
       aria-live="polite"
-      aria-label="Cargando DestinoSmart"
+      aria-label={label}
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: reduced ? 0 : 0.2 }}
@@ -47,20 +52,41 @@ export function Loader() {
           className="size-32 rounded-full object-contain sm:size-36"
         />
       </div>
-      <p className="mt-6 text-sm font-medium text-brand-primary">Cargando...</p>
+      <p className="mt-6 text-sm font-medium text-brand-primary">{label}</p>
     </motion.div>
   )
 }
 
-export function LoaderProvider({ children }: { children: ReactNode }) {
+export interface LoaderProviderProps {
+  children: ReactNode
+  /**
+   * Precarga la portada y muestra el splash inicial. La landing lo usa; las
+   * pantallas internas lo desactivan para no esperar imágenes ajenas.
+   */
+  preload?: boolean
+  /** Duración mínima del splash inicial en ms (por defecto 1500). */
+  minimumDuration?: number
+  /** Duración del loader en cada transición en ms (por defecto 1200). */
+  transitionDuration?: number
+}
+
+export function LoaderProvider({
+  children,
+  preload = true,
+  minimumDuration,
+  transitionDuration,
+}: LoaderProviderProps) {
+  const initialDelay = minimumDuration ?? 1500
+  const transitionDelay = transitionDuration ?? 1200
   const testMode = import.meta.env.MODE === 'test'
-  const [loading, setLoading] = useState(!testMode)
-  const [ready, setReady] = useState(testMode)
-  const [started, setStarted] = useState(testMode)
-  const loadingRef = useRef(true)
+  const [loading, setLoading] = useState(!testMode && preload)
+  const [ready, setReady] = useState(testMode || !preload)
+  const [started, setStarted] = useState(testMode || !preload)
+  const loadingRef = useRef(!testMode && preload)
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
   const reduced = useReducedMotion()
   useEffect(() => {
+    if (!preload) return
     let cancelled = false
     let deadline: ReturnType<typeof setTimeout> | undefined
     const image = new Image()
@@ -84,7 +110,12 @@ export function LoaderProvider({ children }: { children: ReactNode }) {
     })
     const artwork = decode(image)
     const minimum = new Promise<void>((resolve) => {
-      const delay = import.meta.env.MODE === 'test' ? 0 : reduced ? 150 : 1500
+      const delay =
+        import.meta.env.MODE === 'test'
+          ? 0
+          : reduced
+            ? Math.min(initialDelay, 150)
+            : initialDelay
       timer.current = setTimeout(resolve, delay)
     })
     const boundedArtwork = Promise.race([
@@ -104,7 +135,7 @@ export function LoaderProvider({ children }: { children: ReactNode }) {
       clearTimeout(timer.current)
       clearTimeout(deadline)
     }
-  }, [reduced])
+  }, [initialDelay, preload, reduced])
   useEffect(() => {
     if (!loading) return
     const overflow = document.body.style.overflow
@@ -124,7 +155,7 @@ export function LoaderProvider({ children }: { children: ReactNode }) {
         loadingRef.current = false
         setLoading(false)
       },
-      reduced ? 100 : 1200,
+      reduced ? Math.min(transitionDelay, 100) : transitionDelay,
     )
   }
   return (

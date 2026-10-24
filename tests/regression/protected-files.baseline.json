@@ -3,7 +3,7 @@
   "files": {
     "AGENTS.md": "a47a86607ab7683089e5d004db5c58ddd96a09d61a060a6b9ebaf827bc6f73ca",
     "README.md": "9b99f698fecdd92fa6d879b353cce43f61fc69e4364da4f2d2f0ad3c208a4a25",
-    "docs/DESIGN_SYSTEM.md": "a56ea9f41eb70955c619b772e6863ca4657e32be32e82689cbd4da045ce442b2",
+    "docs/DESIGN_SYSTEM.md": "eefaede5671d85eeb02d67994efcec83ac69ce116c386c4871a4d4855128c0a4",
     "docs/constitution.md": "a597c4cffeb3d87a6cc9473ec799271f9bdd91574016a3c05febb5950fc11a91",
     "docs/decisions/ADR-000-template.md": "6cb8d03f23cec447c3df47a9fef34786764ebe6b6e1d1e2992a4ebc481e2f8f6",
     "docs/decisions/ADR-001-mvp-stack.md": "a04a5b7aa879b548edd4d70b051cc7e396540ae7a09e648edac52cc68e41d02b",
@@ -31,7 +31,7 @@
     "specs/core/README.md": "2665ca1243944378b799f6dca2492291877ebccc72b2325fb967809a74546b38",
     "specs/core/review-report.md": "2bb944c6f06dce964a486fa9e2c44b0673e482963cc362dee0d357e1d0d775d1",
     "specs/features/02-authentication/spec.md": "00142d84f9e7c0caedcf5bc2525b90cbc828824c16ddfae8b0bd06008d8962cd",
-    "specs/features/02-authentication/plan.md": "4225c0a38ae17fa5c60f11a36263a06271937ca2515d000dd3aade3817a08e6e",
+    "specs/features/02-authentication/plan.md": "a9c61fbfbd7b49aeda5e5a033111bb25a14da46ff0975a75f99b2d7a03a13c61",
     "specs/features/02-authentication/clarifications.md": "1b605b0a0787c91e7497736c906972b21dd417cdf834ca60c6a283541b63b5d4",
     "specs/features/02-authentication/contracts/auth-contracts.md": "391d562ef222b2c10ed60d796c2489da6bf7653391c3bcba4dec114e6ff2a8a3",
     "specs/features/02-authentication/contracts/profile.schema.json": "16bca83ae98fade7c28bf07dff2a5f5750eae8c93eceb0cc50dd40716213ecd9",

@@ -56,7 +56,7 @@ describe('AuthenticatedGuard', () => {
       </AuthenticatedGuard>,
     );
 
-    expect(screen.getByRole('status')).toHaveTextContent('Cargando sesión');
+    expect(screen.getByRole('status')).toHaveTextContent('Cargando tu sesión');
     expect(screen.queryByText('contenido privado')).not.toBeInTheDocument();
   });
 

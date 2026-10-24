@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
+import { Loader, LoaderProvider } from '../../components/Loader';
 import { useAuth } from '../../features/auth/auth-provider';
 import UserDashboard from '../../features/dashboard/components/UserDashboard';
 import type {
@@ -14,6 +16,7 @@ function planForDashboard(plan: string | undefined): SubscriptionPlan {
 export function DashboardPage() {
   const { state, signOut } = useAuth();
   const navigate = useNavigate();
+  const [loggingOut, setLoggingOut] = useState(false);
 
   if (state.status !== 'authenticated') {
     return null;
@@ -33,19 +36,29 @@ export function DashboardPage() {
   };
 
   async function handleLogout() {
+    if (loggingOut) return;
+    setLoggingOut(true);
+    // AUTH-ROUTE-001: salir primero de la zona privada evita que el guard
+    // redirija a /login mientras el estado pasa a anónimo.
+    try {
+      await navigate({ to: '/', replace: true });
+    } catch {
+      // Si la navegación falla, se cierra sesión igualmente.
+    }
     try {
       await signOut();
     } catch {
       // El estado local ya quedó limpio; no se expone el detalle del proveedor.
     }
-    void Promise.resolve(
-      navigate({
-        to: '/login',
-        search: { returnTo: '/dashboard' },
-        replace: true,
-      }),
-    ).catch(() => undefined);
+    setLoggingOut(false);
   }
 
-  return <UserDashboard user={user} actions={{ onLogout: handleLogout }} />;
+  return (
+    // UI-LOADER-001: transición breve entre pestañas, sin splash ni precarga
+    // de imágenes de portada.
+    <LoaderProvider preload={false} minimumDuration={0} transitionDuration={350}>
+      <UserDashboard user={user} actions={{ onLogout: handleLogout }} />
+      {loggingOut && <Loader label="Cerrando sesión…" />}
+    </LoaderProvider>
+  );
 }

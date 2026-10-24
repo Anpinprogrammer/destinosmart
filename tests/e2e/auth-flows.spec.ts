@@ -25,7 +25,7 @@ test.describe('flujos de autenticación con Supabase local', () => {
     await page.goto('/register');
     await page.getByLabel('Nombre (opcional)').fill('E2E User');
     await page.getByLabel('Email').fill(email);
-    await page.getByLabel('Contraseña').fill(PASSWORD);
+    await page.getByLabel('Contraseña', { exact: true }).fill(PASSWORD);
     await page.getByRole('button', { name: 'Crear cuenta' }).click();
 
     await expect(page).toHaveURL(/\/dashboard$/);
@@ -44,15 +44,15 @@ test.describe('flujos de autenticación con Supabase local', () => {
 
     await page.getByRole('button', { name: 'Cerrar sesión' }).click();
     await expect(page).toHaveURL(/\/login/);
-    await expect(page.getByRole('heading', { name: 'Entrar' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Inicia sesión' })).toBeVisible();
 
     await page.goto('/dashboard');
     await expect(page).toHaveURL(/\/login/);
-    await expect(page.getByRole('heading', { name: 'Entrar' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Inicia sesión' })).toBeVisible();
 
-    await page.getByLabel('Email').fill(email);
-    await page.getByLabel('Contraseña').fill(PASSWORD);
-    await page.getByRole('button', { name: 'Entrar' }).click();
+    await page.getByLabel('Correo electrónico').fill(email);
+    await page.getByLabel('Contraseña', { exact: true }).fill(PASSWORD);
+    await page.getByRole('button', { name: 'Iniciar sesión' }).click();
     await expect(page).toHaveURL(/\/dashboard$/);
     await expect(
       page.getByRole('heading', { name: /Hola, E2E User/ }),
@@ -67,9 +67,9 @@ test.describe('flujos de autenticación con Supabase local', () => {
     await signUpViaApi(request, email, PASSWORD);
 
     await page.goto('/login');
-    await page.getByLabel('Email').fill(email);
-    await page.getByLabel('Contraseña').fill('wrong-password');
-    await page.getByRole('button', { name: 'Entrar' }).click();
+    await page.getByLabel('Correo electrónico').fill(email);
+    await page.getByLabel('Contraseña', { exact: true }).fill('wrong-password');
+    await page.getByRole('button', { name: 'Iniciar sesión' }).click();
     await expect(page.getByRole('alert')).toBeVisible();
     await expect(page).toHaveURL(/\/login/);
 
@@ -77,9 +77,9 @@ test.describe('flujos de autenticación con Supabase local', () => {
     await expect(page).toHaveURL(/\/login/);
 
     await page.goto('/login?returnTo=https%3A%2F%2Fevil.example%2Fdashboard');
-    await page.getByLabel('Email').fill(email);
-    await page.getByLabel('Contraseña').fill(PASSWORD);
-    await page.getByRole('button', { name: 'Entrar' }).click();
+    await page.getByLabel('Correo electrónico').fill(email);
+    await page.getByLabel('Contraseña', { exact: true }).fill(PASSWORD);
+    await page.getByRole('button', { name: 'Iniciar sesión' }).click();
 
     await expect(page).toHaveURL(/\/dashboard$/);
     await expect(page).not.toHaveURL(/evil\.example/);
@@ -119,9 +119,9 @@ test.describe('flujos de autenticación con Supabase local', () => {
     expect(replayLocation).toContain('otp_expired');
 
     await page.goto('/login');
-    await page.getByLabel('Email').fill(email);
-    await page.getByLabel('Contraseña').fill(NEW_PASSWORD);
-    await page.getByRole('button', { name: 'Entrar' }).click();
+    await page.getByLabel('Correo electrónico').fill(email);
+    await page.getByLabel('Contraseña', { exact: true }).fill(NEW_PASSWORD);
+    await page.getByRole('button', { name: 'Iniciar sesión' }).click();
     await expect(page).toHaveURL(/\/dashboard$/);
   });
 
