@@ -1,0 +1,49 @@
+{
+  "samples": [
+    {
+      "sample": "Empezar gratis — Free",
+      "color": "rgb(14, 44, 82)",
+      "background": "rgb(241, 245, 249)",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "opaque": true,
+      "ratio": 12.77267200688991,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "sample": "Elegir plan — Viajero Ocasional",
+      "color": "rgb(14, 44, 82)",
+      "background": "rgb(241, 245, 249)",
+      "fontSize": "14px",
+      "fontWeight": "600",
+      "opaque": true,
+      "ratio": 12.77267200688991,
+      "threshold": 4.5,
+      "passes": true
+    },
+    {
+      "sample": "Elegir plan — Viajero Frecuente",
+      "color": "rgb(255, 255, 255)",
+      "background": "rgb(255, 154, 0)",
+      "fontSize": "14px",
+      "fontWeight": "700",
+      "opaque": true,
+      "ratio": 2.126745857402104,
+      "threshold": 4.5,
+      "passes": false
+    },
+    {
+      "sample": "Contact submit",
+      "color": "rgb(255, 255, 255)",
+      "background": "rgb(255, 154, 0)",
+      "fontSize": "16px",
+      "fontWeight": "700",
+      "opaque": true,
+      "ratio": 2.126745857402104,
+      "threshold": 4.5,
+      "passes": false
+    }
+  ],
+  "scope": "Computed opaque solid button text, default state only; no gradients, images, placeholders or focus indicator certification."
+}

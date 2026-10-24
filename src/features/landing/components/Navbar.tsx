@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Menu, X, ArrowUpRight, Globe2 } from 'lucide-react'
 import { scrollToSection } from '../section-scroll'
@@ -19,7 +19,22 @@ const links = [
 ]
 export function Navbar({ currency, onCurrencyChange, onLogin }: NavbarProps) {
   const [open, setOpen] = useState(false)
+  const menuToggleRef = useRef<HTMLButtonElement>(null)
   const reducedMotion = useReducedMotion()
+  useEffect(() => {
+    if (!open) return
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape' || event.defaultPrevented) return
+      // A modal above this nonmodal menu owns Escape while the header is inert.
+      const toggle = menuToggleRef.current
+      if (toggle?.closest('[inert]')) return
+      event.preventDefault()
+      setOpen(false)
+      if (toggle?.getClientRects().length) toggle.focus({ preventScroll: true })
+    }
+    document.addEventListener('keydown', closeOnEscape)
+    return () => document.removeEventListener('keydown', closeOnEscape)
+  }, [open])
   return (
     <header className="fixed inset-x-0 top-0 z-40 w-full">
       <nav
@@ -96,6 +111,7 @@ export function Navbar({ currency, onCurrencyChange, onLogin }: NavbarProps) {
           </div>
         </div>
         <button
+          ref={menuToggleRef}
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-label={open ? 'Cerrar menú' : 'Abrir menú'}

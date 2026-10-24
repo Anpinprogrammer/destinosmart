@@ -1,0 +1,326 @@
+[
+  {
+    "surface": "hero",
+    "viewport": [
+      1440,
+      900
+    ],
+    "documentWidth": 1440,
+    "overflow": 0,
+    "focusedTag": "BODY",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "initial-tab-sequence",
+    "samples": [
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "A",
+        "visibleBounds": true
+      },
+      {
+        "tag": "A",
+        "visibleBounds": true
+      },
+      {
+        "tag": "A",
+        "visibleBounds": true
+      },
+      {
+        "tag": "A",
+        "visibleBounds": true
+      },
+      {
+        "tag": "A",
+        "visibleBounds": true
+      },
+      {
+        "tag": "A",
+        "visibleBounds": true
+      },
+      {
+        "tag": "SELECT",
+        "visibleBounds": true
+      },
+      {
+        "tag": "A",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "INPUT",
+        "visibleBounds": true
+      },
+      {
+        "tag": "INPUT",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      }
+    ]
+  },
+  {
+    "surface": "explorar",
+    "viewport": [
+      1440,
+      900
+    ],
+    "documentWidth": 1440,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "explorar-regions",
+    "regions": [
+      {
+        "clientWidth": 1216,
+        "scrollWidth": 1216,
+        "overflowX": "visible"
+      }
+    ]
+  },
+  {
+    "surface": "como-funciona",
+    "viewport": [
+      1440,
+      900
+    ],
+    "documentWidth": 1440,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "planes",
+    "viewport": [
+      1440,
+      900
+    ],
+    "documentWidth": 1440,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "planes-regions",
+    "regions": [
+      {
+        "clientWidth": 1120,
+        "scrollWidth": 1129,
+        "overflowX": "visible"
+      }
+    ]
+  },
+  {
+    "surface": "nosotros",
+    "viewport": [
+      1440,
+      900
+    ],
+    "documentWidth": 1440,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "nosotros-regions",
+    "regions": [
+      {
+        "clientWidth": 584,
+        "scrollWidth": 1880,
+        "overflowX": "auto"
+      }
+    ]
+  },
+  {
+    "surface": "testimonios",
+    "viewport": [
+      1440,
+      900
+    ],
+    "documentWidth": 1440,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "testimonios-regions",
+    "regions": [
+      {
+        "clientWidth": 1216,
+        "scrollWidth": 1216,
+        "overflowX": "visible"
+      }
+    ]
+  },
+  {
+    "surface": "contacto",
+    "viewport": [
+      1440,
+      900
+    ],
+    "documentWidth": 1440,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "pie-de-pagina",
+    "viewport": [
+      1440,
+      900
+    ],
+    "documentWidth": 1440,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "legal",
+    "viewport": [
+      1440,
+      900
+    ],
+    "documentWidth": 1440,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": true,
+    "overlays": [
+      {
+        "top": 336,
+        "bottom": 564,
+        "left": 496,
+        "right": 944,
+        "insideViewport": true
+      }
+    ],
+    "keyboard": {
+      "initialInside": true,
+      "reverseInside": false,
+      "reverseOutsideTag": "BODY",
+      "forwardInside": true,
+      "outsidePageTargets": []
+    }
+  },
+  {
+    "surface": "legal-close",
+    "closed": true,
+    "restored": true
+  },
+  {
+    "surface": "chat",
+    "viewport": [
+      1440,
+      900
+    ],
+    "documentWidth": 1440,
+    "overflow": 0,
+    "focusedTag": "INPUT",
+    "focusInOverlay": true,
+    "overlays": [
+      {
+        "top": 280,
+        "bottom": 800,
+        "left": 1036,
+        "right": 1416,
+        "insideViewport": true
+      }
+    ],
+    "input": {
+      "focused": true,
+      "inViewport": true,
+      "centerUncovered": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "boxShadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(59, 130, 246, 0.5) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+    },
+    "closeButton": {
+      "focused": false,
+      "inViewport": true,
+      "centerUncovered": true,
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    }
+  },
+  {
+    "surface": "chat-close",
+    "closed": true,
+    "restored": true
+  },
+  {
+    "surface": "Seleccionar fechas del viaje",
+    "viewport": [
+      1440,
+      900
+    ],
+    "documentWidth": 1440,
+    "overflow": 0,
+    "focusedTag": "DIV",
+    "focusInOverlay": true,
+    "overlays": [
+      {
+        "top": 355,
+        "bottom": 876,
+        "left": 295,
+        "right": 1145,
+        "insideViewport": true
+      }
+    ]
+  },
+  {
+    "surface": "Seleccionar fechas del viaje-close",
+    "closed": true,
+    "restored": true
+  },
+  {
+    "surface": "Viajeros y presupuesto",
+    "viewport": [
+      1440,
+      900
+    ],
+    "documentWidth": 1440,
+    "overflow": 0,
+    "focusedTag": "DIV",
+    "focusInOverlay": true,
+    "overlays": [
+      {
+        "top": 355,
+        "bottom": 792,
+        "left": 876,
+        "right": 1296,
+        "insideViewport": true
+      }
+    ]
+  },
+  {
+    "surface": "Viajeros y presupuesto-close",
+    "closed": true,
+    "restored": true
+  }
+]

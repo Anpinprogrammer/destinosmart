@@ -22,13 +22,6 @@ export function Destinations({
     media.addEventListener('change', update)
     return () => media.removeEventListener('change', update)
   }, [])
-  const [notice, setNotice] = useState(false)
-  const [rotating, setRotating] = useState(false)
-  function refresh() {
-    setRotating(true)
-    setNotice(true)
-    window.setTimeout(() => setRotating(false), 600)
-  }
   return (
     <section
       id="explorar"
@@ -49,22 +42,14 @@ export function Destinations({
           </p>
         </div>
         <button
-          onClick={refresh}
+          type="button"
+          disabled
           className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs font-bold text-deep shadow-sm hover:border-ocean/40"
         >
-          <RefreshCw size={16} className={rotating ? 'animate-spin' : ''} />{' '}
-          Actualizar ofertas
+          <RefreshCw size={16} />{' '}
+          Actualización no disponible
         </button>
       </div>
-      {notice && (
-        <div
-          className="mb-4 rounded-xl bg-amber-50 px-4 py-3 text-xs font-semibold text-amber-900"
-          role="status"
-        >
-          Vista demostrativa: la consulta de ofertas en tiempo real se
-          habilitará al conectar el servicio de tendencias.
-        </div>
-      )}
       <div
         role="region"
         aria-label="Carrusel de destinos"

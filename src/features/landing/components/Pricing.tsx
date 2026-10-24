@@ -8,7 +8,7 @@ const plans = [
     description: 'Para probar DestinoSmart sin pagar.',
     features: [
       '1 viaje completo gratis',
-      'Acceso Pro durante 30 días',
+      'Pro por 30 días desde la creación',
       'Viaje en modo lectura al vencer',
       'PDF generado disponible para consulta',
     ],
@@ -20,10 +20,10 @@ const plans = [
     price: '$4.99',
     description: 'Para convertir ideas en viajes.',
     features: [
-      'Itinerarios completos y reeditables',
-      'Alertas de precios de vuelos',
-      'Exportación PDF',
-      'Suscripción mensual',
+      'Viajes ilimitados con suscripción',
+      'Itinerarios completos y reeditables*',
+      'Alertas de precios de vuelos*',
+      'Exportación PDF*',
     ],
     cta: 'Elegir plan',
     popular: false,
@@ -31,10 +31,10 @@ const plans = [
   {
     name: 'Viajero Frecuente',
     price: '$9.99',
-    description: 'Para exploradores sin límites.',
+    description: 'Para quienes viajan con frecuencia.',
     features: [
-      'Itinerarios completos y reeditables',
-      'Alertas de vuelos y hospedaje',
+      'Viajes ilimitados con suscripción',
+      'Alertas de vuelos y hospedaje*',
       'Asistente de IA 24/7*',
       'Exportación PDF y mapas*',
     ],
@@ -202,8 +202,9 @@ export function Pricing({
           </a>
         </div>
         <p className="mx-auto mt-8 max-w-2xl text-center text-xs leading-relaxed text-slate-400">
-          * Funcionalidades previstas, no activas en esta versión de interfaz.
-          Los botones guardan tu elección y abren el planificador; la
+          * Funcionalidades previstas, aún no disponibles. Las cuotas de IA
+          de los planes pagos están pendientes de definir. Los botones
+          conservan temporalmente tu elección y abren el planificador; la
           contratación de suscripciones y los pagos aún no están activados.
           Al vencer el beneficio Pro, el viaje se conserva en modo lectura y
           los PDF generados siguen disponibles.

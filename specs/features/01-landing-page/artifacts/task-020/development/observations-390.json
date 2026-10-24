@@ -1,0 +1,10 @@
+{
+  "width": 390,
+  "environment": "development",
+  "testimonialWrappers": 1,
+  "testimonialChunks": [
+    "/src/features/landing/components/Testimonials.tsx"
+  ],
+  "neighboringContactMounted": 1,
+  "unexpected": []
+}

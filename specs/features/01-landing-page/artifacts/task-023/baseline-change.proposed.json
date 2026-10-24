@@ -1,0 +1,14 @@
+{
+  "status": "approved-and-applied",
+  "task": "Feature 01 TASK-023",
+  "baseline": "tests/regression/production-files.baseline.json",
+  "only_change": {
+    "path": "src/features/landing/components/Navbar.tsx",
+    "before": "2e5ef9fdc2cee6ed9b082a672ad1c45fa0e93ec1e0f2ffefd9245b78be3b13f3",
+    "after": "1a0edd3c8c1e1d2d270ab54f1c65f0a019cd39699ae097855f3ac3d1e6479571"
+  },
+  "applied": true,
+  "approved_by": "propietario del proyecto",
+  "approved_at": "2026-10-23",
+  "approval_source": "autorizo aplicar esa unica huella"
+}

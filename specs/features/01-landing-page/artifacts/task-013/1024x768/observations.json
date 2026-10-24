@@ -1,0 +1,358 @@
+[
+  {
+    "surface": "hero",
+    "viewport": [
+      1024,
+      768
+    ],
+    "documentWidth": 1024,
+    "overflow": 0,
+    "focusedTag": "BODY",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "initial-tab-sequence",
+    "samples": [
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "A",
+        "visibleBounds": true
+      },
+      {
+        "tag": "SELECT",
+        "visibleBounds": true
+      },
+      {
+        "tag": "A",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "INPUT",
+        "visibleBounds": true
+      },
+      {
+        "tag": "INPUT",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "A",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      }
+    ]
+  },
+  {
+    "surface": "menu",
+    "viewport": [
+      1024,
+      768
+    ],
+    "documentWidth": 1024,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": [],
+    "trigger": {
+      "focused": true,
+      "inViewport": true,
+      "centerUncovered": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "boxShadow": "rgb(255, 255, 255) 0px 0px 0px 2px, rgb(20, 184, 166) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+    },
+    "lastLink": {
+      "focused": false,
+      "inViewport": true,
+      "centerUncovered": true,
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    }
+  },
+  {
+    "surface": "menu-keyboard",
+    "escapeClosed": false
+  },
+  {
+    "surface": "explorar",
+    "viewport": [
+      1024,
+      768
+    ],
+    "documentWidth": 1024,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "explorar-regions",
+    "regions": [
+      {
+        "clientWidth": 960,
+        "scrollWidth": 960,
+        "overflowX": "visible"
+      }
+    ]
+  },
+  {
+    "surface": "como-funciona",
+    "viewport": [
+      1024,
+      768
+    ],
+    "documentWidth": 1024,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "planes",
+    "viewport": [
+      1024,
+      768
+    ],
+    "documentWidth": 1024,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "planes-regions",
+    "regions": [
+      {
+        "clientWidth": 992,
+        "scrollWidth": 1000,
+        "overflowX": "visible"
+      }
+    ]
+  },
+  {
+    "surface": "nosotros",
+    "viewport": [
+      1024,
+      768
+    ],
+    "documentWidth": 1024,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "nosotros-regions",
+    "regions": [
+      {
+        "clientWidth": 456,
+        "scrollWidth": 1880,
+        "overflowX": "auto"
+      }
+    ]
+  },
+  {
+    "surface": "testimonios",
+    "viewport": [
+      1024,
+      768
+    ],
+    "documentWidth": 1024,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "testimonios-regions",
+    "regions": [
+      {
+        "clientWidth": 960,
+        "scrollWidth": 960,
+        "overflowX": "visible"
+      }
+    ]
+  },
+  {
+    "surface": "contacto",
+    "viewport": [
+      1024,
+      768
+    ],
+    "documentWidth": 1024,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "pie-de-pagina",
+    "viewport": [
+      1024,
+      768
+    ],
+    "documentWidth": 1024,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "legal",
+    "viewport": [
+      1024,
+      768
+    ],
+    "documentWidth": 1024,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": true,
+    "overlays": [
+      {
+        "top": 270,
+        "bottom": 498,
+        "left": 288,
+        "right": 736,
+        "insideViewport": true
+      }
+    ],
+    "keyboard": {
+      "initialInside": true,
+      "reverseInside": false,
+      "reverseOutsideTag": "BODY",
+      "forwardInside": true,
+      "outsidePageTargets": []
+    }
+  },
+  {
+    "surface": "legal-close",
+    "closed": true,
+    "restored": true
+  },
+  {
+    "surface": "chat",
+    "viewport": [
+      1024,
+      768
+    ],
+    "documentWidth": 1024,
+    "overflow": 0,
+    "focusedTag": "INPUT",
+    "focusInOverlay": true,
+    "overlays": [
+      {
+        "top": 148,
+        "bottom": 668,
+        "left": 620,
+        "right": 1000,
+        "insideViewport": true
+      }
+    ],
+    "input": {
+      "focused": true,
+      "inViewport": true,
+      "centerUncovered": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "boxShadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(59, 130, 246, 0.5) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+    },
+    "closeButton": {
+      "focused": false,
+      "inViewport": true,
+      "centerUncovered": true,
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    }
+  },
+  {
+    "surface": "chat-close",
+    "closed": true,
+    "restored": true
+  },
+  {
+    "surface": "Seleccionar fechas del viaje",
+    "viewport": [
+      1024,
+      768
+    ],
+    "documentWidth": 1024,
+    "overflow": 0,
+    "focusedTag": "DIV",
+    "focusInOverlay": true,
+    "overlays": [
+      {
+        "top": 223,
+        "bottom": 744,
+        "left": 87,
+        "right": 937,
+        "insideViewport": true
+      }
+    ]
+  },
+  {
+    "surface": "Seleccionar fechas del viaje-close",
+    "closed": true,
+    "restored": true
+  },
+  {
+    "surface": "Viajeros y presupuesto",
+    "viewport": [
+      1024,
+      768
+    ],
+    "documentWidth": 1024,
+    "overflow": 0,
+    "focusedTag": "DIV",
+    "focusInOverlay": true,
+    "overlays": [
+      {
+        "top": 223,
+        "bottom": 660,
+        "left": 572,
+        "right": 992,
+        "insideViewport": true
+      }
+    ]
+  },
+  {
+    "surface": "Viajeros y presupuesto-close",
+    "closed": true,
+    "restored": true
+  }
+]

@@ -1,0 +1,21 @@
+{
+  "task": "Feature 01 TASK-024",
+  "date": "2026-10-23",
+  "comparison": "HEAD vs working tree for approved TASK-022/023",
+  "files": [
+    {
+      "path": "src/features/landing/landing-page.tsx",
+      "static_classes": true,
+      "motion_props": true,
+      "approved_hash_matches_current_and_baseline": true,
+      "sha256": "8d77dbfd655b898e10901d041e3d621c13d0007e878a96dc63cb83a95be5e46e"
+    },
+    {
+      "path": "src/features/landing/components/Navbar.tsx",
+      "static_classes": true,
+      "motion_props": true,
+      "approved_hash_matches_current_and_baseline": true,
+      "sha256": "1a0edd3c8c1e1d2d270ab54f1c65f0a019cd39699ae097855f3ac3d1e6479571"
+    }
+  ]
+}

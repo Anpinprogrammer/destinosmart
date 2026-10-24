@@ -1,0 +1,32 @@
+{
+  "width": 768,
+  "cards": [
+    "Bali",
+    "París",
+    "Tokio",
+    "Santorini",
+    "Roma",
+    "Nueva York"
+  ],
+  "pricesBefore": [
+    "$890",
+    "$790",
+    "$1.120",
+    "$950",
+    "$810",
+    "$730"
+  ],
+  "pricesAfter": [
+    "$890",
+    "$790",
+    "$1.120",
+    "$950",
+    "$810",
+    "$730"
+  ],
+  "disclaimer": "Trayectos y precios simulados para esta demostración, con salida desde Bogotá (BOG). Los importes de ejemplo se muestran en USD; la moneda seleccionada para planear tu viaje es USD.",
+  "refreshLabel": "Actualización no disponible",
+  "refreshEnabled": false,
+  "statusCount": 0,
+  "finding": "H018-001 remediated in this scenario: explicitly unavailable and natively disabled; Feature 09 pending"
+}

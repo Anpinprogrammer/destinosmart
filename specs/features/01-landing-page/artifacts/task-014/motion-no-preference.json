@@ -1,0 +1,51 @@
+{
+  "first": "Paisaje de Santorini, Grecia",
+  "after": "Paisaje de Bali, Indonesia",
+  "changed": true,
+  "pauseControls": 0,
+  "initialAnimations": [
+    {
+      "state": "running",
+      "duration": 550,
+      "iterations": 1,
+      "properties": [
+        "opacity"
+      ]
+    },
+    {
+      "state": "running",
+      "duration": 650,
+      "iterations": 1,
+      "properties": [
+        "opacity"
+      ]
+    },
+    {
+      "state": "running",
+      "duration": 600,
+      "iterations": 1,
+      "properties": [
+        "opacity"
+      ]
+    },
+    {
+      "state": "running",
+      "duration": 250,
+      "iterations": 1,
+      "properties": [
+        "opacity"
+      ]
+    },
+    {
+      "state": "running",
+      "duration": 650,
+      "iterations": 1,
+      "properties": [
+        "opacity"
+      ]
+    }
+  ],
+  "storyAnimation": "story-marquee",
+  "pausedByButton": "paused",
+  "cssScroll": "smooth"
+}

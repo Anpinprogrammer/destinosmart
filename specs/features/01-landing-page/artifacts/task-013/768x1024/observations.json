@@ -1,0 +1,374 @@
+[
+  {
+    "surface": "hero",
+    "viewport": [
+      768,
+      1024
+    ],
+    "documentWidth": 768,
+    "overflow": 0,
+    "focusedTag": "BODY",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "initial-tab-sequence",
+    "samples": [
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "A",
+        "visibleBounds": true
+      },
+      {
+        "tag": "SELECT",
+        "visibleBounds": true
+      },
+      {
+        "tag": "A",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "INPUT",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "DIV",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      },
+      {
+        "tag": "BUTTON",
+        "visibleBounds": true
+      }
+    ]
+  },
+  {
+    "surface": "menu",
+    "viewport": [
+      768,
+      1024
+    ],
+    "documentWidth": 768,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": [],
+    "trigger": {
+      "focused": true,
+      "inViewport": true,
+      "centerUncovered": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "boxShadow": "rgb(255, 255, 255) 0px 0px 0px 2px, rgb(20, 184, 166) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+    },
+    "lastLink": {
+      "focused": false,
+      "inViewport": true,
+      "centerUncovered": true,
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    }
+  },
+  {
+    "surface": "menu-keyboard",
+    "escapeClosed": false
+  },
+  {
+    "surface": "explorar",
+    "viewport": [
+      768,
+      1024
+    ],
+    "documentWidth": 768,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "explorar-regions",
+    "regions": [
+      {
+        "clientWidth": 720,
+        "scrollWidth": 720,
+        "overflowX": "visible"
+      }
+    ]
+  },
+  {
+    "surface": "como-funciona",
+    "viewport": [
+      768,
+      1024
+    ],
+    "documentWidth": 768,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "planes",
+    "viewport": [
+      768,
+      1024
+    ],
+    "documentWidth": 768,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "planes-regions",
+    "regions": [
+      {
+        "clientWidth": 736,
+        "scrollWidth": 736,
+        "overflowX": "visible"
+      }
+    ]
+  },
+  {
+    "surface": "nosotros",
+    "viewport": [
+      768,
+      1024
+    ],
+    "documentWidth": 768,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "nosotros-regions",
+    "regions": [
+      {
+        "clientWidth": 752,
+        "scrollWidth": 1680,
+        "overflowX": "auto"
+      }
+    ]
+  },
+  {
+    "surface": "testimonios",
+    "viewport": [
+      768,
+      1024
+    ],
+    "documentWidth": 768,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "testimonios-regions",
+    "regions": [
+      {
+        "clientWidth": 720,
+        "scrollWidth": 720,
+        "overflowX": "visible"
+      }
+    ]
+  },
+  {
+    "surface": "contacto",
+    "viewport": [
+      768,
+      1024
+    ],
+    "documentWidth": 768,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "pie-de-pagina",
+    "viewport": [
+      768,
+      1024
+    ],
+    "documentWidth": 768,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": []
+  },
+  {
+    "surface": "legal",
+    "viewport": [
+      768,
+      1024
+    ],
+    "documentWidth": 768,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": true,
+    "overlays": [
+      {
+        "top": 398,
+        "bottom": 626,
+        "left": 160,
+        "right": 608,
+        "insideViewport": true
+      }
+    ],
+    "keyboard": {
+      "initialInside": true,
+      "reverseInside": false,
+      "reverseOutsideTag": "BODY",
+      "forwardInside": true,
+      "outsidePageTargets": []
+    }
+  },
+  {
+    "surface": "legal-close",
+    "closed": true,
+    "restored": true
+  },
+  {
+    "surface": "chat",
+    "viewport": [
+      768,
+      1024
+    ],
+    "documentWidth": 768,
+    "overflow": 0,
+    "focusedTag": "INPUT",
+    "focusInOverlay": true,
+    "overlays": [
+      {
+        "top": 404,
+        "bottom": 924,
+        "left": 364,
+        "right": 744,
+        "insideViewport": true
+      }
+    ],
+    "input": {
+      "focused": true,
+      "inViewport": true,
+      "centerUncovered": true,
+      "outlineStyle": "solid",
+      "outlineWidth": "2px",
+      "boxShadow": "rgb(255, 255, 255) 0px 0px 0px 0px, rgba(59, 130, 246, 0.5) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px"
+    },
+    "closeButton": {
+      "focused": false,
+      "inViewport": true,
+      "centerUncovered": true,
+      "outlineStyle": "none",
+      "outlineWidth": "3px",
+      "boxShadow": "none"
+    }
+  },
+  {
+    "surface": "chat-close",
+    "closed": true,
+    "restored": true
+  },
+  {
+    "surface": "trip-modal",
+    "viewport": [
+      768,
+      1024
+    ],
+    "documentWidth": 768,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": true,
+    "overlays": [
+      {
+        "top": 51.203125,
+        "bottom": 972.796875,
+        "left": 128,
+        "right": 640,
+        "insideViewport": true
+      }
+    ],
+    "keyboard": {
+      "initialInside": true,
+      "reverseInside": false,
+      "reverseOutsideTag": "BODY",
+      "forwardInside": true,
+      "outsidePageTargets": []
+    }
+  },
+  {
+    "surface": "trip-close",
+    "closed": true,
+    "restored": true
+  },
+  {
+    "surface": "summary",
+    "viewport": [
+      768,
+      1024
+    ],
+    "documentWidth": 768,
+    "overflow": 0,
+    "focusedTag": "BUTTON",
+    "focusInOverlay": false,
+    "overlays": [
+      {
+        "top": 301.875,
+        "bottom": 722.125,
+        "left": 160,
+        "right": 608,
+        "insideViewport": true
+      }
+    ],
+    "keyboard": {
+      "initialInside": false,
+      "reverseInside": false,
+      "reverseOutsideTag": "BUTTON",
+      "forwardInside": true,
+      "outsidePageTargets": [
+        "BUTTON",
+        "A"
+      ]
+    }
+  },
+  {
+    "surface": "summary-close",
+    "escapeClosed": false
+  }
+]
